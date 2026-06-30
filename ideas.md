@@ -15,6 +15,7 @@ Some of the suggested papers are tested only on real private datasets. We will b
 - **Anti-Money Laundering by Group-Aware Deep Graph Learning (2023)**
     - Link: https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10114503
     - Notes: 
+        - It focuses on identifying money laundering organizations (rings etc) instead of individual fraudolent nodes.
         - It's suitable for AMLSim and AMLGentex datasets
         - I found a thesis from 2025 that is based on it: **Gang Prediction in Graphs for Anti Money Laundering Detection (2025)**
             - Link: https://webthesis.biblio.polito.it/38622/1/tesi.pdf

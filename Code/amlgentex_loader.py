@@ -244,6 +244,7 @@ class AMLGentexLoader(AMLDatasetLoader):
         self,
         seed_node: str | None = None,
         max_nodes: int = 50,
+        type_of_illicit: str = "ML",
         ax: plt.Axes | None = None,
         title: str | None = None,
     ) -> plt.Axes:
@@ -252,15 +253,20 @@ class AMLGentexLoader(AMLDatasetLoader):
         Does NOT require :meth:`build_graph` to have been called.
         Red edges = fraudulent, blue = normal.
         """
+        if type_of_illicit == "F":
+            fraud_col = "isFraud"
+        else:
+            fraud_col = _FRAUD_COL
+            
         return self._fast_subgraph_from_df(
             source_col=_SOURCE_COL,
             dest_col=_DEST_COL,
-            fraud_col=_FRAUD_COL,
+            fraud_col=fraud_col,
             amount_col=_AMOUNT_COL,
             seed_node=seed_node,
             max_nodes=max_nodes,
             ax=ax,
-            title=title or "AMLNet – transaction subgraph",
+            title=title or f"AMLNet – {type_of_illicit} subgraph",
         )
 
     # ------------------------------------------------------------------

@@ -171,6 +171,7 @@ class IBMAMLSimLoader(AMLDatasetLoader):
         self,
         seed_node: str | None = None,
         max_nodes: int = 50,
+        type_of_illicit: str = "ML",
         ax: plt.Axes | None = None,
         title: str | None = None,
     ) -> plt.Axes:
@@ -179,6 +180,7 @@ class IBMAMLSimLoader(AMLDatasetLoader):
         Does NOT require :meth:`build_graph` to have been called.
         Red edges = fraudulent, blue = normal.
         """
+        # IBM AMLSim doesn't distinguish, fallback to default fraud column
         return self._fast_subgraph_from_df(
             source_col=_SOURCE_COL,
             dest_col=_DEST_COL,
@@ -187,7 +189,7 @@ class IBMAMLSimLoader(AMLDatasetLoader):
             seed_node=seed_node,
             max_nodes=max_nodes,
             ax=ax,
-            title=title or "IBM AMLSim – transaction subgraph",
+            title=title or f"IBM AMLSim – {type_of_illicit} subgraph",
         )
 
     # ------------------------------------------------------------------

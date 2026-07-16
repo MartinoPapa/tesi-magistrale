@@ -189,6 +189,7 @@ class SAMLDLoader(AMLDatasetLoader):
         self,
         seed_node: str | None = None,
         max_nodes: int = 50,
+        type_of_illicit: str = "ML",
         ax: plt.Axes | None = None,
         title: str | None = None,
     ) -> plt.Axes:
@@ -197,6 +198,7 @@ class SAMLDLoader(AMLDatasetLoader):
         Does NOT require :meth:`build_graph` to have been called.
         Red edges = fraudulent, blue = normal.
         """
+        # SAML-D does not distinguish, fallback to default fraud column
         return self._fast_subgraph_from_df(
             source_col=_SOURCE_COL,
             dest_col=_DEST_COL,
@@ -205,7 +207,7 @@ class SAMLDLoader(AMLDatasetLoader):
             seed_node=seed_node,
             max_nodes=max_nodes,
             ax=ax,
-            title=title or "SAML-D – transaction subgraph",
+            title=title or f"SAML-D – {type_of_illicit} subgraph",
         )
 
     # ------------------------------------------------------------------

@@ -96,6 +96,7 @@ class AMLDatasetLoader(abc.ABC):
         self,
         seed_node: str | None = None,
         max_nodes: int = 50,
+        type_of_illicit: str = "ML",
         ax: plt.Axes | None = None,
         title: str | None = None,
     ) -> plt.Axes:

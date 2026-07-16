@@ -30,7 +30,6 @@ Some of the suggested papers are tested only on real private datasets. We will b
 ### Task: E-commerce Fraud Detection
 - **An E-commerce Fraud Detection System via Competitive Graph Neural Networks (2022)**
     - Link: https://dl.acm.org/doi/10.1145/3474379
-    - Notes:
     - Code: https://github.com/GeZhangMQ/eFraudCom
     - Datasets:
         - Bitcoin-Alpha
@@ -39,18 +38,15 @@ Some of the suggested papers are tested only on real private datasets. We will b
 ### Task: Fraud detection
 - **Money Laundering Detection Using Graph Neural Networks Enhanced with Autoencoder Components (2025)**
     - Link: https://www.researchgate.net/publication/398340548_Money_Laundering_Detection_Using_Graph_Neural_Networks_Enhanced_with_Autoencoder_Components
-    - Notes: 
     - Datasets:
         - IBM AMLSim https://github.com/IBM/AMLSim/blob/master/README.md
 - HybridFL: A Federated Learning Approach for Financial Crime Detection (2026)
     - Link: https://arxiv.org/pdf/2602.19207
-    - Notes:
     - Datasets:
         - IBM AMLSim https://github.com/IBM/AMLSim/blob/master/README.md
     - Tex: https://arxiv.org/src/2602.19207
 - **Finding Money Launderers Using Heterogeneous Graph Neural Networks (2023)**
     - Link: https://arxiv.org/pdf/2307.13499
-    - Notes:
     - Code: https://github.com/fredjo89/heterogeneous-mpnn
     - Datasets:
         - Private: DNB (Norway's largest bank)

@@ -26,9 +26,9 @@ Amount               : float – transaction amount
 Payment_type         : str   – e.g. "ACH", "Wire", "Cash", "Credit Card"
 Sender_bank_location : str   – country/region of the sender bank
 Receiver_bank_location: str  – country/region of the receiver bank
-Payment_currency     : str   – currency used by the sender
-Received_currency    : str   – currency received
-Sender_lob           : str   – sender line-of-business category
+Payment_currency     : str   - currency of the sender
+Received_currency    : str   - currency received by destination
+Payment_type         : str   - payment instrument used
 Is_laundering        : int   – 0 (normal) or 1 (fraudulent/laundering)
 """
 
@@ -48,7 +48,7 @@ from dataset_loader import AMLDatasetLoader
 # ---------------------------------------------------------------------------
 
 _DATA_DIR: str = os.path.join(
-    os.path.dirname(__file__), "data", "saml_d"
+    os.path.dirname(__file__), "..", "data", "saml_d"
 )
 _FILENAME: str = "SAML-D.csv"
 
@@ -80,11 +80,15 @@ class SAMLDLoader(AMLDatasetLoader):
     def __init__(
         self,
         data_dir: str = _DATA_DIR,
-        filename: str = _FILENAME,
+        filename: str | None = None,
         nrows: int | None = None,
     ) -> None:
         super().__init__(data_dir)
-        self._filename = filename
+        self._filename: str = (
+            filename
+            if filename is not None
+            else self._resolve_filename(data_dir, _FILENAME)
+        )
         self._nrows = nrows
 
     # ------------------------------------------------------------------
@@ -97,8 +101,7 @@ class SAMLDLoader(AMLDatasetLoader):
         if not os.path.exists(path):
             raise FileNotFoundError(
                 f"SAML-D CSV not found at:\n  {path}\n"
-                "Download from: https://www.kaggle.com/datasets/"
-                "berkanoztas/synthetic-transaction-monitoring-dataset-aml"
+                f"Expected file: {self._filename}"
             )
 
         print(f"Loading SAML-D from: {path}")
@@ -164,10 +167,10 @@ class SAMLDLoader(AMLDatasetLoader):
                 "description": "Currency received by the destination account",
                 "possible_values": df["Received_currency"].dropna().unique()[:6].tolist(),
             },
-            "Sender_lob": {
-                "dtype": str(df["Sender_lob"].dtype),
-                "description": "Sender's line-of-business category",
-                "possible_values": df["Sender_lob"].dropna().unique()[:6].tolist(),
+            "Payment_type": {
+                "dtype": str(df["Payment_type"].dtype),
+                "description": "Payment instrument or method used",
+                "possible_values": df["Payment_type"].dropna().unique()[:6].tolist(),
             },
             "Is_laundering": {
                 "dtype": str(df["Is_laundering"].dtype),

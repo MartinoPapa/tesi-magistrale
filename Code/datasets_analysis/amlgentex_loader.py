@@ -62,7 +62,7 @@ from dataset_loader import AMLDatasetLoader
 # ---------------------------------------------------------------------------
 
 _DATA_DIR: str = os.path.join(
-    os.path.dirname(__file__), "data", "amlgentex"
+    os.path.dirname(__file__), "..", "data", "amlgentex"
 )
 _FILENAME: str = "transactions.csv"
 
@@ -104,11 +104,15 @@ class AMLGentexLoader(AMLDatasetLoader):
     def __init__(
         self,
         data_dir: str = _DATA_DIR,
-        filename: str = _FILENAME,
+        filename: str | None = None,
         nrows: int | None = None,
     ) -> None:
         super().__init__(data_dir)
-        self._filename = filename
+        self._filename: str = (
+            filename
+            if filename is not None
+            else self._resolve_filename(data_dir, _FILENAME)
+        )
         self._nrows = nrows
 
     # ------------------------------------------------------------------
@@ -121,9 +125,8 @@ class AMLGentexLoader(AMLDatasetLoader):
         if not os.path.exists(path):
             raise FileNotFoundError(
                 f"AMLNet CSV not found at:\n  {path}\n"
-                "Download from Zenodo (no account needed):\n"
-                "  https://zenodo.org/records/21237971\n"
-                "Then rename the file to 'transactions.csv' and place it in the data dir."
+                f"Expected file: {self._filename}\n"
+                "Source: https://zenodo.org/records/21237971"
             )
 
         print(f"Loading AMLNet (AMLGentex-equivalent) from: {path}")

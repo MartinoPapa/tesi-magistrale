@@ -13,8 +13,8 @@ class GAGNNLoss(nn.Module):
         self.eta = eta
         self.lambda_ = lambda_
         self.zeta = zeta
-        # Using Binary Cross Entropy for all three tasks
-        self.bce = nn.BCELoss()
+        # Using BCEWithLogitsLoss for all three tasks (numerically stable)
+        self.bce = nn.BCEWithLogitsLoss()
 
     def forward(self, p_node, y_node, p_trans, y_trans, p_group, y_group,
                 node_mask=None, trans_mask=None, group_mask=None):

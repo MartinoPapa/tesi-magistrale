@@ -28,6 +28,7 @@ class GAGNN(nn.Module):
         )
 
         self.training_losses = []
+        self.val_losses = []
         
         # 1. Base community-centric encoder
         self.encoder = CommunityCentricEncoder(
@@ -54,17 +55,16 @@ class GAGNN(nn.Module):
             beta=beta
         )
 
-    def forward(self, x, edge_index, edge_attr, y, num_edges=None):
+    def forward(self, x, edge_index, edge_attr, num_edges=None):
         """
         Args:
             x: Node features (N x F)
             edge_index: Adjacency list (2 x E)
             edge_attr: Edge features (E x D)
-            y: Node labels (N x 1)
             num_edges: Total edges for eMRF calculation
         """
         # Step 1: Base node-level encoding
-        X3, p_node = self.encoder(x, edge_index, y, num_edges)
+        X3, p_node = self.encoder(x, edge_index, num_edges)
         
         # Step 2: Group representation and graph reconstruction
         p_trans, X_hat, edge_index_hat, group_mapping = self.group_layer(X3, edge_index, edge_attr)
@@ -79,8 +79,7 @@ class GAGNN(nn.Module):
         
         # Step 3: Group-level encoding
         # Note: the paper feeds \hat{X} and \hat{G} back into the community-centric encoder.
-        # eMRF needs labels for the groups. We use y_group for the eMRF label similarity step.
-        _, p_group = self.group_encoder(X_hat, edge_index_hat, y_group.squeeze(), num_edges)
+        _, p_group = self.group_encoder(X_hat, edge_index_hat, num_edges)
         
         return p_node, p_trans, p_group, y_group
 
@@ -92,6 +91,7 @@ class GAGNN(nn.Module):
         torch.save({
             'state_dict': self.state_dict(),
             'training_losses': self.training_losses,
+            'val_losses': self.val_losses,
             'init_kwargs': self._init_kwargs
         }, path)
 
@@ -125,6 +125,7 @@ class GAGNN(nn.Module):
         model = cls(**init_kwargs)
         model.load_state_dict(checkpoint['state_dict'])
         model.training_losses = checkpoint.get('training_losses', [])
+        model.val_losses = checkpoint.get('val_losses', [])
         model.eval()
         return model
 
@@ -134,20 +135,25 @@ class GAGNN(nn.Module):
         checkpoint = torch.load(path)
         self.load_state_dict(checkpoint['state_dict'])
         self.training_losses = checkpoint.get('training_losses', [])
+        self.val_losses = checkpoint.get('val_losses', [])
         self.eval()
         
-    def plot_training_losses(self):
-        """Plots the training losses recorded during training."""
+    def plot_training_history(self):
+        """Plots the training and validation losses recorded during training."""
         import matplotlib.pyplot as plt
-        if not self.training_losses:
-            print("No training losses to plot.")
+        if not self.training_losses and not getattr(self, 'val_losses', []):
+            print("No training history to plot.")
             return
             
         plt.figure(figsize=(10, 6))
-        plt.plot(self.training_losses, label='Training Loss', color='blue', linewidth=2)
+        if self.training_losses:
+            plt.plot(self.training_losses, label='Training Loss', color='blue', linewidth=2)
+        if hasattr(self, 'val_losses') and self.val_losses:
+            plt.plot(self.val_losses, label='Validation Loss', color='orange', linewidth=2)
+            
         plt.xlabel('Training Iterations / Epochs')
         plt.ylabel('Loss')
-        plt.title('Training Loss Over Time')
+        plt.title('Training and Validation Loss Over Time')
         plt.legend()
         plt.grid(True, linestyle='--', alpha=0.7)
         plt.tight_layout()

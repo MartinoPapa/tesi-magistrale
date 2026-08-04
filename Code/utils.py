@@ -35,7 +35,7 @@ class Evaluator:
             for batch in test_loader:
                 batch = batch.to(device)
                 p_node, p_trans, p_group, y_group = model(
-                    batch.x, batch.edge_index, batch.edge_attr, batch.y_node, batch.num_edges
+                    batch.x, batch.edge_index, batch.edge_attr, batch.num_edges
                 )
 
                 # Restrict to seed nodes only
@@ -43,7 +43,9 @@ class Evaluator:
                 p_node_seed = p_node[:n_seed]        # (n_seed, 1)
                 y_node_seed = batch.y_node[:n_seed]  # (n_seed,)
 
-                preds  = (p_node_seed.squeeze() >= threshold).long().cpu().numpy()
+                # Convert logits to probabilities
+                probs = torch.sigmoid(p_node_seed)
+                preds  = (probs.squeeze() >= threshold).long().cpu().numpy()
                 labels = y_node_seed.long().cpu().numpy()
 
                 all_preds.append(preds)

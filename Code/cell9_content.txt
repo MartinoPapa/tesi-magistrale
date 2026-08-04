@@ -1,0 +1,158 @@
+import os
+import numpy as np
+from sklearn.model_selection import train_test_split
+from torch_geometric.data import Data
+from torch_geometric.loader import NeighborLoader
+
+# --- Train / Val / Test Split Masks (70 / 10 / 20) ---
+all_idx = np.arange(x.shape[0])
+
+# Step 1: hold out 30% as the temporary "rest" set
+train_idx, rest_idx = train_test_split(all_idx, test_size=0.30, random_state=42)
+
+# Step 2: split the 30% rest into val (10%) and test (20%)
+val_idx, test_idx = train_test_split(rest_idx, test_size=2/3, random_state=42)
+
+# --- Down-sampling (training set only) ---
+if downsample:
+    train_labels = y_node[train_idx].cpu().numpy()
+    pos_idx = train_idx[train_labels == 1]
+    neg_idx = train_idx[train_labels == 0]
+    n_pos, n_neg = len(pos_idx), len(neg_idx)
+    if n_neg > n_pos:
+        neg_idx_sampled = np.random.choice(neg_idx, size=n_pos, replace=False)
+        train_idx = np.concatenate([pos_idx, neg_idx_sampled])
+        print(f"Down-sampling: {n_pos} pos + {n_pos} neg sampled (from {n_neg}) -> {len(train_idx)} train nodes")
+    else:
+        print(f"Down-sampling skipped: already balanced (pos={n_pos}, neg={n_neg})")
+
+def make_mask(indices, n):
+    mask = torch.zeros(n, dtype=torch.bool)
+    mask[indices] = True
+    return mask
+
+n_nodes = x.shape[0]
+train_node_mask = make_mask(train_idx, n_nodes)
+val_node_mask   = make_mask(val_idx,   n_nodes)
+test_node_mask  = make_mask(test_idx,  n_nodes)
+
+print(f"Train nodes : {train_node_mask.sum().item()} ({train_node_mask.sum().item()/n_nodes*100:.1f}%)")
+print(f"Val nodes   : {val_node_mask.sum().item()}   ({val_node_mask.sum().item()/n_nodes*100:.1f}%)")
+print(f"Test nodes  : {test_node_mask.sum().item()}  ({test_node_mask.sum().item()/n_nodes*100:.1f}%)")
+print("-" * 50)
+
+# --- Package graph into a PyG Data object ---
+# Tensors must be on CPU for NeighborLoader
+data = Data(
+    x=x.cpu(),
+    edge_index=edge_index.cpu(),
+    edge_attr=edge_attr.cpu(),
+    y_node=y_node.cpu(),
+    y_trans=y_trans.cpu()
+)
+
+# --- Build NeighborLoaders ---
+train_loader = NeighborLoader(
+    data, num_neighbors=num_neighbors, batch_size=batch_size,
+    input_nodes=train_node_mask.cpu(), shuffle=True
+)
+val_loader = NeighborLoader(
+    data, num_neighbors=num_neighbors, batch_size=batch_size,
+    input_nodes=val_node_mask.cpu(), shuffle=False
+)
+test_loader = NeighborLoader(
+    data, num_neighbors=num_neighbors, batch_size=batch_size,
+    input_nodes=test_node_mask.cpu(), shuffle=False
+)
+
+# --- Early Stopping State ---
+best_val_loss    = float('inf')
+patience_counter = 0
+model.val_losses = []          # track validation losses (mirrors model.training_losses)
+
+# --- Mini-batch Training Loop with Early Stopping ---
+for epoch in range(epochs):
+
+    # ── Train ────────────────────────────────────────────────────────────────────────────────
+    model.train()
+    epoch_loss = 0.0
+    num_batches = 0
+
+    for batch in train_loader:
+        batch = batch.to(device)
+        optimizer.zero_grad()
+
+        p_node, p_trans, p_group, y_group = model(
+            batch.x, batch.edge_index, batch.edge_attr, batch.num_edges
+        )
+
+        if p_group.numel() > 0:
+            n_seed = batch.batch_size
+            seed_node_mask = torch.zeros(batch.num_nodes, dtype=torch.bool, device=device)
+            seed_node_mask[:n_seed] = True
+            all_edge_mask = torch.ones(batch.edge_index.shape[1], dtype=torch.bool, device=device)
+
+            loss, l_node, l_trans, l_group = criterion(
+                p_node, batch.y_node.unsqueeze(1),
+                p_trans, batch.y_trans,
+                p_group, y_group,
+                node_mask=seed_node_mask,
+                trans_mask=all_edge_mask
+            )
+
+            loss.backward()
+            optimizer.step()
+            epoch_loss += loss.item()
+            num_batches += 1
+
+    avg_train_loss = epoch_loss / max(num_batches, 1)
+    model.training_losses.append(avg_train_loss)
+
+    # ── Validate ─────────────────────────────────────────────────────────────────────────────
+    model.eval()
+    val_loss_total = 0.0
+    n_val_batches  = 0
+
+    with torch.no_grad():
+        for batch in val_loader:
+            batch = batch.to(device)
+            p_node, p_trans, p_group, y_group = model(
+                batch.x, batch.edge_index, batch.edge_attr, batch.y_node, batch.num_edges
+            )
+            if p_group.numel() > 0:
+                n_seed = batch.batch_size
+                seed_node_mask = torch.zeros(batch.num_nodes, dtype=torch.bool, device=device)
+                seed_node_mask[:n_seed] = True
+                all_edge_mask = torch.ones(batch.edge_index.shape[1], dtype=torch.bool, device=device)
+
+                val_loss, *_ = criterion(
+                    p_node, batch.y_node.unsqueeze(1),
+                    p_trans, batch.y_trans,
+                    p_group, y_group,
+                    node_mask=seed_node_mask,
+                    trans_mask=all_edge_mask
+                )
+                val_loss_total += val_loss.item()
+                n_val_batches  += 1
+
+    avg_val_loss = val_loss_total / max(n_val_batches, 1)
+    model.val_losses.append(avg_val_loss)
+
+    # ── Early Stopping Check ─────────────────────────────────────────────────────────────
+    if avg_val_loss < best_val_loss:
+        best_val_loss    = avg_val_loss
+        patience_counter = 0
+        model.save("saved_models/gagnn_best.pt")
+        status = "new best"
+    else:
+        patience_counter += 1
+        status = f"patience {patience_counter}/{patience}"
+
+    print(f"Epoch {epoch+1:03d} | Train Loss: {avg_train_loss:.4f} | Val Loss: {avg_val_loss:.4f}  [{status}]")
+
+    if patience_counter >= patience:
+        model.save("saved_models/gagnn_patience_trigger.pt")
+        print(f"\nEarly stopping triggered after {epoch+1} epochs (no improvement for {patience} epochs).")
+        break
+
+print("\nTraining complete. Best model saved to saved_models/gagnn_best.pt")

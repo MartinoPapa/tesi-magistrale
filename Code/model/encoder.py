@@ -20,29 +20,32 @@ class CommunityCentricEncoder(nn.Module):
         self.nn_t = nn.Sequential(
             nn.Linear(out_channels, 128),
             nn.ReLU(),
-            nn.Linear(128, 1) # Binary classification output (probability)
+            nn.Linear(128, 1) # Binary classification output (logits)
         )
+        
+        # Coarse classifier to generate label probabilities for eMRF
+        self.coarse_classifier = nn.Linear(out_channels, 1)
 
-    def forward(self, x, edge_index, y, num_edges=None):
+    def forward(self, x, edge_index, num_edges=None):
         """
         Args:
             x: Node attributes matrix X^(1) (N x F)
             edge_index: Adjacency list (2 x E)
-            y: Node labels for eMRF
             num_edges: Total edges for eMRF modularity calculation
         Returns:
             X3: Node embeddings (N x out_channels)
-            X4: Node classification probabilities (N x 1)
+            X4: Node classification logits (N x 1)
         """
         # GAT layers
         x2 = self.gat1(x, edge_index)
         x2 = torch.relu(x2)
         x2 = self.gat2(x2, edge_index) # This is X^(2)
         
-        # eMRF Layer
-        x3 = self.emrf(x2, edge_index, y, num_edges=num_edges) # This is X^(3)
+        # eMRF Layer requires a coarse prediction of the label
+        p_coarse = torch.sigmoid(self.coarse_classifier(x2))
+        x3 = self.emrf(x2, edge_index, p_coarse, num_edges=num_edges) # This is X^(3)
         
-        # Classification
-        x4 = torch.sigmoid(self.nn_t(x3)) # This is X^(4)
+        # Classification (return logits directly for numerical stability in BCEWithLogitsLoss)
+        x4 = self.nn_t(x3) # This is X^(4)
         
         return x3, x4

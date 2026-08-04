@@ -9,7 +9,7 @@ class eMRFLayer(nn.Module):
         # Learnable weight matrix H^(2)
         self.H2 = nn.Linear(in_channels, in_channels, bias=False)
 
-    def forward(self, X2, edge_index, y, num_edges=None):
+    def forward(self, X2, edge_index, p_coarse, num_edges=None):
         """
         Forward pass for the eMRF layer.
         In a full graph scenario, this calculates pairwise potentials dense-ly.
@@ -18,7 +18,7 @@ class eMRFLayer(nn.Module):
         Args:
             X2: Node embeddings from GAT layers (N x F)
             edge_index: Adjacency list (2 x E)
-            y: True labels of nodes (N)
+            p_coarse: Coarse predicted node probabilities from GAT (N x 1)
             num_edges: Total number of edges in the full graph (for modularity calc)
         Returns:
             X3: Updated node embeddings (N x F)
@@ -56,13 +56,13 @@ class eMRFLayer(nn.Module):
         gamma = self.beta * epsilon + (1 - self.beta) * R_zeta
         
         # 4. Pairwise potential Psi(v_i, v_j) = -1^sigma * gamma
-        # sigma(v_i, v_j) = 1 if y_i == y_j else 0
-        y_i = y.unsqueeze(1)
-        y_j = y.unsqueeze(0)
-        sigma = (y_i == y_j).float()
+        # sigma(v_i, v_j) is the continuous probability that v_i and v_j belong to the same class
+        p_i = p_coarse.view(-1, 1) # N x 1
+        p_j = p_coarse.view(1, -1) # 1 x N
+        sigma = p_i * p_j + (1.0 - p_i) * (1.0 - p_j)
         
-        # -1^sigma: if sigma=1 -> -1, if sigma=0 -> 1
-        sign = torch.where(sigma == 1.0, torch.tensor(-1.0, device=X2.device), torch.tensor(1.0, device=X2.device))
+        # -1^sigma: continuous mapping where sigma=1 -> -1, and sigma=0 -> 1
+        sign = 1.0 - 2.0 * sigma
         
         Gamma = sign * gamma  # N x N matrix
         

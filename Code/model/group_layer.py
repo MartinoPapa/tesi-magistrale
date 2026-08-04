@@ -38,13 +38,13 @@ class GroupRepresentationLayer(nn.Module):
         else:
             edge_rep = torch.cat([Z_i, Z_j], dim=1)
             
-        p_trans = torch.sigmoid(self.mlp(edge_rep))
+        p_trans = self.mlp(edge_rep)
         
         # 2. Node Aggregation Policy
-        # If p_trans > 0.5, we believe nodes are conducting money laundering together
+        # If p_trans logits > 0.0 (prob > 0.5), we believe nodes are conducting money laundering together
         # We find connected components based on these predicted positive edges
         N = X3.size(0)
-        is_ml_edge = (p_trans.squeeze() > 0.5).cpu().numpy()
+        is_ml_edge = (p_trans.squeeze() > 0.0).cpu().numpy()
         
         # Build sparse adjacency matrix of ML edges
         row_np = row.cpu().numpy()[is_ml_edge]

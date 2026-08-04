@@ -45,7 +45,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import pandas as pd
 
-from dataset_loader import AMLDatasetLoader
+from .dataset_loader import AMLDatasetLoader
 
 # ---------------------------------------------------------------------------
 # Constants

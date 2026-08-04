@@ -13,10 +13,10 @@ Usage
 
 from __future__ import annotations
 
-from dataset_loader import AMLDatasetLoader
-from ibm_amlsim_loader import IBMAMLSimLoader
-from amlgentex_loader import AMLGentexLoader
-from saml_d_loader import SAMLDLoader
+from .dataset_loader import AMLDatasetLoader
+from .ibm_amlsim_loader import IBMAMLSimLoader
+from .amlgentex_loader import AMLGentexLoader
+from .saml_d_loader import SAMLDLoader
 
 # Mapping from canonical dataset name → loader class.
 _REGISTRY: dict[str, type[AMLDatasetLoader]] = {

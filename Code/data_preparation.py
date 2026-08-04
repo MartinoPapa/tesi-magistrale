@@ -28,8 +28,10 @@ class DataPreparation:
         # Scaler specifically for Unix Timestamp (always standard)
         self.time_scaler = StandardScaler()
         
-        # sparse_output=False ensures a dense array ready for the neural network
-        self.ohe = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
+        # sparse_output=True (default) keeps OHE output as a sparse matrix inside the
+        # ColumnTransformer, avoiding a dense 5M×44 allocation during transformation.
+        # The combined result is densified once, cast to float32, at the end of fit_transform_edges.
+        self.ohe = OneHotEncoder(handle_unknown='ignore')
         
         # Separation of numeric features based on the requested scaling logic
         self.amount_cols = ['Amount Received', 'Amount Paid']
@@ -100,7 +102,11 @@ class DataPreparation:
         
         print(f"Applying edge transformation (Amounts: {self.scaler_type}, Time: standard)...")
         # Apply transformations (this step drops Timestamp, From Bank, To Bank)
+        # toarray() converts the sparse OHE output to dense; cast to float32 to halve memory usage
         processed_array = self.preprocessor.fit_transform(df_engineered)
+        if hasattr(processed_array, 'toarray'):
+            processed_array = processed_array.toarray()
+        processed_array = processed_array.astype('float32')
         
         # Retrieve feature names to reconstruct the DataFrame in the exact order output by ColumnTransformer
         amount_names = self.amount_cols

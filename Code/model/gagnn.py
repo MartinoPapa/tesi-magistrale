@@ -16,7 +16,17 @@ class GAGNN(nn.Module):
             beta: Trade-off parameter for eMRF similarity
         """
         super(GAGNN, self).__init__()
-        
+
+        # Store constructor arguments so they can be saved/restored from checkpoint
+        self._init_kwargs = dict(
+            node_in_dim=node_in_dim,
+            edge_feat_dim=edge_feat_dim,
+            hidden_dim=hidden_dim,
+            out_dim=out_dim,
+            heads=heads,
+            beta=beta
+        )
+
         self.training_losses = []
         
         # 1. Base community-centric encoder
@@ -75,14 +85,48 @@ class GAGNN(nn.Module):
         return p_node, p_trans, p_group, y_group
 
     def save(self, path):
-        """Saves the model weights and training losses to the specified path."""
+        """Saves the model weights, training losses, and architecture config to the specified path."""
         import os
         import torch
         os.makedirs(os.path.dirname(path), exist_ok=True)
         torch.save({
             'state_dict': self.state_dict(),
-            'training_losses': self.training_losses
+            'training_losses': self.training_losses,
+            'init_kwargs': self._init_kwargs
         }, path)
+
+    @classmethod
+    def load_saved(cls, path, **fallback_kwargs):
+        """
+        Alternative constructor: instantiates and loads a GAGNN model directly from
+        a checkpoint file without needing to know the architecture hyperparameters.
+
+        For checkpoints saved with the new save() (which includes 'init_kwargs'),
+        no extra arguments are needed. For older checkpoints that lack 'init_kwargs',
+        pass the architecture hyperparameters as keyword arguments, e.g.:
+            GAGNN.load_saved(path, node_in_dim=8, edge_feat_dim=4, ...)
+
+        Args:
+            path:            Path to the .pt checkpoint saved by GAGNN.save().
+            **fallback_kwargs: Architecture kwargs used when the checkpoint does
+                             not contain 'init_kwargs' (backwards compatibility).
+
+        Returns:
+            A GAGNN instance in eval() mode with weights and losses restored.
+        """
+        import torch
+        checkpoint = torch.load(path, map_location='cpu')
+        init_kwargs = checkpoint.get('init_kwargs', fallback_kwargs)
+        if not init_kwargs:
+            raise KeyError(
+                f"Checkpoint '{path}' does not contain architecture info ('init_kwargs'). "
+                "Pass the model hyperparameters as keyword arguments to load_saved()."
+            )
+        model = cls(**init_kwargs)
+        model.load_state_dict(checkpoint['state_dict'])
+        model.training_losses = checkpoint.get('training_losses', [])
+        model.eval()
+        return model
 
     def load(self, path):
         """Loads the model weights and training losses from the specified path."""

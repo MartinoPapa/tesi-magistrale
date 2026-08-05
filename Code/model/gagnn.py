@@ -4,7 +4,7 @@ from model.encoder import CommunityCentricEncoder
 from model.group_layer import GroupRepresentationLayer
 
 class GAGNN(nn.Module):
-    def __init__(self, node_in_dim, edge_feat_dim, hidden_dim, out_dim, heads=5, beta=0.44):
+    def __init__(self, node_in_dim, edge_feat_dim, hidden_dim, out_dim, heads=5, beta=0.44, mlp_hidden_dim=64, nn_t_hidden_dim=128, minibatches=True):
         """
         GAGNN Model
         Args:
@@ -14,6 +14,9 @@ class GAGNN(nn.Module):
             out_dim: Output dimension of node embeddings X^(3)
             heads: Number of attention heads for GAT
             beta: Trade-off parameter for eMRF similarity
+            mlp_hidden_dim: Hidden dimension for the edge classification MLP
+            nn_t_hidden_dim: Hidden dimension for node classification MLP
+            minibatches: If True, indicates the model is trained with minibatches
         """
         super(GAGNN, self).__init__()
 
@@ -24,7 +27,10 @@ class GAGNN(nn.Module):
             hidden_dim=hidden_dim,
             out_dim=out_dim,
             heads=heads,
-            beta=beta
+            beta=beta,
+            mlp_hidden_dim=mlp_hidden_dim,
+            nn_t_hidden_dim=nn_t_hidden_dim,
+            minibatches=minibatches
         )
 
         self.training_losses = []
@@ -36,32 +42,32 @@ class GAGNN(nn.Module):
             hidden_channels=hidden_dim, 
             out_channels=out_dim, 
             heads=heads, 
-            beta=beta
+            beta=beta,
+            nn_t_hidden_dim=nn_t_hidden_dim
         )
         
         # 2. Group Representation Layer
         self.group_layer = GroupRepresentationLayer(
             node_emb_dim=out_dim, 
-            edge_feat_dim=edge_feat_dim
-        )
-        
-        # 3. Group-level community-centric encoder
-        # Receives \hat{X} which has dimension out_dim
-        self.group_encoder = CommunityCentricEncoder(
-            in_channels=out_dim, 
-            hidden_channels=hidden_dim, 
-            out_channels=out_dim, 
-            heads=heads, 
-            beta=beta
+            edge_feat_dim=edge_feat_dim,
+            mlp_hidden_dim=mlp_hidden_dim
         )
 
-    def forward(self, x, edge_index, edge_attr, num_edges=None):
+        # 3. Linear projection to bridge group features (out_dim) back to node_in_dim
+        # so that the base encoder weights can be re-used for group-level encoding (paper Eq. 12)
+        self.group_proj = nn.Linear(out_dim, node_in_dim)
+
+    def forward(self, x, edge_index, edge_attr, num_edges=None, y_node=None):
         """
         Args:
-            x: Node features (N x F)
+            x:          Node features (N x F)
             edge_index: Adjacency list (2 x E)
-            edge_attr: Edge features (E x D)
-            num_edges: Total edges for eMRF calculation
+            edge_attr:  Edge features (E x D)
+            num_edges:  Total edges for eMRF calculation
+            y_node:     Optional ground-truth node labels (N,) — float in [0,1].
+                        When provided (training), y_group is derived from ground truth
+                        by propagating labels through group_mapping (paper Eq. definition).
+                        When None (inference), falls back to group-size > 1 heuristic.
         """
         # Step 1: Base node-level encoding
         X3, p_node = self.encoder(x, edge_index, num_edges)
@@ -69,17 +75,26 @@ class GAGNN(nn.Module):
         # Step 2: Group representation and graph reconstruction
         p_trans, X_hat, edge_index_hat, group_mapping = self.group_layer(X3, edge_index, edge_attr)
         
-        # Calculate group ground-truth labels y_group
-        # y_group_i = 1 if group_i contains more than 1 node, else 0
+        # Step 3: Compute y_group
         num_groups = X_hat.size(0)
-        group_sizes = torch.zeros(num_groups, dtype=torch.float, device=x.device)
-        group_sizes.scatter_add_(0, group_mapping, torch.ones_like(group_mapping, dtype=torch.float))
+        if y_node is not None:
+            # Paper definition: group is ML if ANY constituent node has a ground-truth ML label.
+            # y_node may be soft [0,1] — threshold at 0.5 to obtain binary assignment.
+            node_is_ml = (y_node.view(-1) > 0.5).float()
+            y_group_raw = torch.zeros(num_groups, dtype=torch.float, device=x.device)
+            y_group_raw.scatter_reduce_(0, group_mapping, node_is_ml, reduce='amax', include_self=True)
+            y_group = y_group_raw.unsqueeze(1)  # (Num_Groups x 1)
+        else:
+            # Inference fallback: a group is suspicious if it contains more than 1 node
+            group_sizes = torch.zeros(num_groups, dtype=torch.float, device=x.device)
+            group_sizes.scatter_add_(0, group_mapping, torch.ones_like(group_mapping, dtype=torch.float))
+            y_group = (group_sizes > 1).float().unsqueeze(1)
         
-        y_group = (group_sizes > 1).float().unsqueeze(1) # (Num_Groups x 1)
-        
-        # Step 3: Group-level encoding
-        # Note: the paper feeds \hat{X} and \hat{G} back into the community-centric encoder.
-        _, p_group = self.group_encoder(X_hat, edge_index_hat, num_edges)
+        # Step 4: Group-level encoding
+        # Project X_hat from out_dim → node_in_dim, then re-use the same encoder weights
+        # as in Step 1 (paper Eq. 12 — weight sharing via community-centric encoder).
+        X_hat_proj = self.group_proj(X_hat)
+        _, p_group = self.encoder(X_hat_proj, edge_index_hat, num_edges)
         
         return p_node, p_trans, p_group, y_group
 

@@ -4,12 +4,12 @@ from torch_geometric.nn import GATConv
 from model.emrf import eMRFLayer
 
 class CommunityCentricEncoder(nn.Module):
-    def __init__(self, in_channels, hidden_channels, out_channels, heads=5, beta=0.44):
+    def __init__(self, in_channels, hidden_channels, out_channels, heads=5, beta=0.44, nn_t_hidden_dim=128):
         super(CommunityCentricEncoder, self).__init__()
         # 1. Two layers of GAT
         # The paper mentions setting attention head k to 5
-        self.gat1 = GATConv(in_channels, hidden_channels, heads=heads, concat=False)
-        self.gat2 = GATConv(hidden_channels, out_channels, heads=heads, concat=False)
+        self.gat1 = GATConv(in_channels, hidden_channels, heads=heads, concat=True)
+        self.gat2 = GATConv(hidden_channels * heads, out_channels, heads=heads, concat=False)
         
         # 2. eMRF Layer
         self.emrf = eMRFLayer(out_channels, beta=beta)
@@ -18,9 +18,9 @@ class CommunityCentricEncoder(nn.Module):
         # Generates X(4) = sigmoid(NN_t(X(3), W_t))
         # The paper says NN_t is set at 128 to extend the original node feature 
         self.nn_t = nn.Sequential(
-            nn.Linear(out_channels, 128),
+            nn.Linear(out_channels, nn_t_hidden_dim),
             nn.ReLU(),
-            nn.Linear(128, 1) # Binary classification output (logits)
+            nn.Linear(nn_t_hidden_dim, 1) # Binary classification output (logits)
         )
         
         # Coarse classifier to generate label probabilities for eMRF

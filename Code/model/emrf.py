@@ -47,9 +47,9 @@ class eMRFLayer(nn.Module):
         X2_norm = F.normalize(X2, p=2, dim=1)
         zeta = torch.mm(X2_norm, X2_norm.t())  # N x N
         
-        # Regularization R_i: assuming MinMax normalization across rows to match scale
-        zeta_min = zeta.min(dim=1, keepdim=True)[0]
-        zeta_max = zeta.max(dim=1, keepdim=True)[0]
+        # Regularization R_i: across all pairs as per paper
+        zeta_min = zeta.min()
+        zeta_max = zeta.max()
         R_zeta = (zeta - zeta_min) / (zeta_max - zeta_min + 1e-8)
         
         # 3. gamma(v_i, v_j)

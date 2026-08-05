@@ -102,11 +102,11 @@ class DataPreparation:
         
         print(f"Applying edge transformation (Amounts: {self.scaler_type}, Time: standard)...")
         # Apply transformations (this step drops Timestamp, From Bank, To Bank)
-        # toarray() converts the sparse OHE output to dense; cast to float32 to halve memory usage
+        # Cast to float32 BEFORE toarray() to avoid a massive float64 dense matrix memory spike
         processed_array = self.preprocessor.fit_transform(df_engineered)
+        processed_array = processed_array.astype('float32')
         if hasattr(processed_array, 'toarray'):
             processed_array = processed_array.toarray()
-        processed_array = processed_array.astype('float32')
         
         # Retrieve feature names to reconstruct the DataFrame in the exact order output by ColumnTransformer
         amount_names = self.amount_cols
@@ -143,30 +143,25 @@ class DataPreparation:
         """
         print("Aggregating node features and extracting ground truth labels...")
         
-        # Outgoing edges (The node is the sender: 'Account')
-        df_out = processed_edges_df.drop(
-            columns=['Account.1']
-        ).rename(columns={'Account': 'Node'})
-        
-        # Incoming edges (The node is the receiver: 'Account.1')
-        df_in = processed_edges_df.drop(
-            columns=['Account']
-        ).rename(columns={'Account.1': 'Node'})
-        
-        # Merge all connection instances for each node (both incoming and outgoing)
-        df_all_incident = pd.concat([df_out, df_in], ignore_index=True)
-        
         # Filter out Unix_Timestamp from the features to aggregate
         features_to_aggregate = [f for f in self.feature_names_ if f != 'Unix_Timestamp']
+        cols_to_sum = features_to_aggregate + ['Is Laundering']
         
-        # Group by node
-        grouped = df_all_incident.groupby('Node')
+        # Group outgoing edges by sender (Node)
+        out_grouped = processed_edges_df.groupby('Account')
+        out_sum = out_grouped[cols_to_sum].sum()
+        out_count = out_grouped.size()
         
-        # Calculate the arithmetic mean of the features (Equation 1)
-        node_features = grouped[features_to_aggregate].mean()
+        # Group incoming edges by receiver (Node)
+        in_grouped = processed_edges_df.groupby('Account.1')
+        in_sum = in_grouped[cols_to_sum].sum()
+        in_count = in_grouped.size()
         
-        # Calculate node soft labels (Equation 2 variation)
-        # The mean of incident edges' labels gives the exact proportion of ML transactions (probability)
-        node_features['Is Laundering'] = grouped['Is Laundering'].mean()
+        # Combine sums and counts (using fill_value=0 handles nodes that only send or only receive)
+        total_sum = out_sum.add(in_sum, fill_value=0)
+        total_count = out_count.add(in_count, fill_value=0)
+        
+        # Calculate the arithmetic mean of the features and labels
+        node_features = total_sum.div(total_count, axis=0)
         
         return node_features

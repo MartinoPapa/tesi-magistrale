@@ -5,15 +5,15 @@ import scipy.sparse as sp
 from torch_geometric.utils import scatter
 
 class GroupRepresentationLayer(nn.Module):
-    def __init__(self, node_emb_dim, edge_feat_dim):
+    def __init__(self, node_emb_dim, edge_feat_dim, mlp_hidden_dim=64):
         super(GroupRepresentationLayer, self).__init__()
         # MLP prediction network for edge classification
         # Input: [Z_i, Z_j, l] (concatenation of node embeddings and edge features)
         in_dim = 2 * node_emb_dim + edge_feat_dim
         self.mlp = nn.Sequential(
-            nn.Linear(in_dim, 64),
+            nn.Linear(in_dim, mlp_hidden_dim),
             nn.ReLU(),
-            nn.Linear(64, 1)
+            nn.Linear(mlp_hidden_dim, 1)
         )
 
     def forward(self, X3, edge_index, edge_attr):

@@ -2,17 +2,17 @@ import torch
 import torch.nn as nn
 
 class GAGNNLoss(nn.Module):
-    def __init__(self, eta=1.0, lambda_=1.0, zeta=1.0):
+    def __init__(self, c1=1.0, c2=1.0, c3=1.0):
         """
         Args:
-            eta: Weight for group loss
-            lambda_: Weight for node loss
-            zeta: Weight for transaction loss
+            c1: Weight for group loss
+            c2: Weight for node loss
+            c3: Weight for transaction loss
         """
         super(GAGNNLoss, self).__init__()
-        self.eta = eta
-        self.lambda_ = lambda_
-        self.zeta = zeta
+        self.c1 = c1
+        self.c2 = c2
+        self.c3 = c3
         # Using BCEWithLogitsLoss for all three tasks (numerically stable)
         self.bce = nn.BCEWithLogitsLoss()
 
@@ -45,5 +45,5 @@ class GAGNNLoss(nn.Module):
         else:
             l_group = self.bce(p_group, y_group)
         
-        total_loss = self.eta * l_group + self.lambda_ * l_node + self.zeta * l_trans
+        total_loss = self.c1 * l_group + self.c2 * l_node + self.c3 * l_trans
         return total_loss, l_node, l_trans, l_group

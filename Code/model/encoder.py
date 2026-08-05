@@ -8,8 +8,8 @@ class CommunityCentricEncoder(nn.Module):
         super(CommunityCentricEncoder, self).__init__()
         # 1. Two layers of GAT
         # The paper mentions setting attention head k to 5
-        self.gat1 = GATConv(in_channels, hidden_channels, heads=heads, concat=True)
-        self.gat2 = GATConv(hidden_channels * heads, out_channels, heads=heads, concat=False)
+        self.gat1 = GATConv(in_channels, hidden_channels, heads=heads, concat=False)
+        self.gat2 = GATConv(hidden_channels, out_channels, heads=heads, concat=False)
         
         # 2. eMRF Layer
         self.emrf = eMRFLayer(out_channels, beta=beta)

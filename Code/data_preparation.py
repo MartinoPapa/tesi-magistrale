@@ -25,8 +25,7 @@ class DataPreparation:
         # Scaler specifically for financial amounts (dynamic based on input)
         self.amount_scaler = RobustScaler() if scaler_type == 'robust' else StandardScaler()
         
-        # Scaler specifically for Unix Timestamp (always standard)
-        self.time_scaler = StandardScaler()
+        # (Unix Timestamp has been removed as per user request)
         
         # sparse_output=True (default) keeps OHE output as a sparse matrix inside the
         # ColumnTransformer, avoiding a dense 5M×44 allocation during transformation.
@@ -35,7 +34,7 @@ class DataPreparation:
         
         # Separation of numeric features based on the requested scaling logic
         self.amount_cols = ['Amount Received', 'Amount Paid']
-        self.time_cols = ['Unix_Timestamp']
+        self.time_cols = []
         
         # LOW cardinality categorical features (One-Hot Encoded)
         self.categorical_cols = ['Receiving Currency', 'Payment Currency', 
@@ -49,7 +48,6 @@ class DataPreparation:
         self.preprocessor = ColumnTransformer(
             transformers=[
                 ('amounts', self.amount_scaler, self.amount_cols),
-                ('time', self.time_scaler, self.time_cols),
                 ('cat', self.ohe, self.categorical_cols),
                 ('pass', 'passthrough', self.passthrough_cols)
             ],
@@ -75,7 +73,7 @@ class DataPreparation:
             df_temp['Timestamp'] = pd.to_datetime(df_temp['Timestamp'])
             
         # 1. Unix Timestamp (seconds since 1970)
-        df_temp['Unix_Timestamp'] = df_temp['Timestamp'].astype('int64') // 10**9
+        # Removed as per request
         
         # 2. Day of the week (0=Monday, 6=Sunday)
         df_temp['Day_of_Week'] = df_temp['Timestamp'].dt.dayofweek

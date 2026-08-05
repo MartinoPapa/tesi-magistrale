@@ -16,12 +16,15 @@ class GroupRepresentationLayer(nn.Module):
             nn.Linear(mlp_hidden_dim, 1)
         )
 
-    def forward(self, X3, edge_index, edge_attr):
+    def forward(self, X3, x, edge_index, edge_attr, y_trans=None, trans_mask=None):
         """
         Args:
             X3: Node embeddings from community-centric encoder (N x F)
+            x: Original node features (N x F_orig)
             edge_index: Graph topology (2 x E)
             edge_attr: Original basic edge features (E x D)
+            y_trans: Ground truth edge labels (E x 1)
+            trans_mask: Boolean mask indicating training edges (E,)
         Returns:
             p_trans: Predicted probabilities for transactions (E x 1)
             X_hat: Grouped node features
@@ -41,12 +44,18 @@ class GroupRepresentationLayer(nn.Module):
         p_trans = self.mlp(edge_rep)
         
         # 2. Node Aggregation Policy
-        # If p_trans logits > 0.0 (prob > 0.5), we believe nodes are conducting money laundering together
-        # We find connected components based on these predicted positive edges
-        N = X3.size(0)
-        is_ml_edge = (p_trans.squeeze() > 0.0).cpu().numpy()
+        # Use predicted probabilities or ground truth for Bernoulli sampling
+        p = torch.sigmoid(p_trans.squeeze())
+        
+        # If we are training, we might use the ground truth labels for training edges
+        if y_trans is not None and trans_mask is not None:
+            p[trans_mask] = y_trans.squeeze()[trans_mask]
+            
+        # Sample edge existence using Bernoulli distribution
+        is_ml_edge = torch.bernoulli(p).bool().cpu().numpy()
         
         # Build sparse adjacency matrix of ML edges
+        N = x.size(0)
         row_np = row.cpu().numpy()[is_ml_edge]
         col_np = col.cpu().numpy()[is_ml_edge]
         data = np.ones_like(row_np)
@@ -60,14 +69,14 @@ class GroupRepresentationLayer(nn.Module):
         num_groups, group_mapping = sp.csgraph.connected_components(
             adj, directed=False, return_labels=True
         )
-        group_mapping = torch.tensor(group_mapping, dtype=torch.long, device=X3.device)
+        group_mapping = torch.tensor(group_mapping, dtype=torch.long, device=x.device)
         
         # 3. Generate New Graph \hat{G} and features \hat{X}
-        # The paper uses element-wise mean for \hat{v}_i
-        X_hat = torch.zeros((num_groups, X3.size(1)), device=X3.device)
+        # The value of the grouped node features is the mean of the ORIGINAL feature values of the nodes
+        X_hat = torch.zeros((num_groups, x.size(1)), device=x.device)
         
-        # Using scatter_mean to average node features belonging to the same group
-        X_hat.scatter_reduce_(0, group_mapping.unsqueeze(1).expand(-1, X3.size(1)), X3, reduce='mean', include_self=False)
+        # Using scatter_mean to average original node features belonging to the same group
+        X_hat.scatter_reduce_(0, group_mapping.unsqueeze(1).expand(-1, x.size(1)), x, reduce='mean', include_self=False)
         
         # Construct \hat{E}
         # Edges between groups
@@ -78,8 +87,7 @@ class GroupRepresentationLayer(nn.Module):
         mask = row_hat != col_hat
         edge_index_hat = torch.stack([row_hat[mask], col_hat[mask]], dim=0)
         
-        # Remove duplicate edges in the new graph to keep it clean (optional but good practice)
-        # We can use torch_geometric.utils.coalesce if available, but manual unique is fine
+        # Remove duplicate edges in the new graph to keep it clean
         edge_index_hat = torch.unique(edge_index_hat, dim=1)
         
         return p_trans, X_hat, edge_index_hat, group_mapping

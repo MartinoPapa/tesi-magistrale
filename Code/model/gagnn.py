@@ -53,11 +53,8 @@ class GAGNN(nn.Module):
             mlp_hidden_dim=mlp_hidden_dim
         )
 
-        # 3. Linear projection to bridge group features (out_dim) back to node_in_dim
-        # so that the base encoder weights can be re-used for group-level encoding (paper Eq. 12)
-        self.group_proj = nn.Linear(out_dim, node_in_dim)
 
-    def forward(self, x, edge_index, edge_attr, num_edges=None, y_node=None):
+    def forward(self, x, edge_index, edge_attr, num_edges=None, y_node=None, y_trans=None, trans_mask=None):
         """
         Args:
             x:          Node features (N x F)
@@ -68,12 +65,14 @@ class GAGNN(nn.Module):
                         When provided (training), y_group is derived from ground truth
                         by propagating labels through group_mapping (paper Eq. definition).
                         When None (inference), falls back to group-size > 1 heuristic.
+            y_trans:    Optional ground-truth edge labels for Bernoulli grouping
+            trans_mask: Optional boolean mask for training edges
         """
         # Step 1: Base node-level encoding
         X3, p_node = self.encoder(x, edge_index, num_edges)
         
         # Step 2: Group representation and graph reconstruction
-        p_trans, X_hat, edge_index_hat, group_mapping = self.group_layer(X3, edge_index, edge_attr)
+        p_trans, X_hat, edge_index_hat, group_mapping = self.group_layer(X3, x, edge_index, edge_attr, y_trans, trans_mask)
         
         # Step 3: Compute y_group
         num_groups = X_hat.size(0)
@@ -91,10 +90,8 @@ class GAGNN(nn.Module):
             y_group = (group_sizes > 1).float().unsqueeze(1)
         
         # Step 4: Group-level encoding
-        # Project X_hat from out_dim → node_in_dim, then re-use the same encoder weights
-        # as in Step 1 (paper Eq. 12 — weight sharing via community-centric encoder).
-        X_hat_proj = self.group_proj(X_hat)
-        _, p_group = self.encoder(X_hat_proj, edge_index_hat, num_edges)
+        # Reuse the same encoder weights as in Step 1
+        _, p_group = self.encoder(X_hat, edge_index_hat, num_edges)
         
         return p_node, p_trans, p_group, y_group
 

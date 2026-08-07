@@ -51,8 +51,13 @@ class GroupRepresentationLayer(nn.Module):
         if y_trans is not None and trans_mask is not None:
             p[trans_mask] = y_trans.squeeze()[trans_mask]
             
+        # Check for NaNs which occur if model weights are corrupted (exploding gradients)
+        if torch.isnan(p).any():
+            raise RuntimeError("Model predicted NaN values! The model weights have been corrupted. Please re-run the cell that initializes `model = GAGNN(...)` to reset the weights.")
+            
         # Sample edge existence using Bernoulli distribution
-        is_ml_edge = torch.bernoulli(p).bool().cpu().numpy()
+        # Clamp just to be absolutely safe against precision errors
+        is_ml_edge = torch.bernoulli(torch.clamp(p, 0.0, 1.0)).bool().cpu().numpy()
         
         # Build sparse adjacency matrix of ML edges
         N = x.size(0)

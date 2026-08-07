@@ -30,18 +30,24 @@ class GAGNNLoss(nn.Module):
             trans_mask: Boolean mask for transactions
             group_mask: Boolean mask for groups
         """
+        l_node = torch.tensor(0.0, device=p_node.device)
         if node_mask is not None:
-            l_node = self.bce(p_node[node_mask], y_node[node_mask])
+            if node_mask.any():
+                l_node = self.bce(p_node[node_mask], y_node[node_mask])
         else:
             l_node = self.bce(p_node, y_node)
             
+        l_trans = torch.tensor(0.0, device=p_trans.device)
         if trans_mask is not None:
-            l_trans = self.bce(p_trans[trans_mask], y_trans[trans_mask])
+            if trans_mask.any():
+                l_trans = self.bce(p_trans[trans_mask], y_trans[trans_mask])
         else:
             l_trans = self.bce(p_trans, y_trans)
             
+        l_group = torch.tensor(0.0, device=p_group.device)
         if group_mask is not None:
-            l_group = self.bce(p_group[group_mask], y_group[group_mask])
+            if group_mask.any():
+                l_group = self.bce(p_group[group_mask], y_group[group_mask])
         else:
             l_group = self.bce(p_group, y_group)
         

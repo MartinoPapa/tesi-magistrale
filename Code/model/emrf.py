@@ -56,12 +56,26 @@ class eMRFLayer(nn.Module):
         gamma = self.beta * epsilon + (1 - self.beta) * R_zeta
         
         # 4. Pairwise potential Psi(v_i, v_j) = -1^sigma * gamma
-        # sigma(v_i, v_j) is the continuous probability that v_i and v_j belong to the same class
+        # The paper specifies sigma=1 if same category, 0 otherwise (Hard binary indicator).
+        # We use a Straight-Through Estimator (STE) to make this differentiable.
         p_i = p_coarse.view(-1, 1) # N x 1
         p_j = p_coarse.view(1, -1) # 1 x N
-        sigma = p_i * p_j + (1.0 - p_i) * (1.0 - p_j)
         
-        # -1^sigma: continuous mapping where sigma=1 -> -1, and sigma=0 -> 1
+        # Soft continuous probability of same class
+        sigma_soft = p_i * p_j + (1.0 - p_i) * (1.0 - p_j)
+        
+        # Hard binary indicator
+        pred_i = (p_i > 0.5).float()
+        pred_j = (p_j > 0.5).float()
+        sigma_hard = (pred_i == pred_j).float()
+        
+        # STE: forward pass gets sigma_hard, backward pass gets sigma_soft gradients
+        sigma = sigma_hard.detach() - sigma_soft.detach() + sigma_soft
+        
+        # -1^sigma: mapping where sigma=1 -> -1, and sigma=0 -> 1
+        # Using a linear mapping instead of torch.pow(-1.0, sigma) because
+        # the derivative of a^x is a^x * ln(a). ln(-1) is mathematically undefined, 
+        # which causes PyTorch to output NaN gradients during backward pass!
         sign = 1.0 - 2.0 * sigma
         
         Gamma = sign * gamma  # N x N matrix

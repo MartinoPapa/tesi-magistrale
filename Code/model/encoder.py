@@ -19,7 +19,7 @@ class CommunityCentricEncoder(nn.Module):
         # The paper says NN_t is set at 128 to extend the original node feature 
         self.nn_t = nn.Sequential(
             nn.Linear(out_channels, nn_t_hidden_dim),
-            nn.ReLU(),
+            nn.Sigmoid(),
             nn.Linear(nn_t_hidden_dim, 1) # Binary classification output (logits)
         )
         

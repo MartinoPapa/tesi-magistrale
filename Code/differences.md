@@ -10,9 +10,12 @@ This document compares the model described in the paper **"Anti-Money Laundering
 - **Paper**: Uses a proprietary real-world dataset from **UnionPay** (one of the largest bank card alliances worldwide), spanning three weeks (06/09/2021–26/09/2021), with ~1.8 million transactions per week and ~5% labeled as suspicious ML (money laundering). The labels are annotated by financial risk experts with the help of automation tools.
 - **Implementation**: Uses the publicly available **IBM AMLSim (HI-Small)** synthetic dataset (`HI-Small_Trans.csv`), which has 5,078,345 transactions with only ~0.10% labeled as money laundering.
 
-### 1.2 Data Split Strategy
-- **Paper**: Splits data **chronologically** into three weeks. The model is trained on 70% of data from each week and tested on the remaining 30%, simulating a real-world online scenario where the model is re-trained nightly and deployed for next-day predictions. There is **no explicit validation set** mentioned — only train/test.
-- **Implementation**: Uses a **stratified random split** (`get_random_splits` in `utils.py`) on the whole dataset at once, dividing into **70% train / 10% validation / 20% test**. The chronological ordering of transactions is not preserved. An explicit validation set is added (not in the paper) to enable early stopping.
+### 1.2 Data Split Strategy ✅ *Resolved*
+
+> **Change made**: Implemented a **strict chronological split** directly based on the transaction `Timestamp` to perfectly simulate the paper's online deployment scenario. We selected a `split_date`, and split the graph chronologically: the preceding 7 days are the training block, the last 2 days of that block act as validation, and the 7 days after the split date act as the test set.
+
+- **Paper**: Splits data **chronologically** into three weeks. The model is trained on 70% of data from each week and tested on the remaining 30%, simulating a real-world online scenario where the model is re-trained nightly and deployed for next-day predictions. There is **no explicit validation set** mentioned — only train/test. Moreover, the task is explicitly stated as **inductive** (Section III.A).
+- **Implementation**: The previous random train/test split (and its associated K-Fold Cross Validation loop) was removed. We now employ a **strict chronological split** (e.g., `2022-09-08`). The model isolates a 5-day training subgraph, a 2-day validation subgraph for early stopping, and tests on future data beyond the `split_date`. The `Timestamp` is completely stripped from the features fed to the model to prevent data leakage.
 
 ---
 
@@ -66,10 +69,12 @@ This document compares the model described in the paper **"Anti-Money Laundering
 
 ---
 
-## 8. eMRF Pairwise Potential ($\Psi$) — Differentiability
+## 8. eMRF Pairwise Potential ($\Psi$) — Differentiability ✅ *Resolved*
 
-- **Paper**: The pairwise potential uses a discrete indicator $\sigma(v_i, v_j) = 1$ when $v_i$ and $v_j$ are labeled in the **same category**, making $-1^{\sigma(v_i,v_j)}$ a hard sign flip. This is non-differentiable.
-- **Implementation** (`emrf.py`): Uses a **soft, differentiable approximation**. The probability that two nodes share the same class is computed continuously as `sigma = p_i * p_j + (1 - p_i) * (1 - p_j)`, and the sign is computed as `sign = 1.0 - 2.0 * sigma`. This maps sigma=1 (same class) → sign=−1, and sigma=0 (different class) → sign=+1, matching the paper's intent while remaining differentiable for backpropagation.
+> **Change made**: Implemented a **Straight-Through Estimator (STE)** for $\sigma$. The forward pass now uses a hard binary indicator (as defined in Eq. 5), while the backward pass uses the soft continuous probability gradient to allow the `coarse_classifier` to learn.
+
+- **Paper**: The pairwise potential (Eq. 5) uses a discrete indicator $\sigma(v_i, v_j) = 1$ when $v_i$ and $v_j$ are labeled in the **same category**, making $-1^{\sigma(v_i,v_j)}$ a hard sign flip. However, Equation 7 defines the propagation matrix as $\Gamma = \gamma(v_i, v_j)$, completely dropping $\Psi$ and $\sigma$. This is likely a typo in the paper, as dropping $\sigma$ means the classification labels are not used in the eMRF at all. Furthermore, using a hard binary indicator for $\sigma$ natively in PyTorch is non-differentiable.
+- **Implementation** (`emrf.py`): Assumes the paper intended $\Gamma = \Psi$ in Eq. 7. To stay loyal to the "hard binary indicator" in Eq. 5 without breaking differentiability, we use a **Straight-Through Estimator (STE)**. The probability that two nodes share the same class is computed continuously as `sigma_soft = p_i * p_j + (1 - p_i) * (1 - p_j)`, but the forward pass evaluates using `sigma_hard = (pred_i == pred_j)`. The STE (`sigma = sigma_hard.detach() - sigma_soft.detach() + sigma_soft`) ensures gradients flow back to the coarse classifier while strictly matching the paper's hard indicator during inference.
 
 ---
 
@@ -80,12 +85,12 @@ This document compares the model described in the paper **"Anti-Money Laundering
 
 ---
 
-## 10. Mini-Batch Neighbor Sampling ✅ *Resolved*
+## 10. Mini-Batch Graph Sampling & Batching ✅ *Resolved*
 
-> **Change made**: Changed `num_neighbors = [-1, -1]` to remove the uniform sampling limit. Moved `dropout_adj` to be applied to the global graph before creating `NeighborLoader` inside the epoch loop. This ensures that the Bernoulli sampling limits computation for high-degree nodes during the sampling phase itself, matching the paper's intent.
+> **Change made**: Replaced `NeighborLoader` with PyG's `ClusterLoader` for the training phase to build batches of highly connected subgraphs, maximizing the community structure needed by the eMRF layer.
 
 - **Paper**: States that neighbors are sampled according to a **Bernoulli distribution** with the same parameter to limit computation for high-degree nodes. This is mentioned as the strategy for making the algorithm scalable to 60M samples.
-- **Implementation** (current): Uses PyTorch Geometric's `NeighborLoader` with `num_neighbors=[-1, -1]`. To limit computation for high-degree nodes and implement true Bernoulli sampling, `dropout_adj` is applied globally to the entire graph at the beginning of each epoch (dropping edges with probability `1.0 - sampling_prob`), and `NeighborLoader` is recreated dynamically to load the sampled subgraphs. This applies to both training and validation logic for scalability.
+- **Implementation** (current): During training, uses PyG's `ClusterLoader`, which relies on the **METIS graph partitioning algorithm** to split the training graph into dense, highly-connected subgraphs (clusters). These clusters are batched together to form the mini-batch. This perfectly complements the GAGNN architecture by maximizing the internal edges (transactions) and distinct communities inside each batch, doing exactly what a constrained BFS would do but efficiently in C++. Validation and testing still use `NeighborLoader` for exhaustive evaluation.
 
 ---
 
@@ -129,7 +134,7 @@ This document compares the model described in the paper **"Anti-Money Laundering
 | **GAT heads** | **k=5** | **k=5 ✅** | **Resolved** |
 | **GAT concat mode** | **Not specified** | **concat=True (hidden), False (out) ✅** | **Resolved** |
 | **Group encoder** | **Same encoder (weight sharing, Eq. 12)** | **Shared via group_proj + self.encoder ✅** | **Resolved** |
-| **eMRF sigma** | Hard binary indicator | Soft continuous probability | Difference |
+| **eMRF sigma** | **Hard binary indicator** | **Hard binary indicator (via STE) ✅** | **Resolved** |
 | **y_group label** | **Any constituent node is ML** | **scatter-max over group_mapping ✅** | **Resolved** |
 | Node aggregation | Mean (Eq. 11) | Mean (correctly follows Eq. 11) | Matches |
 | **Neighbor sampling** | **Bernoulli distribution** | **Global edge dropout + dynamic Loader ✅** | **Resolved** |

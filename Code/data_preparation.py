@@ -125,6 +125,7 @@ class DataPreparation:
         processed_edges_df['Account'] = df_engineered['Account'].values
         processed_edges_df['Account.1'] = df_engineered['Account.1'].values
         processed_edges_df['Is Laundering'] = df_engineered['Is Laundering'].values
+        processed_edges_df['Timestamp'] = df_engineered['Timestamp'].values
         
         return processed_edges_df
 

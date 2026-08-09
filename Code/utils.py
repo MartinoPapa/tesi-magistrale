@@ -11,7 +11,7 @@ class Evaluator:
     """Utility class for model evaluation and reporting."""
 
     @staticmethod
-    def evaluation_report(model, test_loader, criterion, device, threshold=0.5):
+    def evaluation_report(model, test_loader, criterion, device, threshold=0.5, edge_mask_name=None):
         """
         Loads the best saved model, evaluates it on the test set, and reports:
           - Accuracy, Precision, Recall, F1-score, ROC-AUC
@@ -25,6 +25,7 @@ class Evaluator:
             criterion:   GAGNNLoss instance.
             device:      torch.device to run inference on.
             threshold:   Decision threshold applied to p_trans predictions (default 0.5).
+            edge_mask_name: String name of the boolean edge mask attribute to filter edges (e.g. 'edge_test_mask').
         """
         model.eval()
 
@@ -49,6 +50,10 @@ class Evaluator:
                 else:
                     # Fallback for full-batch testing where e_id might be missing
                     mask = torch.ones(batch.num_edges, dtype=torch.bool)
+                
+                if edge_mask_name is not None and hasattr(batch, edge_mask_name):
+                    split_mask = getattr(batch, edge_mask_name).cpu()
+                    mask = mask & split_mask
                 
                 if not mask.any():
                     continue

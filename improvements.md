@@ -6,7 +6,7 @@ provare a vedere se si può includere il tempo
 
 ChinaPay dataset
 
-loss pesata per riconoscere cercare di riconoscere i laundering
+loss pesata per cercare di riconoscere i laundering
 
 provo modelli più grandi con dataset più grande
 

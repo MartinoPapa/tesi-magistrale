@@ -89,6 +89,7 @@ class IBMAMLSimLoader(AMLDatasetLoader):
         data_dir: str = _DATA_DIR,
         filename: str | None = None,
         accounts_filename: str | None = _ACCOUNTS_FILENAME,
+        **kwargs: Any,
     ) -> None:
         super().__init__(data_dir)
         # For the transactions file: use auto-detection only when the
@@ -101,6 +102,7 @@ class IBMAMLSimLoader(AMLDatasetLoader):
         )
         # The accounts file uses an explicit default; pass None to disable.
         self._accounts_filename: str | None = accounts_filename
+        self._read_csv_kwargs: dict[str, Any] = kwargs
 
     # ------------------------------------------------------------------
     # AMLDatasetLoader interface
@@ -121,7 +123,19 @@ class IBMAMLSimLoader(AMLDatasetLoader):
             )
 
         print(f"Loading IBM AMLSim transactions from: {path}")
-        self._transactions = pd.read_csv(path)
+        self._transactions = pd.read_csv(path, **self._read_csv_kwargs)
+
+        # The PyArrow engine does not automatically deduplicate column names,
+        # which breaks code expecting 'Account.1'. We manually emulate it.
+        cols = list(self._transactions.columns)
+        seen = {}
+        for i, c in enumerate(cols):
+            if c in seen:
+                seen[c] += 1
+                cols[i] = f"{c}.{seen[c]}"
+            else:
+                seen[c] = 0
+        self._transactions.columns = cols
 
         # Ensure the fraud column is integer.
         self._transactions[_FRAUD_COL] = (
@@ -296,9 +310,11 @@ class IBMAMLSimLargeLoader(IBMAMLSimLoader):
         data_dir: str = _DATA_DIR,
         filename: str | None = "HI-Large_Trans.csv",
         accounts_filename: str | None = "HI-Large_accounts.csv",
+        **kwargs: Any,
     ) -> None:
         super().__init__(
             data_dir=data_dir,
             filename=filename,
             accounts_filename=accounts_filename,
+            **kwargs,
         )

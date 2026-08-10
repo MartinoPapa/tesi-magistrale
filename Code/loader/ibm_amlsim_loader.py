@@ -283,3 +283,22 @@ class IBMAMLSimLoader(AMLDatasetLoader):
 
     def _dest_column(self) -> str:
         return _DEST_COL
+
+
+class IBMAMLSimLargeLoader(IBMAMLSimLoader):
+    """Loader for the IBM AMLSim dataset (HI-Large variant).
+
+    Uses 'HI-Large_Trans.csv' and 'HI-Large_accounts.csv'.
+    """
+
+    def __init__(
+        self,
+        data_dir: str = _DATA_DIR,
+        filename: str | None = "HI-Large_Trans.csv",
+        accounts_filename: str | None = "HI-Large_accounts.csv",
+    ) -> None:
+        super().__init__(
+            data_dir=data_dir,
+            filename=filename,
+            accounts_filename=accounts_filename,
+        )

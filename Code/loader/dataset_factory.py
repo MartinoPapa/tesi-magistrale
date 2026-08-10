@@ -14,13 +14,14 @@ Usage
 from __future__ import annotations
 
 from .dataset_loader import AMLDatasetLoader
-from .ibm_amlsim_loader import IBMAMLSimLoader
+from .ibm_amlsim_loader import IBMAMLSimLoader, IBMAMLSimLargeLoader
 from .amlgentex_loader import AMLGentexLoader
 from .saml_d_loader import SAMLDLoader
 
 # Mapping from canonical dataset name → loader class.
 _REGISTRY: dict[str, type[AMLDatasetLoader]] = {
     "ibm_amlsim": IBMAMLSimLoader,
+    "ibm_amlsim_large": IBMAMLSimLargeLoader,
     "amlgentex": AMLGentexLoader,
     "saml_d": SAMLDLoader,
 }
@@ -34,9 +35,10 @@ class DatasetFactory:
 
     Supported names (case-insensitive)
     ------------------------------------
-    ``"ibm_amlsim"``  →  :class:`~ibm_amlsim_loader.IBMAMLSimLoader`
-    ``"amlgentex"``   →  :class:`~amlgentex_loader.AMLGentexLoader`
-    ``"saml_d"``      →  :class:`~saml_d_loader.SAMLDLoader`
+    ``"ibm_amlsim"``       →  :class:`~ibm_amlsim_loader.IBMAMLSimLoader`
+    ``"ibm_amlsim_large"`` →  :class:`~ibm_amlsim_loader.IBMAMLSimLargeLoader`
+    ``"amlgentex"``        →  :class:`~amlgentex_loader.AMLGentexLoader`
+    ``"saml_d"``           →  :class:`~saml_d_loader.SAMLDLoader`
     """
 
     def __init__(self) -> None:
@@ -50,7 +52,7 @@ class DatasetFactory:
         ----------
         name:
             Dataset identifier (case-insensitive).
-            One of ``"ibm_amlsim"``, ``"amlgentex"``, ``"saml_d"``.
+            One of ``"ibm_amlsim"``, ``"ibm_amlsim_large"``, ``"amlgentex"``, ``"saml_d"``.
         **kwargs:
             Extra keyword arguments forwarded to the loader constructor
             (e.g. ``nrows=100_000`` for SAMLDLoader).

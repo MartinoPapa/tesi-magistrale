@@ -41,7 +41,7 @@ class DataPreparation:
                                  'Payment Format', 'Day_of_Week']
         
         # Cyclic features that bypass scaling/encoding
-        self.passthrough_cols = ['Hour_Sin', 'Hour_Cos']
+        self.passthrough_cols = ['Hour_Sin', 'Hour_Cos', 'Week']
         
         # The ColumnTransformer handles the dropping of excluded columns.
         # Original 'Timestamp', 'From Bank', and 'To Bank' are permanently removed.
@@ -83,25 +83,34 @@ class DataPreparation:
         df_temp['Hour_Sin'] = np.sin(2 * np.pi * hours / 24)
         df_temp['Hour_Cos'] = np.cos(2 * np.pi * hours / 24)
         
+        # 4. Week (weeks since the first transaction)
+        min_timestamp = df_temp['Timestamp'].min()
+        df_temp['Week'] = (df_temp['Timestamp'] - min_timestamp).dt.days // 7
+        
         return df_temp
 
-    def fit_transform_edges(self, df: pd.DataFrame) -> pd.DataFrame:
+    def fit_transform_edges(self, df: pd.DataFrame, train_mask: pd.Series = None) -> pd.DataFrame:
         """
         Engineers time features, applies scaling/OHE, and drops high-cardinality/old features.
         
         Args:
             df (pd.DataFrame): Raw transactions DataFrame.
+            train_mask (pd.Series, optional): Boolean mask indicating training edges.
             
         Returns:
             pd.DataFrame: Transformed edges containing the new features, structural IDs, and labels.
         """
-        print("Extracting time features (Unix time, Cyclic Hour, Day of Week)...")
+        print("Extracting time features (Unix time, Cyclic Hour, Day of Week, Week)...")
         df_engineered = self._engineer_time_features(df)
         
         print(f"Applying edge transformation (Amounts: {self.scaler_type}, Time: standard)...")
         # Apply transformations (this step drops Timestamp, From Bank, To Bank)
         # Cast to float32 BEFORE toarray() to avoid a massive float64 dense matrix memory spike
-        processed_array = self.preprocessor.fit_transform(df_engineered)
+        if train_mask is not None:
+            self.preprocessor.fit(df_engineered[train_mask])
+            processed_array = self.preprocessor.transform(df_engineered)
+        else:
+            processed_array = self.preprocessor.fit_transform(df_engineered)
         processed_array = processed_array.astype('float32')
         if hasattr(processed_array, 'toarray'):
             processed_array = processed_array.toarray()
@@ -129,13 +138,14 @@ class DataPreparation:
         
         return processed_edges_df
 
-    def get_node_features(self, processed_edges_df: pd.DataFrame) -> pd.DataFrame:
+    def get_node_features(self, processed_edges_df: pd.DataFrame, train_mask: pd.Series = None) -> pd.DataFrame:
         """
         Aggregates edge features to create node features.
         Implements Equation 1 (node features) and Equation 2 (node labels) from the GAGNN paper.
         
         Args:
             processed_edges_df (pd.DataFrame): Output from fit_transform_edges.
+            train_mask (pd.Series, optional): Boolean mask indicating training edges.
             
         Returns:
             pd.DataFrame: DataFrame containing the aggregated features and labels for each node.
@@ -144,23 +154,49 @@ class DataPreparation:
         
         # Filter out Unix_Timestamp from the features to aggregate
         features_to_aggregate = [f for f in self.feature_names_ if f != 'Unix_Timestamp']
-        cols_to_sum = features_to_aggregate + ['Is Laundering']
         
+        all_nodes = pd.concat([processed_edges_df['Account'], processed_edges_df['Account.1']]).unique()
+        
+        # 1. Feature aggregation (Training edges only if train_mask provided)
+        if train_mask is not None:
+            df_to_agg_features = processed_edges_df[train_mask]
+        else:
+            df_to_agg_features = processed_edges_df
+            
         # Group outgoing edges by sender (Node)
-        out_grouped = processed_edges_df.groupby('Account')
-        out_sum = out_grouped[cols_to_sum].sum()
-        out_count = out_grouped.size()
+        out_grouped_feat = df_to_agg_features.groupby('Account')
+        out_sum_feat = out_grouped_feat[features_to_aggregate].sum()
+        out_count_feat = out_grouped_feat.size()
         
         # Group incoming edges by receiver (Node)
-        in_grouped = processed_edges_df.groupby('Account.1')
-        in_sum = in_grouped[cols_to_sum].sum()
-        in_count = in_grouped.size()
+        in_grouped_feat = df_to_agg_features.groupby('Account.1')
+        in_sum_feat = in_grouped_feat[features_to_aggregate].sum()
+        in_count_feat = in_grouped_feat.size()
         
         # Combine sums and counts (using fill_value=0 handles nodes that only send or only receive)
-        total_sum = out_sum.add(in_sum, fill_value=0)
-        total_count = out_count.add(in_count, fill_value=0)
+        total_sum_feat = out_sum_feat.add(in_sum_feat, fill_value=0)
+        total_count_feat = out_count_feat.add(in_count_feat, fill_value=0)
         
-        # Calculate the arithmetic mean of the features and labels
-        node_features = total_sum.div(total_count, axis=0)
+        # Calculate the arithmetic mean of the features
+        node_features = total_sum_feat.div(total_count_feat, axis=0)
+        node_features = node_features.reindex(all_nodes, fill_value=0.0)
+        
+        # 2. Label aggregation (All edges to retain ground truth for evaluation)
+        out_grouped_label = processed_edges_df.groupby('Account')
+        out_sum_label = out_grouped_label[['Is Laundering']].sum()
+        out_count_label = out_grouped_label.size()
+        
+        in_grouped_label = processed_edges_df.groupby('Account.1')
+        in_sum_label = in_grouped_label[['Is Laundering']].sum()
+        in_count_label = in_grouped_label.size()
+        
+        total_sum_label = out_sum_label.add(in_sum_label, fill_value=0)
+        total_count_label = out_count_label.add(in_count_label, fill_value=0)
+        
+        node_labels = total_sum_label.div(total_count_label, axis=0)
+        node_labels = node_labels.reindex(all_nodes, fill_value=0.0)
+        
+        # Combine features and labels
+        node_features['Is Laundering'] = node_labels['Is Laundering']
         
         return node_features

@@ -1,0 +1,14 @@
+{
+    "max_norm": 5.0,
+    "hidden_dim_GAT": 128,
+    "out_dim": 256,
+    "heads": 5,
+    "beta": 0.44,
+    "mlp_hidden_dim": 128,
+    "nn_t_hidden_dim": 256,
+    "lr": 0.0005,
+    "c1": 0.75,
+    "c2": 0.75,
+    "c3": 1,
+    "laundry_weight": 1.0
+}

@@ -15,44 +15,46 @@ A level-1 auxiliary file: Sections/futureDirections.aux
 A level-1 auxiliary file: Sections/software.aux
 The style file: plain.bst
 Database file #1: refs.bib
-You've used 5 entries,
+Warning--empty journal in ruleBased
+You've used 12 entries,
             2118 wiz_defined-function locations,
-            540 strings with 5260 characters,
-and the built_in function-call counts, 1493 in all, are:
-= -- 139
-> -- 82
-< -- 0
-+ -- 34
-- -- 28
-* -- 101
-:= -- 276
-add.period$ -- 15
-call.type$ -- 5
-change.case$ -- 29
+            586 strings with 6592 characters,
+and the built_in function-call counts, 3895 in all, are:
+= -- 372
+> -- 206
+< -- 1
++ -- 83
+- -- 70
+* -- 272
+:= -- 682
+add.period$ -- 38
+call.type$ -- 12
+change.case$ -- 71
 chr.to.int$ -- 0
-cite$ -- 5
-duplicate$ -- 52
-empty$ -- 107
-format.name$ -- 28
-if$ -- 293
+cite$ -- 13
+duplicate$ -- 135
+empty$ -- 287
+format.name$ -- 70
+if$ -- 793
 int.to.chr$ -- 0
-int.to.str$ -- 5
-missing$ -- 5
-newline$ -- 28
-num.names$ -- 10
-pop$ -- 28
+int.to.str$ -- 12
+missing$ -- 11
+newline$ -- 64
+num.names$ -- 24
+pop$ -- 71
 preamble$ -- 1
-purify$ -- 24
+purify$ -- 59
 quote$ -- 0
-skip$ -- 33
+skip$ -- 93
 stack$ -- 0
-substring$ -- 69
-swap$ -- 4
-text.length$ -- 0
+substring$ -- 208
+swap$ -- 20
+text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 18
-warning$ -- 0
-while$ -- 13
-width$ -- 6
-write$ -- 55
+type$ -- 46
+warning$ -- 1
+while$ -- 33
+width$ -- 14
+write$ -- 132
+(There was 1 warning)

@@ -14,6 +14,8 @@ Mechanism: Financial regulators mandate that flagged transactions have clear aud
 
 SOTA Implementations: Frameworks integrate post-hoc interpretability models like SHAP (SHapley Additive exPlanations) or GNNExplainer directly into deep graph architectures to identify subgraphs, feature importance, and behavioral deviations driving the alert.
 
+Exploring Explainable AI in the Financial Sector: Perspectives of Banks and Supervisory Authorities
+
 4. Differential privacy allows multiple banking institutions to train a unified AML model collaboratively without disclosing customer PII or raw transaction data
 
 3. Graph Transformers, Graph Isomorphism Networks
@@ -21,6 +23,8 @@ SOTA Implementations: Frameworks integrate post-hoc interpretability models like
 
 pyarrow invece di numpy per salvare il dataset
 
+
+add rule based to the algorithm prediction
 TODO:
 
 

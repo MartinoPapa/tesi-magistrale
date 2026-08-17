@@ -1,4 +1,28 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{cafc_home}
+{Canadian Anti-Fraud Centre}.
+\newblock Canadian anti-fraud centre.
+\newblock \url{https://antifraudcentre-centreantifraude.ca/index-eng.htm},
+  2026.
+\newblock Accessed: 2026-08-17.
+
+\bibitem{standardlearning}
+Ana~Isabel Canhoto.
+\newblock Leveraging machine learning in the global fight against money
+  laundering and terrorism financing: An affordances perspective.
+\newblock {\em Journal of Business Research}, 131:441--452, 2021.
+
+\bibitem{mainpaper}
+Dawei Cheng, Yujia Ye, Sheng Xiang, Zhenwei Ma, Ying Zhang, and Changjun Jiang.
+\newblock Anti-money laundering by group-aware deep graph learning.
+\newblock {\em IEEE Transactions on Knowledge and Data Engineering},
+  35(12):12444--12457, 2023.
+
+\bibitem{Cheng_2025}
+Dawei Cheng, Yao Zou, Sheng Xiang, and Changjun Jiang.
+\newblock Graph neural networks for financial fraud detection: a review.
+\newblock {\em Frontiers of Computer Science}, 19(9), January 2025.
 
 \bibitem{contreras2026strategic}
 Alfredo Contreras and Edgar~Villa P{\'e}rez.
@@ -17,12 +41,31 @@ Mariano-Florentino Cu{\'e}llar.
 \newblock Does crime still pay? criminal asset recovery in the eu.
 \newblock Technical report, Europol, 2016.
 
+\bibitem{kuiper2021exploring}
+Ouren Kuiper, Martin van~den Berg, Joost van~der Burgt, and Stefan Leijnen.
+\newblock Exploring explainable ai in the financial sector: Perspectives of
+  banks and supervisory authorities.
+\newblock In {\em Benelux Conference on Artificial Intelligence}, pages
+  253--268. Springer, 2021.
+
 \bibitem{li2025scamsweeper}
 Xiaoqi Li, Wenkai Li, Zhijie Liu, Meikang Qiu, Zhiquan Liu, Sen Nie, Zongwei
   Li, Shi Wu, and Yuqing Zhang.
 \newblock Scamsweeper: Detecting illegal accounts in web3 scams via
   transactions analysis.
 \newblock {\em IEEE Transactions on Information Forensics and Security}, 2025.
+
+\bibitem{ruleBased}
+Adetoyese Omoseebi, Godwin Ola, and Jackson Tyler.
+\newblock Rule-based systems in aml.
+\newblock 03 2025.
+
+\bibitem{singh2019anti}
+K.~Singh and P.~Best.
+\newblock Anti-money laundering: Using data visualization to identify
+  suspicious activity.
+\newblock {\em International Journal of Accounting Information Systems},
+  34:100418, 2019.
 
 \bibitem{unodc2011estimating}
 {United Nations Office on Drugs and Crime (UNODC)}.

@@ -3,21 +3,49 @@ Money laundering (ML) is the criminal process of disguising or concealing the or
 Its detection has become a foundational pillar of modern economic security.
 The rapid digitization of financial services has opened new possibilities for fraudulent activities.
 Undetected ML leads to massive economic losses for individuals and institutions, undermines the public trust in the financial system and frequently serves to finance criminal organizations.
-The scale of this phenomenon is staggering: the United Nations Office on Drugs and Crime (UNODC) estimates that between 2\% and 5\% of global GDP is laundered annually, with less than 1\% of these illicit financial flows being successfully intercepted~\cite{unodc2011estimating,europol2016does}.
+The scale of this phenomenon is staggering: the United Nations Office on Drugs and Crime (UNODC) estimates that between 2\% and 5\% of global GDP is laundered annually, with less than 1\% of these illicit financial flows being successfully detected~\cite{unodc2011estimating,europol2016does}.
+According to the Canadian Anti Fraud Centre (CAFC), 704 million dollars were lost because of frauds in 2025 only, confirming the raising trend of the previous years \cite{cafc_home}. 
 Consequently, developing robust mechanisms to identify and stop it is critically important to preserving both market integrity and social stability.
 
 \section{Traditional AML methods}
-% vedi tesi
+Anti Money Laundering is a critical component of the global financial system. Financial institutions ought to implement robust mechanisms to comply with regulatory standards and protect the integrity of the financial system \cite{ruleBased}.
 
-% we prefer data driven solutions
+Rule-based models have long been employed to detect suspicious transactions. These models consist of a set of predefined rules that are used to flag transactions that deviate from typical financial behavior.
+The criteria are typically based on regulatory requirements, historical data, and known patterns of illicit behavior. For example we could decide to flag transactions that exceed a certain amount, that rapidly transfer funds between accounts or that involve a high-risk jurisdiction.
+
+The main advantage of this approach is its transparency and interpretability. Furthermore they are computationally inexpensive, easy to implement and they can operate in real-time \cite{ruleBased}. 
+Unfortunately there are also several limitations. They tend to produce a high amount of false positives, which leads to more work from human operators that will have to deal with the flagged transactions. They could be easily exploited by criminals who are aware of the rules and can tailor their illicit activities to avoid detection. This will be further discussed in Section \ref{moneyLaundering}.
+
+Due to its tendency of producing a huge amount of false positives and the huge amount of data that nowadays is produced by financial institutions, the rule-based approach is becoming less and less effective.
+
+At the same time big datasets allow the usage of data-driven solutions that can learn directly from historical data.
+First attempts in this direction involved standard machine learning approaches such as logistic regression and support vector machines \cite{standardlearning}. Those models improved the state of the art but they still struggled to detect human brain-armed patterns due to their very limited parameter capacity \cite{mainpaper}.
+
+For this reason the research field shifted toward deep learning solutions which offer a much wider and complex hypothesis space, allowing to capture high order relationships between data, at the cost of a much worse interpretability. Nowadays the challenge is to combine high performance together with explainability to allow the usage of effective models in the highly regulated financial field, a necessity increasingly emphasized by both financial institutions and supervisory authorities~\cite{kuiper2021exploring}.
 
 \section{The Growing Challenge}
-Detecting fraud is becoming increasingly difficult. The sheer volume and velocity of digital transactions make manual oversight impossible and heavily strain classical machine learning architectures. Furthermore, the rise of decentralized finance (DeFi), Web3, and cryptocurrencies has introduced a paradigm of pseudo-anonymity that complicates traditional tracing. 
-On top of that, the sophistication of the techniques used by scammers is constantly evolving.
+Detecting fraud is becoming increasingly difficult. The sheer volume and velocity of digital transactions make manual oversight impossible and heavily strain classical machine learning architectures. Furthermore, the rise of decentralized finance (DeFi), Web3, and cryptocurrencies has introduced a paradigm of pseudo-anonymity that complicates traditional tracing.
+
+On top of that, criminals are constantly developing more and more sophisticated methods to avoid being caught. 
 As Cuèllar (2003) noted, \textit{"raising the marginal cost of perpetrating criminal activity can itself conceivably have counterintuitive effects. To the extent that criminals engaged in crimes for profit are acting rationally, then raising the cost of crime can discourage smaller operations and clear the market allowing more sophisticated criminal organizations to innovate and take more control from less organized criminals"}~\cite{cuellar2003tenuous}. 
-Hence, to prevent inadvertently incentivizing sophisticated criminal networks, detection mechanisms must be updated continuously. The framework proposed in this study leverages deep learning models that support online updates, ensuring that the detection algorithm remains aligned with the most recent transaction patterns.
+Hence, to prevent inadvertently incentivizing sophisticated criminal networks, detection mechanisms must be updated continuously. The framework proposed in this study leverages deep learning models that support online updates. This ensures that the detection algorithm remains aligned with the most recent transaction patterns.
 
 \section{GNN for fraud detection}
-% definition of finantial graph
+The necessity of capturing complex interactions between accounts and transactions led to the idea of modeling the financial feed as a graph, where accounts are nodes and transactions are edges \cite{singh2019anti}.
+
+\begin{definition}[Financial Graph]
+A financial graph is a directed graph $G = (V, E)$, where $V$ represents a set of financial entities (e.g. bank accounts or individuals), and $E$ represents a set of transactions between these entities. Each edge $e \in E$ is directed from the sender to the receiver and may be associated with features.
+\end{definition}
+
+GNNs rely on message passing to aggregate information from neighbors and learn representations of the nodes that will be given as input to a classifier or regressor to predict the probability that an account (Node-Level detection), a transaction (Edge-Level detection) or a subgraph (Graph-Level detection) is fraudulent. These methods allow to capture complex relationships, learn features automatically, handle dynamic graphs, and integrate multimodal data.
+
+Formally the message passing process at the $k$-th layer in a GNN is defined as follows:
+\begin{equation}
+\begin{aligned}
+m_i^{(k)} &= \operatorname{AGGREGATE} \left\{ \operatorname{MSG}\left( h_j^{(k-1)},e_{ji}\right) : j \in \mathcal{N}(i) \right\} \\
+h_i^{(k)} &= \operatorname{UPDATE} \left( h_i^{(k-1)}, m_i^{(k)}, x_i \right)
+\end{aligned}
+\end{equation}
+where $\mathcal{N}(i)$ denotes the set of neighboring nodes of node $i$, $e_{ji}$ is the feature vector of the edge from node $j$ to node $i$ and $x_i$ is the feature vector of node $i$. Following $K$ iterations of message passing, the resultant node embeddings $H^{(K)}$ are then used to execute the designated task, in our case the detection of fraudulent accounts \cite{Cheng_2025}.
 
 \section{Structure of the Dissertation}

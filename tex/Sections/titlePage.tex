@@ -1,0 +1,58 @@
+%--------------------------------------------------------------
+% titlepage.tex (use thesis.tex as main file)
+%--------------------------------------------------------------
+\newcommand{\myDegree}{Laurea Magistrale in Data Science, Calcolo Scientifico \& Intelligenza Artificiale\xspace}
+\newcommand{\myUni}{\protect{Universit\`a degli Studi di Firenze}\xspace}
+\newcommand{\myLocation}{Firenze\xspace}
+\newcommand{\myVersion}{Version 0.1\xspace}
+\newcommand{\myFaculty}{Scuola di Scienze Matematiche, Fisiche e Naturali\xspace}
+\newcommand{\mySupervisor}{Nome Cognome\xspace}
+
+\begin{titlepage}
+	\begin{center}
+   	\large
+      \hfill
+      \vfill
+      \begingroup
+         \includegraphics[height=3cm]{LOGO/LOGO_UNIFI}
+         \\[.8cm]
+	 \myFaculty \\[.2cm]
+	 \myDegree \\ 
+	\vspace{1cm}    
+         \emph{Master Thesis}  
+         \vspace{2cm}      
+      \endgroup 
+      \vfill 
+      \begingroup
+      	\color{Maroon}\spacedallcaps{\myTitle} \\
+	\bigskip
+      \endgroup
+      \spacedlowsmallcaps{\myName}
+      \vfill 
+      \vspace{1cm} 
+      \vfill
+      Advisor: \emph{\myProf}\\[.4cm]
+      \ifx\myOtherProf\undefined
+      \else
+	 Co-Advisor: \emph{\myOtherProf}%
+      \fi
+      \vspace{1cm}    
+      \vfill
+      \vfill
+      \myTime
+      \vfill                      
+	\end{center}        
+\end{titlepage}   
+%--------------------------------------------------------------
+% back titlepage
+%--------------------------------------------------------------
+   \newpage
+	\thispagestyle{empty}
+	\hfill
+	\vfill
+	\noindent\myName: 
+	\textit{\myTitle,} 
+	\myDegree, \textcopyright\ \myTime
+%--------------------------------------------------------------
+% back titlepage end
+%--------------------------------------------------------------

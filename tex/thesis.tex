@@ -1,0 +1,129 @@
+%--------------------------------------------------------------
+% thesis.tex 
+%--------------------------------------------------------------
+% Laurea Magistrale in Data Science, Calcolo Scientifico 
+% & Intelligenza Artificiale
+% https://www.dscsia.unifi.it
+% @Scuola di Scienze Matematiche, Fisiche e Naturali
+% @Universit\`a degli Studi di Firenze
+%--------------------------------------------------------------
+% - template for the main file of the LM-DATA@Unifi Thesis 
+% - based on Classic Thesis Style Copyright (C) 2008 
+%   Andr\'e Miede http://www.miede.de   
+%--------------------------------------------------------------
+\documentclass[twoside,openright,titlepage,fleqn,
+	headinclude,12pt,a4paper,BCOR=5mm,footinclude]{scrbook}
+%--------------------------------------------------------------
+
+\newcommand{\myTitle}{Anti-Money Laundering with Graph Neural Networks\xspace}
+\newcommand{\myName}{Name Surname\xspace}
+\newcommand{\myProf}{prof. Name Surname\xspace}
+\newcommand{\myOtherProf}{prof. Name Surname\xspace} %optional: remove this command if the thesis has no co-advisor
+\newcommand{\myTime}{Academic Year 2023-2024\xspace}
+
+%--------------------------------------------------------------
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc} 
+\usepackage[T1]{fontenc} 
+\usepackage[square,numbers]{natbib} 
+\usepackage[fleqn]{amsmath}  
+\usepackage{ellipsis}
+\usepackage{listings}
+\usepackage{subfig}
+\usepackage{caption}
+\usepackage{appendix}
+\usepackage{siunitx}
+%--------------------------------------------------------------
+\usepackage{scrhack} % suppress titlesec/tocloft KOMA-Script compatibility warnings
+\usepackage{dia-classicthesis-ldpkg}
+%--------------------------------------------------------------
+% Options for classicthesis.sty:
+% tocaligned eulerchapternumbers drafting linedheaders 
+% listsseparated subfig nochapters beramono eulermath parts 
+% minionpro pdfspacing
+\usepackage[eulerchapternumbers,linedheaders,subfig,beramono,eulermath,
+parts]{classicthesis}
+%--------------------------------------------------------------
+\newlength{\abcd} 
+\newcommand{\myfloatalign}{\centering} 
+\setlength{\extrarowheight}{3pt} % increase table row height
+\captionsetup{format=hang,font=small}
+%--------------------------------------------------------------
+% Layout setting
+%--------------------------------------------------------------
+\usepackage{geometry}
+\geometry{
+	a4paper,
+	ignoremp,
+	bindingoffset = 1cm, 
+	textwidth     = 13.5cm,
+	textheight    = 21.5cm,
+	lmargin       = 3.5cm, % left margin
+	tmargin       = 4cm    % top margin 
+}
+
+\lstset{
+  	frame=tb,
+	language=Matlab,
+  	aboveskip=3mm,
+  	belowskip=3mm,
+  	showstringspaces=false,
+  	columns=flexible,
+  	basicstyle={\small\ttfamily},
+  	numbers=none,
+  	breaklines=true,
+  	breakatwhitespace=true,
+  	tabsize=3
+}
+%--------------------------------------------------------------
+\begin{document}
+\frenchspacing
+\raggedbottom
+\pagenumbering{roman}
+\pagestyle{plain}
+%--------------------------------------------------------------
+% Frontmatter
+%--------------------------------------------------------------
+\include{Sections/titlePage}
+\include{Sections/abstract}
+\pagestyle{scrheadings}
+%--------------------------------------------------------------
+% Mainmatter
+%--------------------------------------------------------------
+\pagenumbering{arabic}
+% use \cleardoublepage here to avoid problems with pdfbookmark
+\tableofcontents
+\listoffigures
+\cleardoublepage
+\thispagestyle{empty}
+\begin{flushright}
+\null\vspace{\stretch {1}}
+\emph{"Citation" \break --- citation's author} \vspace{\stretch{2}}\null
+\end{flushright}
+\cleardoublepage
+%--------------------------------------------------------------
+
+\include{Sections/introduction}
+\include{Sections/moneyLaundering}
+\include{Sections/ethics-privacy-regulations}
+\include{Sections/stateOfTheArt}
+\include{Sections/proposedModels}
+\include{Sections/experiments}
+\include{Sections/challenges}
+\include{Sections/conclusion}
+\include{Sections/futureDirections}
+
+%--------------------------------------------------------------
+% Appendix
+%--------------------------------------------------------------
+\appendix
+\include{Sections/software}
+
+%--------------------------------------------------------------
+
+\bibliographystyle{plain} % 
+\bibliography{refs} % Entries are in the refs.bib file
+
+%--------------------------------------------------------------
+\end{document}
+%--------------------------------------------------------------

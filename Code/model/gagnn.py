@@ -4,19 +4,26 @@ from model.encoder import CommunityCentricEncoder
 from model.group_layer import GroupRepresentationLayer
 
 class GAGNN(nn.Module):
-    def __init__(self, node_in_dim, edge_feat_dim, hidden_dim, out_dim, heads=5, beta=0.44, mlp_hidden_dim=64, nn_t_hidden_dim=128, minibatches=True):
+    def __init__(self, node_in_dim, edge_feat_dim, hidden_dim, out_dim, heads=5, beta=0.44,
+                 mlp_hidden_dim=64, nn_t_hidden_dim=128, minibatches=True,
+                 gnn_type='gat', num_layers=2, gin_mlp_hidden_dim=128):
         """
         GAGNN Model
         Args:
-            node_in_dim: Dimension of input node features X^(1)
-            edge_feat_dim: Dimension of edge features l
-            hidden_dim: Hidden dimension for GAT layers
-            out_dim: Output dimension of node embeddings X^(3)
-            heads: Number of attention heads for GAT
-            beta: Trade-off parameter for eMRF similarity
-            mlp_hidden_dim: Hidden dimension for the edge classification MLP
-            nn_t_hidden_dim: Hidden dimension for node classification MLP
-            minibatches: If True, indicates the model is trained with minibatches
+            node_in_dim:        Dimension of input node features X^(1)
+            edge_feat_dim:      Dimension of edge features l
+            hidden_dim:         Hidden dimension for GNN layers
+            out_dim:            Output dimension of node embeddings X^(3)
+            heads:              Number of attention heads (GAT / TransformerConv / GPSConv).
+                                Silently ignored for GIN.
+            beta:               Trade-off parameter for eMRF similarity
+            mlp_hidden_dim:     Hidden dimension for the edge classification MLP
+            nn_t_hidden_dim:    Hidden dimension for node classification MLP
+            minibatches:        If True, indicates the model is trained with minibatches
+            gnn_type:           GNN backbone: 'gat', 'gin', 'transformer_conv', 'gps_conv'
+            num_layers:         Number of stacked GNN layers
+            gin_mlp_hidden_dim: Hidden dimension of the MLP inside each GIN layer.
+                                Also used by GPSConv for its local GIN component.
         """
         super(GAGNN, self).__init__()
 
@@ -30,7 +37,10 @@ class GAGNN(nn.Module):
             beta=beta,
             mlp_hidden_dim=mlp_hidden_dim,
             nn_t_hidden_dim=nn_t_hidden_dim,
-            minibatches=minibatches
+            minibatches=minibatches,
+            gnn_type=gnn_type,
+            num_layers=num_layers,
+            gin_mlp_hidden_dim=gin_mlp_hidden_dim
         )
 
         self.training_losses = []
@@ -43,7 +53,10 @@ class GAGNN(nn.Module):
             out_channels=out_dim, 
             heads=heads, 
             beta=beta,
-            nn_t_hidden_dim=nn_t_hidden_dim
+            nn_t_hidden_dim=nn_t_hidden_dim,
+            gnn_type=gnn_type,
+            num_layers=num_layers,
+            gin_mlp_hidden_dim=gin_mlp_hidden_dim
         )
         
         # 2. Group Representation Layer

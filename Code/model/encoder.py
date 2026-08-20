@@ -1,10 +1,10 @@
 import torch
 import torch.nn as nn
-from torch_geometric.nn import GATConv, GINConv, TransformerConv, GPSConv
+from torch_geometric.nn import GATConv, GINConv, GPSConv
 from model.emrf import eMRFLayer
 
 # Valid GNN backbone identifiers
-VALID_GNN_TYPES = ('gat', 'gin', 'transformer_conv', 'gps_conv')
+VALID_GNN_TYPES = ('gat', 'gin', 'gps_conv')
 
 
 class CommunityCentricEncoder(nn.Module):
@@ -15,14 +15,14 @@ class CommunityCentricEncoder(nn.Module):
     Supports four GNN backbones:
         - 'gat'              : Graph Attention Network (GATConv)
         - 'gin'              : Graph Isomorphism Network (GINConv)
-        - 'transformer_conv' : Lightweight Graph Transformer (TransformerConv)
+
         - 'gps_conv'         : General, Powerful, Scalable Graph Transformer (GPSConv)
 
     Args:
         in_channels:        Dimension of input node features X^(1).
         hidden_channels:    Hidden dimension inside GNN layers.
         out_channels:       Output dimension of node embeddings X^(3).
-        heads:              Number of attention heads (GAT / TransformerConv / GPSConv).
+        heads:              Number of attention heads (GAT / GPSConv).
                             Silently ignored for GIN.
         beta:               eMRF trade-off between topological and attribute similarity.
         nn_t_hidden_dim:    Hidden dimension of the node classification MLP (NN_t).
@@ -94,11 +94,6 @@ class CommunityCentricEncoder(nn.Module):
                 heads, num_layers
             )
 
-        elif gnn_type == 'transformer_conv':
-            layers = self._build_attention_layers(
-                TransformerConv, in_channels, hidden_channels, out_channels,
-                heads, num_layers
-            )
 
         elif gnn_type == 'gin':
             layers = self._build_gin_layers(
@@ -114,7 +109,7 @@ class CommunityCentricEncoder(nn.Module):
 
         return layers
 
-    # --- Attention-based layers (GAT / TransformerConv) ----------------
+    # --- Attention-based layers (GAT) ----------------
     @staticmethod
     def _build_attention_layers(conv_cls, in_channels, hidden_channels,
                                 out_channels, heads, num_layers):

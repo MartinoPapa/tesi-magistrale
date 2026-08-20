@@ -120,6 +120,114 @@ class Evaluator:
         plt.tight_layout()
         plt.show()
 
+    @staticmethod
+    def baseline_evaluation_report(model, test_loader, device, threshold=0.5, edge_mask_name=None):
+        """
+        Evaluates a :class:`StandaloneGNN` on the test set and reports:
+          - Accuracy, Precision, Recall, F1-score, ROC-AUC
+          - Confusion matrix plot for TRANSACTIONS (edges).
+
+        Uses ``batch.e_id`` to prevent double-counting edges sampled in
+        multiple overlapping subgraphs (same logic as ``evaluation_report``).
+
+        Args:
+            model:          A StandaloneGNN instance in eval() mode.
+            test_loader:    PyG NeighborLoader (or list containing the full Data).
+            device:         torch.device to run inference on.
+            threshold:      Decision threshold for p_trans (default 0.5).
+            edge_mask_name: Attribute name of the boolean edge mask to restrict
+                            evaluation to the test split (e.g. 'edge_test_mask').
+        """
+        model.eval()
+
+        all_probs  = []
+        all_preds  = []
+        all_labels = []
+
+        # Track which edges have been evaluated to avoid double counting
+        num_total_edges = (
+            test_loader.data.num_edges
+            if hasattr(test_loader, 'data')
+            else test_loader[0].num_edges
+        )
+        evaluated_edges = torch.zeros(num_total_edges, dtype=torch.bool)
+
+        with torch.no_grad():
+            for batch in test_loader:
+                batch = batch.to(device)
+
+                # Build dedup mask
+                if hasattr(batch, 'e_id'):
+                    e_id = batch.e_id.cpu()
+                    mask = ~evaluated_edges[e_id]
+                    evaluated_edges[e_id] = True
+                else:
+                    mask = torch.ones(batch.num_edges, dtype=torch.bool)
+
+                if edge_mask_name is not None and hasattr(batch, edge_mask_name):
+                    split_mask = getattr(batch, edge_mask_name).cpu()
+                    mask = mask & split_mask
+
+                if not mask.any():
+                    continue
+
+                # StandaloneGNN returns only p_trans
+                p_trans = model(batch.x, batch.edge_index, batch.edge_attr)
+
+                p_trans_masked = p_trans[mask]
+                y_trans_masked = batch.y_trans[mask]
+
+                probs = torch.sigmoid(p_trans_masked)
+                probs_flat = probs.view(-1).cpu().numpy()
+                preds  = (probs_flat >= threshold).astype(int)
+                labels = y_trans_masked.view(-1).long().cpu().numpy()
+
+                all_probs.append(probs_flat)
+                all_preds.append(preds)
+                all_labels.append(labels)
+
+        if len(all_preds) == 0:
+            print("No edges evaluated!")
+            return
+
+        all_probs  = np.concatenate(all_probs)
+        all_preds  = np.concatenate(all_preds)
+        all_labels = np.concatenate(all_labels)
+
+        # Compute metrics
+        acc  = accuracy_score(all_labels, all_preds)
+        prec = precision_score(all_labels, all_preds, zero_division=0)
+        rec  = recall_score(all_labels, all_preds, zero_division=0)
+        f1   = f1_score(all_labels, all_preds, zero_division=0)
+        try:
+            auc = roc_auc_score(all_labels, all_probs)
+        except ValueError:
+            auc = 0.0
+
+        print("=" * 50)
+        print("  BASELINE EVALUATION REPORT (Transactions / Edges)")
+        print("=" * 50)
+        print(f"  Accuracy  : {acc:.4f}")
+        print(f"  Precision : {prec:.4f}")
+        print(f"  Recall    : {rec:.4f}")
+        print(f"  F1-Score  : {f1:.4f}")
+        print(f"  ROC-AUC   : {auc:.4f}")
+        print("-" * 50)
+        print(classification_report(
+            all_labels, all_preds,
+            target_names=["Legit", "Laundering"],
+            zero_division=0
+        ))
+
+        # Confusion matrix plot
+        cm = confusion_matrix(all_labels, all_preds)
+        fig, ax = plt.subplots(figsize=(6, 5))
+        disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=["Legit", "Laundering"])
+        disp.plot(ax=ax, colorbar=True, cmap="Oranges")
+        ax.set_title("Baseline — Confusion Matrix (Transactions)", fontsize=13, fontweight="bold")
+        plt.tight_layout()
+        plt.show()
+
 
 def get_random_splits(y, num_nodes, val_size=0.1, test_size=0.2, seed=42):
     """

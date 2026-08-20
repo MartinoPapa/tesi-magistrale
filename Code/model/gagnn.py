@@ -14,13 +14,13 @@ class GAGNN(nn.Module):
             edge_feat_dim:      Dimension of edge features l
             hidden_dim:         Hidden dimension for GNN layers
             out_dim:            Output dimension of node embeddings X^(3)
-            heads:              Number of attention heads (GAT / TransformerConv / GPSConv).
+            heads:              Number of attention heads (GAT / GPSConv).
                                 Silently ignored for GIN.
             beta:               Trade-off parameter for eMRF similarity
             mlp_hidden_dim:     Hidden dimension for the edge classification MLP
             nn_t_hidden_dim:    Hidden dimension for node classification MLP
             minibatches:        If True, indicates the model is trained with minibatches
-            gnn_type:           GNN backbone: 'gat', 'gin', 'transformer_conv', 'gps_conv'
+            gnn_type:           GNN backbone: 'gat', 'gin', 'gps_conv'
             num_layers:         Number of stacked GNN layers
             gin_mlp_hidden_dim: Hidden dimension of the MLP inside each GIN layer.
                                 Also used by GPSConv for its local GIN component.

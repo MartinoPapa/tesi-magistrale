@@ -46,6 +46,13 @@ m_i^{(k)} &= \operatorname{AGGREGATE} \left\{ \operatorname{MSG}\left( h_j^{(k-1
 h_i^{(k)} &= \operatorname{UPDATE} \left( h_i^{(k-1)}, m_i^{(k)}, x_i \right)
 \end{aligned}
 \end{equation}
-where $\mathcal{N}(i)$ denotes the set of neighboring nodes of node $i$, $e_{ji}$ is the feature vector of the edge from node $j$ to node $i$ and $x_i$ is the feature vector of node $i$. Following $K$ iterations of message passing, the resultant node embeddings $H^{(K)}$ are then used to execute the designated task, in our case the detection of fraudulent accounts \cite{Cheng_2025}.
+where $\mathcal{N}(i)$ denotes the set of neighboring nodes of node $i$, $e_{ji}$ is the feature vector of the edge from node $j$ to node $i$, \(\operatorname{MSG}\) (e.g. \(\operatorname{MLP}\)) is the function that merges informations from the neighbor and the connecting edge and $x_i$ is the feature vector of node $i$.
+Sometimes edge features are not used during the message passing process, in such cases \(m_i^{(k)}\) is defined as: 
+\begin{equation}
+    m_i^{(k)} = \operatorname{AGGREGATE} \left\{ h_j^{(k-1)} : j \in \mathcal{N}(i) \right\}
+\end{equation}
+After $K$ iterations of message passing, the resultant node embeddings $H^{(K)}$ are then used to execute the designated task, in our case the detection of fraudulent accounts \cite{Cheng_2025}. 
+
+There are different types of GNNs, the way \( \operatorname{UPDATE}\) and \( \operatorname{AGGREGATE}\) functions are implemented defines them. Further details will be provided in Chapter \ref{approaches}.
 
 \section{Structure of the Dissertation}

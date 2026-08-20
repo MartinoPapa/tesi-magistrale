@@ -5,15 +5,16 @@ import scipy.sparse as sp
 from torch_geometric.utils import scatter
 
 class GroupRepresentationLayer(nn.Module):
-    def __init__(self, node_emb_dim, edge_feat_dim, mlp_hidden_dim=64):
+    def __init__(self, node_emb_dim, edge_feat_dim, mlp_hidden_dim=64, num_classes=1):
         super(GroupRepresentationLayer, self).__init__()
         # MLP prediction network for edge classification
         # Input: [Z_i, Z_j, l] (concatenation of node embeddings and edge features)
         in_dim = 2 * node_emb_dim + edge_feat_dim
+        self.num_classes = num_classes
         self.mlp = nn.Sequential(
             nn.Linear(in_dim, mlp_hidden_dim),
             nn.ReLU(),
-            nn.Linear(mlp_hidden_dim, 1)
+            nn.Linear(mlp_hidden_dim, num_classes)
         )
 
     def forward(self, X3, x, edge_index, edge_attr, y_trans=None, trans_mask=None):
@@ -23,10 +24,10 @@ class GroupRepresentationLayer(nn.Module):
             x: Original node features (N x F_orig)
             edge_index: Graph topology (2 x E)
             edge_attr: Original basic edge features (E x D)
-            y_trans: Ground truth edge labels (E x 1)
+            y_trans: Ground truth edge labels (E x 1 or E)
             trans_mask: Boolean mask indicating training edges (E,)
         Returns:
-            p_trans: Predicted probabilities for transactions (E x 1)
+            p_trans: Predicted probabilities or logits for transactions (E x num_classes)
             X_hat: Grouped node features
             edge_index_hat: Grouped edge index
             group_mapping: Mapping from original nodes to groups
@@ -45,11 +46,19 @@ class GroupRepresentationLayer(nn.Module):
         
         # 2. Node Aggregation Policy
         # Use predicted probabilities or ground truth for Bernoulli sampling
-        p = torch.sigmoid(p_trans.squeeze())
-        
-        # If we are training, we might use the ground truth labels for training edges
-        if y_trans is not None and trans_mask is not None:
-            p[trans_mask] = y_trans.squeeze()[trans_mask]
+        if self.num_classes == 1:
+            p = torch.sigmoid(p_trans.squeeze())
+            # If we are training, we might use the ground truth labels for training edges
+            if y_trans is not None and trans_mask is not None:
+                p[trans_mask] = y_trans.squeeze()[trans_mask]
+        else:
+            # For multiclass, group nodes if they belong to any illicit pattern (class > 0)
+            probs = torch.softmax(p_trans, dim=1)
+            # Probability of being illicit is sum of probabilities of all illicit classes (1 to num_classes-1)
+            # Alternatively, 1 - P(LEGIT)
+            p = 1.0 - probs[:, 0].squeeze()
+            if y_trans is not None and trans_mask is not None:
+                p[trans_mask] = (y_trans.squeeze()[trans_mask] > 0).float()
             
         # Check for NaNs which occur if model weights are corrupted (exploding gradients)
         if torch.isnan(p).any():

@@ -19,36 +19,54 @@ class StandaloneGNNLoss(nn.Module):
     Args:
         laundry_weight: Positive-class weight for BCEWithLogitsLoss.
                         Values > 1 penalise false negatives more heavily.
+        task:           'binary' or 'multiclass'
     """
 
-    def __init__(self, laundry_weight: float = 1.0):
+    def __init__(self, laundry_weight: float | torch.Tensor = 1.0, task: str = 'binary'):
         super().__init__()
         self.laundry_weight = laundry_weight
+        self.task = task
 
     def forward(self, p_trans: torch.Tensor, y_trans: torch.Tensor,
                 trans_mask: torch.Tensor | None = None) -> torch.Tensor:
         """
         Args:
-            p_trans:    Raw logits for each edge  (E x 1) or (E,)
+            p_trans:    Raw logits for each edge  (E x 1) or (E, num_classes)
             y_trans:    Ground-truth edge labels   (E x 1) or (E,)
             trans_mask: Optional boolean mask to restrict loss to a subset
                         of edges (e.g. only train edges within a mini-batch).
         Returns:
             Scalar loss tensor.
         """
-        pos_weight = torch.tensor([self.laundry_weight], device=p_trans.device)
-
-        if trans_mask is not None and trans_mask.any():
-            loss = F.binary_cross_entropy_with_logits(
-                p_trans[trans_mask], y_trans[trans_mask], pos_weight=pos_weight
-            )
-        elif trans_mask is None:
-            loss = F.binary_cross_entropy_with_logits(
-                p_trans, y_trans, pos_weight=pos_weight
-            )
+        if self.task == 'binary':
+            pos_weight = torch.tensor([self.laundry_weight], device=p_trans.device)
+            if trans_mask is not None and trans_mask.any():
+                loss = F.binary_cross_entropy_with_logits(
+                    p_trans[trans_mask], y_trans[trans_mask], pos_weight=pos_weight
+                )
+            elif trans_mask is None:
+                loss = F.binary_cross_entropy_with_logits(
+                    p_trans, y_trans, pos_weight=pos_weight
+                )
+            else:
+                loss = torch.tensor(0.0, device=p_trans.device, requires_grad=True)
+        elif self.task == 'multiclass':
+            if isinstance(self.laundry_weight, torch.Tensor):
+                weight = self.laundry_weight.to(p_trans.device)
+            else:
+                weight = None
+            if trans_mask is not None and trans_mask.any():
+                loss = F.cross_entropy(
+                    p_trans[trans_mask], y_trans[trans_mask].squeeze().long(), weight=weight
+                )
+            elif trans_mask is None:
+                loss = F.cross_entropy(
+                    p_trans, y_trans.squeeze().long(), weight=weight
+                )
+            else:
+                loss = torch.tensor(0.0, device=p_trans.device, requires_grad=True)
         else:
-            # mask exists but selects nothing → return zero to avoid NaN
-            loss = torch.tensor(0.0, device=p_trans.device, requires_grad=True)
+            raise ValueError(f"Unknown task {self.task}")
 
         return loss
 
@@ -100,6 +118,7 @@ class StandaloneGNN(nn.Module):
         gin_mlp_hidden_dim: int = 128,
         mlp_hidden_dim: int = 128,
         minibatches: bool = True,
+        num_classes: int = 1,
     ):
         super().__init__()
 
@@ -122,6 +141,7 @@ class StandaloneGNN(nn.Module):
             gin_mlp_hidden_dim=gin_mlp_hidden_dim,
             mlp_hidden_dim=mlp_hidden_dim,
             minibatches=minibatches,
+            num_classes=num_classes,
         )
 
         self.gnn_type = gnn_type
@@ -147,7 +167,7 @@ class StandaloneGNN(nn.Module):
         self.edge_mlp = nn.Sequential(
             nn.Linear(edge_mlp_in, mlp_hidden_dim),
             nn.ReLU(),
-            nn.Linear(mlp_hidden_dim, 1),
+            nn.Linear(mlp_hidden_dim, num_classes),
         )
 
     # ------------------------------------------------------------------

@@ -89,6 +89,72 @@ class DataPreparation:
         
         return df_temp
 
+    def parse_patterns_file(self, df: pd.DataFrame, patterns_file_path: str) -> pd.DataFrame:
+        """
+        Parses HI-Small_Patterns.txt and adds 'Laundering_Type' column to the dataframe.
+        """
+        print(f"Parsing patterns from {patterns_file_path}...")
+        
+        pattern_mapping = {
+            'LEGIT': 0, 'FAN-OUT': 1, 'FAN-IN': 2, 'CYCLE': 3,
+            'GATHER-SCATTER': 4, 'SCATTER-GATHER': 5, 'BIPARTITE': 6,
+            'STACK': 7, 'RANDOM': 8
+        }
+        
+        illicit_transactions = {}
+        current_pattern = None
+        
+        with open(patterns_file_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                if line.startswith('BEGIN LAUNDERING ATTEMPT -'):
+                    pattern_str = line.split(' - ')[1].split(':')[0].strip()
+                    current_pattern = pattern_mapping.get(pattern_str, -1)
+                elif line.startswith('END LAUNDERING ATTEMPT'):
+                    current_pattern = None
+                else:
+                    if current_pattern is not None:
+                        parts = line.split(',')
+                        if len(parts) >= 11:
+                            timestamp = parts[0]
+                            sender_account = parts[2]
+                            receiver_account = parts[4]
+                            sent_amount = float(parts[5])
+                            key = (timestamp, sender_account, receiver_account, sent_amount)
+                            illicit_transactions[key] = current_pattern
+                            
+        # Convert dictionary to DataFrame
+        if not illicit_transactions:
+            print("No illicit transactions found in patterns file.")
+            df_temp = df.copy()
+            df_temp['Laundering_Type'] = 0
+            return df_temp
+            
+        import datetime
+        converted_illicit = {}
+        for (ts, s_acc, r_acc, amt), pat in illicit_transactions.items():
+            ts_dt = pd.to_datetime(ts)
+            converted_illicit[(ts_dt, s_acc, r_acc, amt)] = pat
+            
+        illicit_df = pd.DataFrame.from_records(
+            list(converted_illicit.keys()),
+            columns=['Timestamp', 'Account', 'Account.1', 'Amount Paid']
+        )
+        illicit_df['Laundering_Type'] = list(converted_illicit.values())
+        illicit_df = illicit_df.drop_duplicates(subset=['Timestamp', 'Account', 'Account.1', 'Amount Paid'])
+        
+        df_temp = df.copy()
+        if not pd.api.types.is_datetime64_any_dtype(df_temp['Timestamp']):
+            df_temp['Timestamp'] = pd.to_datetime(df_temp['Timestamp'])
+            
+        df_temp = df_temp.merge(illicit_df, on=['Timestamp', 'Account', 'Account.1', 'Amount Paid'], how='left')
+        df_temp['Laundering_Type'] = df_temp['Laundering_Type'].fillna(0).astype(int)
+        
+        print(f"Matched {(df_temp['Laundering_Type'] > 0).sum()} illicit transactions from patterns file.")
+        return df_temp
+
     def fit_transform_edges(self, df: pd.DataFrame, train_mask: pd.Series = None) -> pd.DataFrame:
         """
         Engineers time features, applies scaling/OHE, and drops high-cardinality/old features.
@@ -136,6 +202,9 @@ class DataPreparation:
         processed_edges_df['Is Laundering'] = df_engineered['Is Laundering'].values
         processed_edges_df['Timestamp'] = df_engineered['Timestamp'].values
         
+        if 'Laundering_Type' in df_engineered.columns:
+            processed_edges_df['Laundering_Type'] = df_engineered['Laundering_Type'].values
+            
         return processed_edges_df
 
     def get_node_features(self, processed_edges_df: pd.DataFrame, train_mask: pd.Series = None) -> pd.DataFrame:

@@ -11,7 +11,7 @@ class Evaluator:
     """Utility class for model evaluation and reporting."""
 
     @staticmethod
-    def evaluation_report(model, test_loader, criterion, device, threshold=0.5, edge_mask_name=None):
+    def evaluation_report(model, test_loader, criterion, device, threshold=0.5, edge_mask_name=None, task='binary'):
         """
         Loads the best saved model, evaluates it on the test set, and reports:
           - Accuracy, Precision, Recall, F1-score, ROC-AUC
@@ -24,8 +24,9 @@ class Evaluator:
             test_loader: PyG NeighborLoader for the test split.
             criterion:   GAGNNLoss instance.
             device:      torch.device to run inference on.
-            threshold:   Decision threshold applied to p_trans predictions (default 0.5).
+            threshold:   Decision threshold applied to p_trans predictions (default 0.5, binary only).
             edge_mask_name: String name of the boolean edge mask attribute to filter edges (e.g. 'edge_test_mask').
+            task:        'binary' or 'multiclass'
         """
         model.eval()
 
@@ -66,12 +67,15 @@ class Evaluator:
                 p_trans_new = p_trans[mask]
                 y_trans_new = batch.y_trans[mask]
 
-                # Convert logits to probabilities
-                probs = torch.sigmoid(p_trans_new)
-                
-                # Squeeze might reduce shape to 0 if only 1 element remains; view(-1) is safer
-                probs_flat = probs.view(-1).cpu().numpy()
-                preds = (probs_flat >= threshold).astype(int)
+                if task == 'binary':
+                    probs = torch.sigmoid(p_trans_new)
+                    probs_flat = probs.view(-1).cpu().numpy()
+                    preds = (probs_flat >= threshold).astype(int)
+                else:
+                    probs = torch.softmax(p_trans_new, dim=1)
+                    probs_flat = probs.cpu().numpy()
+                    preds = torch.argmax(probs, dim=1).cpu().numpy()
+                    
                 labels = y_trans_new.view(-1).long().cpu().numpy()
 
                 all_probs.append(probs_flat)
@@ -87,14 +91,24 @@ class Evaluator:
         all_labels = np.concatenate(all_labels)
 
         # Compute metrics
-        acc  = accuracy_score(all_labels, all_preds)
-        prec = precision_score(all_labels, all_preds, zero_division=0)
-        rec  = recall_score(all_labels, all_preds, zero_division=0)
-        f1   = f1_score(all_labels, all_preds, zero_division=0)
-        try:
-            auc = roc_auc_score(all_labels, all_probs)
-        except ValueError:
-            auc = 0.0  # Handle case with only one class present
+        if task == 'binary':
+            acc  = accuracy_score(all_labels, all_preds)
+            prec = precision_score(all_labels, all_preds, zero_division=0)
+            rec  = recall_score(all_labels, all_preds, zero_division=0)
+            f1   = f1_score(all_labels, all_preds, zero_division=0)
+            try:
+                auc = roc_auc_score(all_labels, all_probs)
+            except ValueError:
+                auc = 0.0  # Handle case with only one class present
+        else:
+            acc  = accuracy_score(all_labels, all_preds)
+            prec = precision_score(all_labels, all_preds, average='macro', zero_division=0)
+            rec  = recall_score(all_labels, all_preds, average='macro', zero_division=0)
+            f1   = f1_score(all_labels, all_preds, average='macro', zero_division=0)
+            try:
+                auc = roc_auc_score(all_labels, all_probs, multi_class='ovr')
+            except ValueError:
+                auc = 0.0
 
         print("=" * 50)
         print("    EVALUATION REPORT (Transactions / Edges)")
@@ -105,23 +119,36 @@ class Evaluator:
         print(f"  F1-Score  : {f1:.4f}")
         print(f"  ROC-AUC   : {auc:.4f}")
         print("-" * 50)
+        
+        if task == 'binary':
+            target_names = ["Legit", "Laundering"]
+        else:
+            pattern_mapping = {
+                0: 'LEGIT', 1: 'FAN-OUT', 2: 'FAN-IN', 3: 'CYCLE',
+                4: 'GATHER-SCATTER', 5: 'SCATTER-GATHER', 6: 'BIPARTITE',
+                7: 'STACK', 8: 'RANDOM'
+            }
+            # Only include classes that are present in the dataset (or all if we want fixed report)
+            unique_labels = sorted(list(set(all_labels) | set(all_preds)))
+            target_names = [pattern_mapping.get(i, f"Class {i}") for i in unique_labels]
+
         print(classification_report(
             all_labels, all_preds,
-            target_names=["Legit", "Laundering"],
-            zero_division=0
+            target_names=target_names,
+            zero_division=0,
+            labels=unique_labels if task == 'multiclass' else None
         ))
 
         # Confusion matrix plot
         cm = confusion_matrix(all_labels, all_preds)
-        fig, ax = plt.subplots(figsize=(6, 5))
-        disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=["Legit", "Laundering"])
-        disp.plot(ax=ax, colorbar=True, cmap="Blues")
+        fig, ax = plt.subplots(figsize=(8 if task == 'multiclass' else 6, 6 if task == 'multiclass' else 5))
+        disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=target_names)
+        disp.plot(ax=ax, colorbar=True, cmap="Blues", xticks_rotation='vertical' if task == 'multiclass' else 'horizontal')
         ax.set_title("Confusion Matrix — Transactions", fontsize=13, fontweight="bold")
         plt.tight_layout()
         plt.show()
-
     @staticmethod
-    def baseline_evaluation_report(model, test_loader, device, threshold=0.5, edge_mask_name=None):
+    def baseline_evaluation_report(model, test_loader, device, threshold=0.5, edge_mask_name=None, task='binary'):
         """
         Evaluates a :class:`StandaloneGNN` on the test set and reports:
           - Accuracy, Precision, Recall, F1-score, ROC-AUC
@@ -134,9 +161,10 @@ class Evaluator:
             model:          A StandaloneGNN instance in eval() mode.
             test_loader:    PyG NeighborLoader (or list containing the full Data).
             device:         torch.device to run inference on.
-            threshold:      Decision threshold for p_trans (default 0.5).
+            threshold:      Decision threshold for p_trans (default 0.5, binary only).
             edge_mask_name: Attribute name of the boolean edge mask to restrict
                             evaluation to the test split (e.g. 'edge_test_mask').
+            task:           'binary' or 'multiclass'
         """
         model.eval()
 
@@ -177,9 +205,15 @@ class Evaluator:
                 p_trans_masked = p_trans[mask]
                 y_trans_masked = batch.y_trans[mask]
 
-                probs = torch.sigmoid(p_trans_masked)
-                probs_flat = probs.view(-1).cpu().numpy()
-                preds  = (probs_flat >= threshold).astype(int)
+                if task == 'binary':
+                    probs = torch.sigmoid(p_trans_masked)
+                    probs_flat = probs.view(-1).cpu().numpy()
+                    preds  = (probs_flat >= threshold).astype(int)
+                else:
+                    probs = torch.softmax(p_trans_masked, dim=1)
+                    probs_flat = probs.cpu().numpy()
+                    preds = torch.argmax(probs, dim=1).cpu().numpy()
+                    
                 labels = y_trans_masked.view(-1).long().cpu().numpy()
 
                 all_probs.append(probs_flat)
@@ -195,14 +229,24 @@ class Evaluator:
         all_labels = np.concatenate(all_labels)
 
         # Compute metrics
-        acc  = accuracy_score(all_labels, all_preds)
-        prec = precision_score(all_labels, all_preds, zero_division=0)
-        rec  = recall_score(all_labels, all_preds, zero_division=0)
-        f1   = f1_score(all_labels, all_preds, zero_division=0)
-        try:
-            auc = roc_auc_score(all_labels, all_probs)
-        except ValueError:
-            auc = 0.0
+        if task == 'binary':
+            acc  = accuracy_score(all_labels, all_preds)
+            prec = precision_score(all_labels, all_preds, zero_division=0)
+            rec  = recall_score(all_labels, all_preds, zero_division=0)
+            f1   = f1_score(all_labels, all_preds, zero_division=0)
+            try:
+                auc = roc_auc_score(all_labels, all_probs)
+            except ValueError:
+                auc = 0.0
+        else:
+            acc  = accuracy_score(all_labels, all_preds)
+            prec = precision_score(all_labels, all_preds, average='macro', zero_division=0)
+            rec  = recall_score(all_labels, all_preds, average='macro', zero_division=0)
+            f1   = f1_score(all_labels, all_preds, average='macro', zero_division=0)
+            try:
+                auc = roc_auc_score(all_labels, all_probs, multi_class='ovr')
+            except ValueError:
+                auc = 0.0
 
         print("=" * 50)
         print("  BASELINE EVALUATION REPORT (Transactions / Edges)")
@@ -213,18 +257,95 @@ class Evaluator:
         print(f"  F1-Score  : {f1:.4f}")
         print(f"  ROC-AUC   : {auc:.4f}")
         print("-" * 50)
+        
+        if task == 'binary':
+            target_names = ["Legit", "Laundering"]
+        else:
+            pattern_mapping = {
+                0: 'LEGIT', 1: 'FAN-OUT', 2: 'FAN-IN', 3: 'CYCLE',
+                4: 'GATHER-SCATTER', 5: 'SCATTER-GATHER', 6: 'BIPARTITE',
+                7: 'STACK', 8: 'RANDOM'
+            }
+            # Only include classes that are present in the dataset (or all if we want fixed report)
+            unique_labels = sorted(list(set(all_labels) | set(all_preds)))
+            target_names = [pattern_mapping.get(i, f"Class {i}") for i in unique_labels]
+            
         print(classification_report(
             all_labels, all_preds,
-            target_names=["Legit", "Laundering"],
-            zero_division=0
+            target_names=target_names,
+            zero_division=0,
+            labels=unique_labels if task == 'multiclass' else None
         ))
 
         # Confusion matrix plot
         cm = confusion_matrix(all_labels, all_preds)
-        fig, ax = plt.subplots(figsize=(6, 5))
-        disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=["Legit", "Laundering"])
-        disp.plot(ax=ax, colorbar=True, cmap="Oranges")
+        fig, ax = plt.subplots(figsize=(8 if task == 'multiclass' else 6, 6 if task == 'multiclass' else 5))
+        disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=target_names)
+        disp.plot(ax=ax, colorbar=True, cmap="Oranges", xticks_rotation='vertical' if task == 'multiclass' else 'horizontal')
         ax.set_title("Baseline — Confusion Matrix (Transactions)", fontsize=13, fontweight="bold")
+        plt.tight_layout()
+        plt.show()
+
+    @staticmethod
+    def plot_multiclass_distribution(y_trans, train_edge_mask, val_edge_mask, test_edge_mask):
+        """
+        Plots the distribution of money laundering types in the dataset,
+        training set, validation set, and test set. Excludes the LEGIT class (0).
+
+        Args:
+            y_trans (torch.Tensor or np.ndarray): Ground truth labels for all transactions.
+            train_edge_mask (torch.Tensor or np.ndarray): Boolean mask for the training edges.
+            val_edge_mask (torch.Tensor or np.ndarray): Boolean mask for the validation edges.
+            test_edge_mask (torch.Tensor or np.ndarray): Boolean mask for the test edges.
+        """
+        import pandas as pd
+        import seaborn as sns
+        
+        if isinstance(y_trans, torch.Tensor):
+            y_trans = y_trans.cpu().numpy()
+        
+        y_trans = y_trans.flatten()
+        
+        pattern_mapping = {
+            1: 'FAN-OUT', 2: 'FAN-IN', 3: 'CYCLE',
+            4: 'GATHER-SCATTER', 5: 'SCATTER-GATHER', 6: 'BIPARTITE',
+            7: 'STACK', 8: 'RANDOM'
+        }
+
+        # Filter out legit transactions (class 0)
+        def get_counts(labels, mask=None):
+            if mask is not None:
+                if isinstance(mask, torch.Tensor):
+                    mask = mask.cpu().numpy()
+                labels = labels[mask]
+            
+            # Keep only classes > 0
+            labels = labels[labels > 0]
+            counts = pd.Series(labels).value_counts().sort_index()
+            return {pattern_mapping.get(k, f"Class {k}"): v for k, v in counts.items()}
+
+        overall_counts = get_counts(y_trans)
+        train_counts = get_counts(y_trans, train_edge_mask)
+        val_counts = get_counts(y_trans, val_edge_mask)
+        test_counts = get_counts(y_trans, test_edge_mask)
+
+        # Create a combined DataFrame for plotting
+        df_list = []
+        for class_name in pattern_mapping.values():
+            df_list.append({'Class': class_name, 'Count': overall_counts.get(class_name, 0), 'Split': 'Overall'})
+            df_list.append({'Class': class_name, 'Count': train_counts.get(class_name, 0), 'Split': 'Train'})
+            df_list.append({'Class': class_name, 'Count': val_counts.get(class_name, 0), 'Split': 'Validation'})
+            df_list.append({'Class': class_name, 'Count': test_counts.get(class_name, 0), 'Split': 'Test'})
+            
+        df = pd.DataFrame(df_list)
+
+        plt.figure(figsize=(14, 6))
+        sns.barplot(data=df, x='Class', y='Count', hue='Split')
+        plt.title('Distribution of Money Laundering Types (Excluding LEGIT)', fontsize=14, fontweight='bold')
+        plt.xlabel('Money Laundering Pattern', fontsize=12)
+        plt.ylabel('Number of Transactions', fontsize=12)
+        plt.xticks(rotation=45)
+        plt.legend(title='Dataset Split')
         plt.tight_layout()
         plt.show()
 

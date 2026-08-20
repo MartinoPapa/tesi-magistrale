@@ -6,7 +6,7 @@ from model.group_layer import GroupRepresentationLayer
 class GAGNN(nn.Module):
     def __init__(self, node_in_dim, edge_feat_dim, hidden_dim, out_dim, heads=5, beta=0.44,
                  mlp_hidden_dim=64, nn_t_hidden_dim=128, minibatches=True,
-                 gnn_type='gat', num_layers=2, gin_mlp_hidden_dim=128):
+                 gnn_type='gat', num_layers=2, gin_mlp_hidden_dim=128, num_classes=1):
         """
         GAGNN Model
         Args:
@@ -24,6 +24,7 @@ class GAGNN(nn.Module):
             num_layers:         Number of stacked GNN layers
             gin_mlp_hidden_dim: Hidden dimension of the MLP inside each GIN layer.
                                 Also used by GPSConv for its local GIN component.
+            num_classes:        Number of output classes for edge classification
         """
         super(GAGNN, self).__init__()
 
@@ -40,7 +41,8 @@ class GAGNN(nn.Module):
             minibatches=minibatches,
             gnn_type=gnn_type,
             num_layers=num_layers,
-            gin_mlp_hidden_dim=gin_mlp_hidden_dim
+            gin_mlp_hidden_dim=gin_mlp_hidden_dim,
+            num_classes=num_classes
         )
 
         self.training_losses = []
@@ -63,7 +65,8 @@ class GAGNN(nn.Module):
         self.group_layer = GroupRepresentationLayer(
             node_emb_dim=out_dim, 
             edge_feat_dim=edge_feat_dim,
-            mlp_hidden_dim=mlp_hidden_dim
+            mlp_hidden_dim=mlp_hidden_dim,
+            num_classes=num_classes
         )
 
 

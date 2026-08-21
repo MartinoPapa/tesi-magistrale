@@ -1,5 +1,12 @@
 \begin{thebibliography}{10}
 
+\bibitem{AMLWorld}
+Erik Altman, Jovan Blanusa, Luc Niederhäusern, Beni Egressy, Andreea Anghel,
+  and Kubilay Atasu.
+\newblock Realistic synthetic financial transactions for anti-money laundering
+  models.
+\newblock 12 2023.
+
 \bibitem{cafc_home}
 {Canadian Anti-Fraud Centre}.
 \newblock Canadian anti-fraud centre.
@@ -67,10 +74,23 @@ K.~Singh and P.~Best.
 \newblock {\em International Journal of Accounting Information Systems},
   34:100418, 2019.
 
+\bibitem{AMLSim}
+Toyotaro Suzumura and Hiroki Kanezashi.
+\newblock {Anti-Money Laundering Datasets}: {InPlusLab} anti-money laundering
+  datadatasets.
+\newblock \url{http://github.com/IBM/AMLSim/}, 2021.
+
 \bibitem{unodc2011estimating}
 {United Nations Office on Drugs and Crime (UNODC)}.
 \newblock {\em Estimating illicit financial flows resulting from drug
   trafficking and other transnational organized crimes}.
 \newblock UNODC Vienna, 2011.
+
+\bibitem{AMLgentex}
+Johan Östman, Edvin Callisen, Anton Chen, Kristiina Ausmees, Emanuel Gårdh,
+  Jovan Zamac, Jolanta Goldsteine, Hugo Wefer, Simon Whelan, and Markus
+  Reimegård.
+\newblock Amlgentex: Mobilizing data-driven research to combat money
+  laundering, 2025.
 
 \end{thebibliography}

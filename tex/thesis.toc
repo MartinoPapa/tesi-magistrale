@@ -8,16 +8,17 @@
 \contentsline {chapter}{\numberline {2}Financial Crime and Money Laundering}{11}{chapter.2}%
 \contentsline {section}{\numberline {2.1}The Limitations of the Lonely Scammer}{11}{section.2.1}%
 \contentsline {section}{\numberline {2.2}Fraud Rings}{12}{section.2.2}%
-\contentsline {section}{\numberline {2.3}ML patterns}{12}{section.2.3}%
-\contentsline {chapter}{\numberline {3}Ethics, Privacy and Regulations}{13}{chapter.3}%
-\contentsline {chapter}{\numberline {4}State of the Art}{15}{chapter.4}%
-\contentsline {chapter}{\numberline {5}Proposed Approaches and Methodology}{17}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Experiments}{19}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Experimental Settings}{19}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Hyperparameter Tuning}{19}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Experimental Results and Discussion}{19}{section.6.3}%
-\contentsline {chapter}{\numberline {7}Challenges}{21}{chapter.7}%
-\contentsline {chapter}{\numberline {8}Conclusion}{23}{chapter.8}%
-\contentsline {chapter}{\numberline {9}Future Directions}{25}{chapter.9}%
-\contentsline {chapter}{\numberline {A}Software}{27}{appendix.A}%
+\contentsline {section}{\numberline {2.3}Money Laundering patterns}{12}{section.2.3}%
+\contentsline {chapter}{\numberline {3}Ethics, Privacy and Regulations}{15}{chapter.3}%
+\contentsline {chapter}{\numberline {4}State of the Art}{17}{chapter.4}%
+\contentsline {chapter}{\numberline {5}Task}{19}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Proposed Approaches and Methodology}{21}{chapter.6}%
+\contentsline {chapter}{\numberline {7}Experiments}{23}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Experimental Settings}{23}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Hyperparameter Tuning}{23}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Experimental Results and Discussion}{23}{section.7.3}%
+\contentsline {chapter}{\numberline {8}Challenges}{25}{chapter.8}%
+\contentsline {chapter}{\numberline {9}Conclusion}{27}{chapter.9}%
+\contentsline {chapter}{\numberline {10}Future Directions}{29}{chapter.10}%
+\contentsline {chapter}{\numberline {A}Software}{31}{appendix.A}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

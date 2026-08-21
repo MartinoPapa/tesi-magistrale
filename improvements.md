@@ -21,6 +21,10 @@ Exploring Explainable AI in the Financial Sector: Perspectives of Banks and Supe
 3. Graph Transformers, Graph Isomorphism Networks
 -> studio e implemento al posto di GAT
 
+- provo differenti tipi di GNN come Local Message Passing Neural Network nei GT
+
+- scrivo in esperimenti le caratteristiche di tutti i modelli (funzione attivazione, head, ...)
+
 pyarrow invece di numpy per salvare il dataset
 
 

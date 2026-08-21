@@ -4,6 +4,8 @@
 \chapter{Financial Crime and Money Laundering}
 \label{moneyLaundering}
 %--------------------------------------------------------------
+Understanding how money laundering works is fundamental to garantee both an effective and explainable detection of suspicious transaction. 
+This chapter offers a theoretical introduction to money laundering providing a mathematical formulation of the problem together with a summary of common strategies employed by criminals to avoid detection.
 \section{The Limitations of the Lonely Scammer}
 Individual scammers typically rely on simple and intuitive techniques to introduce illicit funds into the legitimate economy. One of the most prevalent methods is known as ``smurfing''. In simple terms, smurfing involves breaking down a large sum of illicit money into many smaller, inconspicuous chunks to deposit them without raising suspicion. 
 
@@ -25,4 +27,26 @@ By spreading the funds through a complex topology, the fraud ring successfully i
 \end{equation}
 where $E[\pi_L]$ is the expected profit, $p_L$ is the enhanced probability of evading detection when $L$ layers are used, $x$ is the total illicit funds, $T$ is the total penalty if caught, and $c(L)$ represents the monotonic cost function associated with establishing and maintaining the $L$ transaction layers. Because the fraud ring dramatically increases the probability of evading detection ($p_L \to 1$ as $L$ increases), the expected payoff remains highly profitable even when factoring in the complex layering costs $c(L)$ \cite{contreras2026strategic}. 
 
-\section{ML patterns}
+\section{Money Laundering patterns}
+Understanding the structural patterns that criminality assumes is fundamental to develop effective detection models and to employ strategies to enhance the explainability of them. According to the literature, there are 8 different patterns that are often used in ML \cite{AMLSim, AMLWorld}. 
+\begin{figure}
+    \centering
+    \includegraphics[width=1\textwidth]{IMG/laundering_patterns.jpg}
+    \caption{Money Laundering patterns}
+    \label{fig:launderingPatterns}
+\end{figure}
+Which are: 
+\begin{itemize}
+    \item \textit{fan-out}, shown in Figure \ref{fig:launderingPatterns} a, characterized by outgoing edges from a node $v$ to more than 2 adjacent nodes; 
+    \item \textit{fan-in}, Figure \ref{fig:launderingPatterns} b, $v$ is connected to more than 2 nodes by incoming edges;
+    \item \textit{gather-scatter}, Figure \ref{fig:launderingPatterns} c, is the combination of a fan-in and a fan-out pattern on the same node $v$;
+    \item \textit{scatter-gather}, Figure \ref{fig:launderingPatterns} d, also composed by a fan-in and a fan-out pattern but on two different nodes, sharing the same intermediate neighbors;
+    \item \textit{simple-cycle}, Figure \ref{fig:launderingPatterns} e, characterized by a sequence of transactions that starts and ends at the same node;
+    \item \textit{random}, Figure \ref{fig:launderingPatterns} f, similar to the cycle but founds do not return to the original account;
+    \item \textit{bipartite}, Figure \ref{fig:launderingPatterns} g, moves founds from a set of original nodes to a set of target nodes, with no transactions between accounts of the same set;
+    \item \textit{stack}, Figure \ref{fig:launderingPatterns} h, extends the bipartite pattern by adding a second bipartite layer.
+\end{itemize}
+It's important to mention that in some cases some patterns can be found in both illicit and licit transactions \cite{AMLgentex}. Specifically, \textit{fan-in} and \textit{fan-out} are patterns that are also frequent in legitimate, every-day transactions, such as salary payments or transfers between family members or friends.
+That being said, the detection of such patterns remains a foundamental component of any money laundering detection models, albeit insufficient on its own.
+Furthermore, a model that correctly classifies those patterns provides a much more interpretable result than one that simply performs a binary classification between licit and illicit transactions. In Chapter \ref{ethics_privacy_regulations} we will see why explainability is of fundamental importance in the financial field. 
+

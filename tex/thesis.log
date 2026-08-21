@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.12.20)  20 AUG 2026 12:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.12.20)  21 AUG 2026 16:30
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -813,7 +813,7 @@ File: lstlang1.sty 2020/03/24 1.8d listings language file
 LaTeX Font Info:    Trying to load font information for T1+pplj on input line 81.
  (c:/texlive/2022/texmf-dist/tex/latex/psnfss/t1pplj.fd
 File: t1pplj.fd 2004/09/06 font definitions for T1/pplj.
-) (./thesis.aux (./Sections/titlePage.aux) (./Sections/abstract.aux) (./Sections/introduction.aux) (./Sections/moneyLaundering.aux) (./Sections/ethics-privacy-regulations.aux) (./Sections/stateOfTheArt.aux) (./Sections/proposedModels.aux) (./Sections/experiments.aux) (./Sections/challenges.aux) (./Sections/conclusion.aux) (./Sections/futureDirections.aux) (./Sections/software.aux))
+) (./thesis.aux (./Sections/titlePage.aux) (./Sections/abstract.aux) (./Sections/introduction.aux) (./Sections/moneyLaundering.aux) (./Sections/ethics-privacy-regulations.aux) (./Sections/stateOfTheArt.aux) (./Sections/task.aux) (./Sections/proposedModels.aux) (./Sections/experiments.aux) (./Sections/challenges.aux) (./Sections/conclusion.aux) (./Sections/futureDirections.aux) (./Sections/software.aux))
 \openout1 = `thesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 81.
@@ -1115,7 +1115,13 @@ Class scrbook Warning: Redefinition of \@makechapterhead detected.
 
 
 
-]) [12]
+]
+<IMG/laundering_patterns.jpg, id=175, 1064.778pt x 202.95825pt>
+File: IMG/laundering_patterns.jpg Graphic file (type jpg)
+<use IMG/laundering_patterns.jpg>
+Package pdftex.def Info: IMG/laundering_patterns.jpg  used on input line 34.
+(pdftex.def)             Requested size: 384.1122pt x 73.21666pt.
+ [12] [13 <./IMG/laundering_patterns.jpg>]) [14]
 \openout2 = `Sections/ethics-privacy-regulations.aux'.
 
  (./Sections/Ethics-privacy-regulations.tex
@@ -1131,7 +1137,7 @@ Class scrbook Warning: Redefinition of \@makechapterhead detected.
 (scrbook)              KOMA-Script and will not work with a coming version,
 (scrbook)              that will remove this deprecated code.
 
-) [13
+) [15
 
 
 
@@ -1140,7 +1146,7 @@ Class scrbook Warning: Redefinition of \@makechapterhead detected.
 ]
 \openout2 = `Sections/stateOfTheArt.aux'.
 
- (./Sections/stateOfTheArt.tex [14
+ (./Sections/stateOfTheArt.tex [16
 
 
 
@@ -1159,10 +1165,10 @@ Class scrbook Warning: Redefinition of \@makechapterhead detected.
 (scrbook)              KOMA-Script and will not work with a coming version,
 (scrbook)              that will remove this deprecated code.
 
-) [15]
-\openout2 = `Sections/proposedModels.aux'.
+) [17]
+\openout2 = `Sections/task.aux'.
 
- (./Sections/proposedModels.tex [16
+ (./Sections/task.tex [18
 
 
 
@@ -1181,10 +1187,10 @@ Class scrbook Warning: Redefinition of \@makechapterhead detected.
 (scrbook)              KOMA-Script and will not work with a coming version,
 (scrbook)              that will remove this deprecated code.
 
-) [17]
-\openout2 = `Sections/experiments.aux'.
+) [19]
+\openout2 = `Sections/proposedModels.aux'.
 
- (./Sections/experiments.tex [18
+ (./Sections/proposedModels.tex [20
 
 
 
@@ -1203,10 +1209,10 @@ Class scrbook Warning: Redefinition of \@makechapterhead detected.
 (scrbook)              KOMA-Script and will not work with a coming version,
 (scrbook)              that will remove this deprecated code.
 
-) [19]
-\openout2 = `Sections/challenges.aux'.
+) [21]
+\openout2 = `Sections/experiments.aux'.
 
- (./Sections/challenges.tex [20
+ (./Sections/experiments.tex [22
 
 
 
@@ -1225,10 +1231,10 @@ Class scrbook Warning: Redefinition of \@makechapterhead detected.
 (scrbook)              KOMA-Script and will not work with a coming version,
 (scrbook)              that will remove this deprecated code.
 
-) [21]
-\openout2 = `Sections/conclusion.aux'.
+) [23]
+\openout2 = `Sections/challenges.aux'.
 
- (./Sections/conclusion.tex [22
+ (./Sections/challenges.tex [24
 
 
 
@@ -1247,10 +1253,10 @@ Class scrbook Warning: Redefinition of \@makechapterhead detected.
 (scrbook)              KOMA-Script and will not work with a coming version,
 (scrbook)              that will remove this deprecated code.
 
-) [23]
-\openout2 = `Sections/futureDirections.aux'.
+) [25]
+\openout2 = `Sections/conclusion.aux'.
 
- (./Sections/futureDirections.tex [24
+ (./Sections/conclusion.tex [26
 
 
 
@@ -1269,10 +1275,32 @@ Class scrbook Warning: Redefinition of \@makechapterhead detected.
 (scrbook)              KOMA-Script and will not work with a coming version,
 (scrbook)              that will remove this deprecated code.
 
-) [25]
+) [27]
+\openout2 = `Sections/futureDirections.aux'.
+
+ (./Sections/futureDirections.tex [28
+
+
+
+
+
+]
+chapter 10.
+
+Class scrbook Warning: Redefinition of \@makechapterhead detected.
+(scrbook)              Note: KOMA-Script does use styles for commands like
+(scrbook)              \chapter. Currently it internally still provides and
+(scrbook)              uses \@makechapterhead, but a completely different
+(scrbook)              definition compared to the standard classes.
+(scrbook)              So redefining or using internal \@makechapterhead
+(scrbook)              by users or package authors may already break
+(scrbook)              KOMA-Script and will not work with a coming version,
+(scrbook)              that will remove this deprecated code.
+
+) [29]
 \openout2 = `Sections/software.aux'.
 
- (./Sections/software.tex [26
+ (./Sections/software.tex [30
 
 
 
@@ -1291,11 +1319,11 @@ Class scrbook Warning: Redefinition of \@makechapterhead detected.
 (scrbook)              KOMA-Script and will not work with a coming version,
 (scrbook)              that will remove this deprecated code.
 
-) [27] (./thesis.bbl (./thesis.brf)
+) [31] (./thesis.bbl (./thesis.brf)
 \tf@brf=\write6
 \openout6 = `thesis.brf'.
 
- [28
+ [32
 
 
 
@@ -1312,35 +1340,35 @@ Class scrbook Warning: Redefinition of \@makeschapterhead detected.
 (scrbook)              KOMA-Script and will not work with a coming version,
 (scrbook)              that will remove this deprecated code.
 
-LaTeX Font Info:    Trying to load font information for T1+fvm on input line 9.
+LaTeX Font Info:    Trying to load font information for T1+fvm on input line 16.
 (c:/texlive/2022/texmf-dist/tex/latex/bera/t1fvm.fd
 File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
 )
 LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 10.20007pt on input line 9.
+(Font)              scaled to size 10.20007pt on input line 16.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `fvm' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- [29]) [30] (./thesis.aux (./Sections/titlePage.aux) (./Sections/abstract.aux) (./Sections/introduction.aux) (./Sections/moneyLaundering.aux) (./Sections/ethics-privacy-regulations.aux) (./Sections/stateOfTheArt.aux) (./Sections/proposedModels.aux) (./Sections/experiments.aux) (./Sections/challenges.aux) (./Sections/conclusion.aux) (./Sections/futureDirections.aux) (./Sections/software.aux))
+ [33]) [34] (./thesis.aux (./Sections/titlePage.aux) (./Sections/abstract.aux) (./Sections/introduction.aux) (./Sections/moneyLaundering.aux) (./Sections/ethics-privacy-regulations.aux) (./Sections/stateOfTheArt.aux) (./Sections/task.aux) (./Sections/proposedModels.aux) (./Sections/experiments.aux) (./Sections/challenges.aux) (./Sections/conclusion.aux) (./Sections/futureDirections.aux) (./Sections/software.aux))
 Package rerunfilecheck Info: File `thesis.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 Package rerunfilecheck Info: File `thesis.brf' has not changed.
-(rerunfilecheck)             Checksum: E77CBB8E834341616505229AADCC2EE5;830.
+(rerunfilecheck)             Checksum: CABD959AB842B27F9E21E43D97BB158C;969.
  ) 
 Here is how much of TeX's memory you used:
- 28477 strings out of 476093
- 572452 string characters out of 5795582
+ 28605 strings out of 476093
+ 574577 string characters out of 5795582
  1863787 words of memory out of 5000000
- 47904 multiletter control sequences out of 15000+600000
- 580078 words of font info for 344 fonts, out of 8000000 for 9000
+ 47968 multiletter control sequences out of 15000+600000
+ 582637 words of font info for 380 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,23n,135p,10649b,1127s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 108i,23n,137p,10649b,1127s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {c:/texlive/2022/texmf-dist/fonts/enc/dvips/base/8r.enc}<c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/euler/euex10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/euler/eufm10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/euler/eurb10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/euler/eurm10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/euler/eusm10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/fpl/fplbj8a.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/fpl/fplrc8a.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/bera/fvmr8a.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb><c:/texlive/2022/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb><c:/texlive/2022/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on thesis.pdf (33 pages, 220410 bytes).
+Output written on thesis.pdf (37 pages, 342092 bytes).
 PDF statistics:
- 409 PDF objects out of 1000 (max. 8388607)
- 340 compressed objects within 4 object streams
- 75 named destinations out of 1000 (max. 500000)
- 75430 words of extra memory for PDF output out of 89155 (max. 10000000)
+ 457 PDF objects out of 1000 (max. 8388607)
+ 383 compressed objects within 4 object streams
+ 84 named destinations out of 1000 (max. 500000)
+ 75443 words of extra memory for PDF output out of 89155 (max. 10000000)
 

@@ -1,7 +1,35 @@
 \chapter{Ethics, Privacy and Regulations}
 \label{ethics_privacy_regulations}
-% Explainability regulations.
-% How to achive explainability in our case (Pattern identification, Explainable AI)
+In this chapter we will begin by introducing a brief overview of the regulations that currently govern the field of AML.
+Subsequently a discussion on the main issues that the use of ML models may introduce will be provided, toghether with suggested solutions to address them. A special focus will be reserved to the issues of explainability and privacy.
+To conclude we will consider the use of Synthetic Datasets as a possible solution to these issues, analyzing their limits and advantages in the context of AML.
+\section{AML Global Regulations}
+Effective ML detection requires a combination of domestic laws, regulatory oversight, and international cooperation. Since the end of the 20th century the United States and the Eureopean Union as key jurisdictions, toghether with the FAFT \footnote{The Financial Action Task Force (FATF) is an intergovernmental policymaking body established in 1989 by the G7} as the global leading standard-setter have been developing and elaborate framework for AML \cite{regulations}.
+
+In 1989 the G-7 nations enstabished an inter-governmental task force to develop and promote international guidelines in regard to fight money laundering, the FATF. Nowadays FAFT still holds a central role in the AML field. It has issued 40 recomendations for national laws and international cooperation \cite{regulations}.
+These principles have been adopted by over than 200 jurisdictions and they fall into 5 main areas \cite{ruleBased}:
+\begin{itemize}
+    \item Risk Based Approach (RBA): jurisdictions must identify and understand the financial crime risks that they face, allocating the right amount of resources to mitigate them;
+    \item Legal Framework: members nations must adopt laws that criminalize money laundering; furthermore authorithies must be given the power to freeze and confiscate funds when needed;
+    \item Preventive Measures:
+    \begin{itemize}
+        \item Customer Due Diligence (CDD): financial instututions must verify the identity of their customers;
+        \item Ultimate Beneficial Ownership (OBO): company's owners must be verified, this adresses the issue of criminals hiding behind shell instututions;
+        \item Record Keeping: financial instututions must mantain their transactions recrds for at least 5 years and file Suspicious Transactions Reports (STRs) to Financial Intelligence Units (FIUs).
+    \end{itemize} 
+    \item Supervision and Transparency: regulators must actively supervise financial instututions; members nations must immediatly enforce UN financial sanctions when required to.
+    \item International cooperation: members must share informations quickly and provide legal assistance to each other in international investigations.
+\end{itemize}
+In regard to those guidelines FAFT keeps a \textit{black-list} and a \textit{grey-list} of jurisdictions that are not compliant with its standards \cite{regulations}.
+
+\section{Ethical and practical issues}
+% trade off tra risultati e explainability
+% Necessità di trovare tutte le frodi anche a costo di un maggior numero di falsi allarmi
 % Differential privacy to train from datasets from multiple banks.
-% synthetic financial data
+% How to achive explainability in our case (Pattern identification, Explainable AI)
+% Explainability regulations.
+
+\section{Synthetic Datasets}
 % 3.1 Motivation for Synthetic Data
+
+

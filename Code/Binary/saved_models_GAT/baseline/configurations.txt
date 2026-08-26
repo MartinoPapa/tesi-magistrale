@@ -1,0 +1,11 @@
+Total configurations tested: 324
+
+Hyperparameter grids:
+baseline_max_norm_clipping: [5.0]
+baseline_hidden_dims: [64, 128]
+baseline_out_dims: [64, 128, 256]
+baseline_heads_list: [3, 5, 7]
+baseline_num_layers_list: [2, 3]
+baseline_mlp_hidden_dims: [64, 128, 256]
+baseline_learning_rates: [0.0005]
+baseline_laundry_weights: [1.0, 2.0, 3.0]

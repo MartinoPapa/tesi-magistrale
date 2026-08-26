@@ -1,0 +1,16 @@
+Total configurations tested: 2592
+
+Hyperparameter grids:
+max_norm_clipping: [5.0]
+hidden_dims: [64, 128]
+out_dims: [64, 128]
+heads_list: [3, 5]
+num_layers_list: [2, 3]
+betas: [0.44]
+mlp_hidden_dims: [128]
+nn_t_hidden_dims: [128, 256]
+learning_rates: [0.0001]
+c1_list: [0.65, 0.75, 0.85]
+c2_list: [0.65, 0.75, 0.85]
+c3_list: [0.9, 1.0, 1.1]
+laundry_weights: [1.0, 2.0, 3.0]

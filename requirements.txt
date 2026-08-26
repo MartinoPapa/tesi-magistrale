@@ -8,3 +8,5 @@ torch
 torch-geometric
 pyarrow
 jupyter
+torch-sparse
+pyg-lib

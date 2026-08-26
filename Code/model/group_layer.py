@@ -46,14 +46,16 @@ class GroupRepresentationLayer(nn.Module):
         
         # 2. Node Aggregation Policy
         # Use predicted probabilities or ground truth for Bernoulli sampling
+        # Force FP32 for numerically sensitive operations (sigmoid, softmax, bernoulli)
+        p_trans_f32 = p_trans.float()
         if self.num_classes == 1:
-            p = torch.sigmoid(p_trans.squeeze())
+            p = torch.sigmoid(p_trans_f32.squeeze())
             # If we are training, we might use the ground truth labels for training edges
             if y_trans is not None and trans_mask is not None:
                 p[trans_mask] = y_trans.squeeze()[trans_mask]
         else:
             # For multiclass, group nodes if they belong to any illicit pattern (class > 0)
-            probs = torch.softmax(p_trans, dim=1)
+            probs = torch.softmax(p_trans_f32, dim=1)
             # Probability of being illicit is sum of probabilities of all illicit classes (1 to num_classes-1)
             # Alternatively, 1 - P(LEGIT)
             p = 1.0 - probs[:, 0].squeeze()
@@ -102,6 +104,8 @@ class GroupRepresentationLayer(nn.Module):
         edge_index_hat = torch.stack([row_hat[mask], col_hat[mask]], dim=0)
         
         # Remove duplicate edges in the new graph to keep it clean
-        edge_index_hat = torch.unique(edge_index_hat, dim=1)
+        # Using coalesce instead of unique(dim=1) to avoid CUDA merge_sort illegal memory access bugs
+        from torch_geometric.utils import coalesce
+        edge_index_hat = coalesce(edge_index_hat)
         
         return p_trans, X_hat, edge_index_hat, group_mapping

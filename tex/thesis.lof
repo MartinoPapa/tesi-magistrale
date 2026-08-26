@@ -2,7 +2,9 @@
 \deactivateaddvspace 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1}{\ignorespaces Money Laundering patterns\relax }}{13}{figure.caption.4}%
+\contentsline {figure}{\numberline {1}{\ignorespaces Money Laundering patterns}}{13}{figure.caption.4}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2}{\ignorespaces Overview of AMLworld simulation \cite {AMLWorld}}}{17}{figure.caption.5}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
@@ -10,5 +12,5 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\addvspace {10\p@ }
+\def \@chapapp {\appendixname }
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

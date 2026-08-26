@@ -18,18 +18,28 @@ These principles have been adopted by over than 200 jurisdictions and they fall 
         \item Record Keeping: financial instututions must mantain their transactions recrds for at least 5 years and file Suspicious Transactions Reports (STRs) to Financial Intelligence Units (FIUs).
     \end{itemize} 
     \item Supervision and Transparency: regulators must actively supervise financial instututions; members nations must immediatly enforce UN financial sanctions when required to.
-    \item International cooperation: members must share informations quickly and provide legal assistance to each other in international investigations.
+    \item International cooperation: members must quickly share information and provide mutual legal assistance in international investigations.
 \end{itemize}
 In regard to those guidelines FAFT keeps a \textit{black-list} and a \textit{grey-list} of jurisdictions that are not compliant with its standards \cite{regulations}.
 
 \section{Ethical and practical issues}
-% trade off tra risultati e explainability
-% Necessità di trovare tutte le frodi anche a costo di un maggior numero di falsi allarmi
-% Differential privacy to train from datasets from multiple banks.
-% How to achive explainability in our case (Pattern identification, Explainable AI)
-% Explainability regulations.
+When considering real-world datasets, models that detect financial crime are trained on sensitive data that needs to be protected. To avoid the leakage of sensitive information, before feeding ML models, it is necessary to apply privacy-preserving techniques. The most common practice is to apply differential privacy, which adds noise to the dataset to protect individual data points. That noise can be quantified using the privacy budget $\epsilon$, which determines the trade-off between privacy and utility. All this comes at the cost of reducing the accuracy of the model.
 
-\section{Synthetic Datasets}
-% 3.1 Motivation for Synthetic Data
+Another significant issue to consider is explainability. Regulators require banks to explain their decisions, and this requirement extends to the ML models they use. Deep Learning models, albeit generally more precise and powerful than traditional ML models, are often \textit{black-boxes}, meaning their decision process is very difficoult to understand for a human being.  
+
+Real datasets are also often limited by the fact that the informations are not shared accross jurisdictions, making it difficult to detect frauds that cross borders.
+
+To tackle all those problematics researchers at IBM developed a simulator for generating realistic financial transactions, called AMLWorld (2023) \cite{AMLWorld}. This simulator solves the privacy problem, simulates multi-jurisdictional transactions and it even tries to takle the explainability issue by providing as lable not only a boolean value for the presence of a fraud, but also the ML pattern that caracterized it. This wouldn't be possible in real life, but models trained on this synthetic dataset could be able to generalize the detection of patterns even in real world scenarios, highly enhancing interpretability.
+Figure \ref{fig:amlsim_architecture} provides an overview on how AMLWorld generates realistic financial transactions and patterns of financial crime. 
+
+The possible laundering patterns are the one described in Section \ref{mlpatterns}; the model assumes the existence of 9 different surces of criminal activities: extortion, loan sharking, gambling, prostitution, kidnapping, robbery, embezzlement, drugs, and smuggling. The amount of money and the frequency of these criminal enterprises vary by both activity category and acting entity \cite{AMLWorld}. The funds are then inserted in the financial system alongside the legit ones.
+\begin{figure}
+    \centering
+    \includegraphics[width=1\textwidth]{IMG/AMLWorld.png}
+    \caption{Overview of AMLworld simulation \cite{AMLWorld}}
+    \label{fig:amlsim_architecture}
+\end{figure}
+
+
 
 

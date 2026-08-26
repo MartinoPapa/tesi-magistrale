@@ -14,7 +14,12 @@
 \documentclass[twoside,openright,titlepage,fleqn,
 	headinclude,12pt,a4paper,BCOR=5mm,footinclude]{scrbook}
 %--------------------------------------------------------------
-
+\usepackage{silence}
+\WarningFilter{scrbook}{Usage of package `titlesec'}
+\WarningFilter{scrbook}{Usage of package `tocloft'}
+\WarningFilter{titlesec}{Non standard sectioning command}
+\WarningFilter{scrbook}{Redefinition of \@makechapterhead}
+\WarningFilter{scrbook}{Redefinition of \@makeschapterhead}
 \newcommand{\myTitle}{Anti-Money Laundering with Graph Neural Networks\xspace}
 \newcommand{\myName}{Name Surname\xspace}
 \newcommand{\myProf}{prof. Name Surname\xspace}

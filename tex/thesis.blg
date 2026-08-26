@@ -1,61 +1,72 @@
-This is BibTeX, Version 0.99d (TeX Live 2022)
+This is BibTeX, Version 0.99e
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: thesis.aux
+Reallocating 'name_of_file' (item size: 1) to 23 items.
 A level-1 auxiliary file: Sections/titlePage.aux
+Reallocating 'name_of_file' (item size: 1) to 22 items.
 A level-1 auxiliary file: Sections/abstract.aux
+Reallocating 'name_of_file' (item size: 1) to 26 items.
 A level-1 auxiliary file: Sections/introduction.aux
+Reallocating 'name_of_file' (item size: 1) to 29 items.
 A level-1 auxiliary file: Sections/moneyLaundering.aux
+Reallocating 'name_of_file' (item size: 1) to 40 items.
 A level-1 auxiliary file: Sections/ethics-privacy-regulations.aux
+Reallocating 'name_of_file' (item size: 1) to 18 items.
 A level-1 auxiliary file: Sections/task.aux
+Reallocating 'name_of_file' (item size: 1) to 28 items.
 A level-1 auxiliary file: Sections/proposedModels.aux
+Reallocating 'name_of_file' (item size: 1) to 25 items.
 A level-1 auxiliary file: Sections/experiments.aux
+Reallocating 'name_of_file' (item size: 1) to 24 items.
 A level-1 auxiliary file: Sections/challenges.aux
+Reallocating 'name_of_file' (item size: 1) to 24 items.
 A level-1 auxiliary file: Sections/conclusion.aux
+Reallocating 'name_of_file' (item size: 1) to 30 items.
 A level-1 auxiliary file: Sections/futureDirections.aux
+Reallocating 'name_of_file' (item size: 1) to 22 items.
 A level-1 auxiliary file: Sections/software.aux
+Reallocating 'name_of_file' (item size: 1) to 6 items.
 The style file: plain.bst
+Reallocating 'name_of_file' (item size: 1) to 5 items.
 Database file #1: refs.bib
-Warning--empty journal in AMLWorld
-Warning--empty journal in ruleBased
 You've used 16 entries,
             2118 wiz_defined-function locations,
             604 strings with 7405 characters,
-and the built_in function-call counts, 5191 in all, are:
-= -- 481
+and the built_in function-call counts, 5179 in all, are:
+= -- 477
 > -- 312
 < -- 1
 + -- 125
 - -- 108
-* -- 366
-:= -- 916
-add.period$ -- 49
+* -- 362
+:= -- 904
+add.period$ -- 47
 call.type$ -- 16
 change.case$ -- 102
 chr.to.int$ -- 0
-cite$ -- 18
-duplicate$ -- 169
-empty$ -- 365
+cite$ -- 16
+duplicate$ -- 163
+empty$ -- 375
 format.name$ -- 108
-if$ -- 1044
+if$ -- 1050
 int.to.chr$ -- 0
 int.to.str$ -- 16
-missing$ -- 13
-newline$ -- 83
+missing$ -- 11
+newline$ -- 81
 num.names$ -- 32
-pop$ -- 113
+pop$ -- 119
 preamble$ -- 1
 purify$ -- 86
 quote$ -- 0
-skip$ -- 123
+skip$ -- 125
 stack$ -- 0
 substring$ -- 228
-swap$ -- 23
+swap$ -- 25
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 62
-warning$ -- 2
+warning$ -- 0
 while$ -- 41
 width$ -- 18
-write$ -- 169
-(There were 2 warnings)
+write$ -- 167

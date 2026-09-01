@@ -13,14 +13,16 @@
 \contentsline {section}{\numberline {3.1}AML Global Regulations}{15}{section.3.1}%
 \contentsline {section}{\numberline {3.2}Ethical and practical issues}{16}{section.3.2}%
 \contentsline {chapter}{\numberline {4}Task}{19}{chapter.4}%
-\contentsline {chapter}{\numberline {5}Proposed Approaches and Methodology}{21}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Experiments}{23}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Experimental Settings}{23}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Hyperparameter Tuning}{23}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Experimental Results and Discussion}{23}{section.6.3}%
-\contentsline {chapter}{\numberline {7}Challenges}{25}{chapter.7}%
-\contentsline {chapter}{\numberline {8}Conclusion}{27}{chapter.8}%
-\contentsline {chapter}{\numberline {9}Future Directions}{29}{chapter.9}%
-\contentsline {chapter}{\numberline {A}Software}{31}{appendix.A}%
+\contentsline {section}{\numberline {4.1}Dataset description}{20}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Features analysis}{21}{section.4.2}%
+\contentsline {chapter}{\numberline {5}Proposed Approaches and Methodology}{27}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Experiments}{29}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Experimental Settings}{29}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Hyperparameter Tuning}{29}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Experimental Results and Discussion}{29}{section.6.3}%
+\contentsline {chapter}{\numberline {7}Challenges}{31}{chapter.7}%
+\contentsline {chapter}{\numberline {8}Conclusion}{33}{chapter.8}%
+\contentsline {chapter}{\numberline {9}Future Directions}{35}{chapter.9}%
+\contentsline {chapter}{\numberline {A}Software}{37}{appendix.A}%
 \def \@chapapp {\appendixname }
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

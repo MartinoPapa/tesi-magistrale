@@ -22,7 +22,7 @@ These principles have been adopted by over than 200 jurisdictions and they fall 
 \end{itemize}
 In regard to those guidelines FAFT keeps a \textit{black-list} and a \textit{grey-list} of jurisdictions that are not compliant with its standards \cite{regulations}.
 
-\section{Ethical and practical issues}
+\section{Ethical and practical issues} \label{patterns}
 When considering real-world datasets, models that detect financial crime are trained on sensitive data that needs to be protected. To avoid the leakage of sensitive information, before feeding ML models, it is necessary to apply privacy-preserving techniques. The most common practice is to apply differential privacy, which adds noise to the dataset to protect individual data points. That noise can be quantified using the privacy budget $\epsilon$, which determines the trade-off between privacy and utility. All this comes at the cost of reducing the accuracy of the model.
 
 Another significant issue to consider is explainability. Regulators require banks to explain their decisions, and this requirement extends to the ML models they use. Deep Learning models, albeit generally more precise and powerful than traditional ML models, are often \textit{black-boxes}, meaning their decision process is very difficoult to understand for a human being.  

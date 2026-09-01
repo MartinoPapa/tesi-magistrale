@@ -1,4 +1,4 @@
-Total configurations tested: 64
+Total configurations tested: 48
 
 Hyperparameter grids:
 max_norm_clipping: [5.0]
@@ -14,4 +14,4 @@ learning_rates: [0.0005]
 c1_list: [0.75]
 c2_list: [0.75]
 c3_list: [1.0]
-laundry_weights: [1.0, 2.0, 3.0, 4.0]
+laundry_weights: [1.0, 2.0, 3.0]

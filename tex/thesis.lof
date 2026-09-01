@@ -6,6 +6,16 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {2}{\ignorespaces Overview of AMLworld simulation \cite {AMLWorld}}}{17}{figure.caption.5}%
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {3}{\ignorespaces IBM AMLSim datasets statistics \cite {AMLWorld}}}{20}{figure.caption.6}%
+\contentsline {figure}{\numberline {4}{\ignorespaces IBM AMLSim account records}}{22}{figure.caption.7}%
+\contentsline {figure}{\numberline {5}{\ignorespaces IBM AMLSim transaction records}}{22}{figure.caption.8}%
+\contentsline {figure}{\numberline {6}{\ignorespaces IBM AMLSim patterns examples}}{23}{figure.caption.9}%
+\contentsline {figure}{\numberline {7}{\ignorespaces IBM AMLSim patterns distribution over fraudulent edges}}{24}{figure.caption.10}%
+\contentsline {figure}{\numberline {8}{\ignorespaces IBM AMLSim amounts distribution}}{25}{figure.caption.11}%
+\contentsline {figure}{\numberline {9}{\ignorespaces IBM AMLSim currencies distribution}}{25}{figure.caption.12}%
+\contentsline {figure}{\numberline {10}{\ignorespaces IBM AMLSim payment formats distribution}}{26}{figure.caption.13}%
+\contentsline {figure}{\numberline {11}{\ignorespaces IBM AMLSim hour and day of the week distributions}}{26}{figure.caption.14}%
+\contentsline {figure}{\numberline {12}{\ignorespaces IBM AMLSim banks distribution}}{26}{figure.caption.15}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.8.25)  26 AUG 2026 16:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.8.25)  1 SEP 2026 15:38
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -811,50 +811,50 @@ Class scrbook Info: loading recommended package `bookmark'.
 (scrbook)           `bookmarkpackage=false' before \begin{document} and
 (scrbook)           you can avoid this message adding:
 (scrbook)             \usepackage{bookmark}
-(scrbook)           before \begin{document} on input line 86.
+(scrbook)           before \begin{document} on input line 85.
  (C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/latex/bookmark\bookmark.sty
 Package: bookmark 2026-05-21 v1.32 PDF bookmarks (HO)
  (C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/latex/bookmark\bkm-pdftex.def
 File: bkm-pdftex.def 2026-05-21 v1.32 bookmark driver for pdfTeX (HO)
 \BKM@id=\count375
 ))
-LaTeX Font Info:    Trying to load font information for T1+pplj on input line 86.
+LaTeX Font Info:    Trying to load font information for T1+pplj on input line 85.
  (C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\t1pplj.fd
 File: t1pplj.fd 2004/09/06 font definitions for T1/pplj.
 ) (thesis.aux (Sections/titlePage.aux) (Sections/abstract.aux) (Sections/introduction.aux) (Sections/moneyLaundering.aux) (Sections/ethics-privacy-regulations.aux) (Sections/task.aux) (Sections/proposedModels.aux) (Sections/experiments.aux) (Sections/challenges.aux) (Sections/conclusion.aux) (Sections/futureDirections.aux) (Sections/software.aux))
 \openout1 = `thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 86.
-LaTeX Font Info:    ... okay on input line 86.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 86.
-LaTeX Font Info:    ... okay on input line 86.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 86.
-LaTeX Font Info:    ... okay on input line 86.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 86.
-LaTeX Font Info:    ... okay on input line 86.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 86.
-LaTeX Font Info:    ... okay on input line 86.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 86.
-LaTeX Font Info:    ... okay on input line 86.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 86.
-LaTeX Font Info:    ... okay on input line 86.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 86.
-LaTeX Font Info:    ... okay on input line 86.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 86.
-LaTeX Font Info:    ... okay on input line 86.
-Package scrbase Info: activating english \partname on input line 86.
-Package scrbase Info: activating english \chaptername on input line 86.
-Package scrbase Info: activating english \appendixname on input line 86.
-Package scrbase Info: activating english \figurename on input line 86.
-Package scrbase Info: activating english \tablename on input line 86.
-Package scrbase Info: activating english \contentsname on input line 86.
-Package scrbase Info: activating english \listfigurename on input line 86.
-Package scrbase Info: activating english \listtablename on input line 86.
-Package scrbase Info: activating english \bibname on input line 86.
-Package scrbase Info: activating english \indexname on input line 86.
-LaTeX Info: Redefining \dots on input line 86.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+Package scrbase Info: activating english \partname on input line 85.
+Package scrbase Info: activating english \chaptername on input line 85.
+Package scrbase Info: activating english \appendixname on input line 85.
+Package scrbase Info: activating english \figurename on input line 85.
+Package scrbase Info: activating english \tablename on input line 85.
+Package scrbase Info: activating english \contentsname on input line 85.
+Package scrbase Info: activating english \listfigurename on input line 85.
+Package scrbase Info: activating english \listtablename on input line 85.
+Package scrbase Info: activating english \bibname on input line 85.
+Package scrbase Info: activating english \indexname on input line 85.
+LaTeX Info: Redefining \dots on input line 85.
 \c@lstlisting=\count376
-Package tocbasic Info: setting babel extension for `lol' on input line 86.
+Package tocbasic Info: setting babel extension for `lol' on input line 85.
 \scr@dte@lstlisting@maxnumwidth=\skip132
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
@@ -863,9 +863,9 @@ Package caption Info: End \AtBeginDocument code.
  (C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/latex/translations/dicts\translations-basic-dictionary-english.trsl
 File: translations-basic-dictionary-english.trsl (english translation file `translations-basic-dictionary')
 )
-Package translations Info: loading dictionary `translations-basic-dictionary' for `english'. on input line 86.
-Package backref Info: ** backref set up for natbib ** on input line 86.
-Package hyperref Info: Link coloring OFF on input line 86.
+Package translations Info: loading dictionary `translations-basic-dictionary' for `english'. on input line 85.
+Package backref Info: ** backref set up for natbib ** on input line 85.
+Package hyperref Info: Link coloring OFF on input line 85.
  (C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count377
@@ -885,13 +885,13 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-LaTeX Info: Redefining \microtypecontext on input line 86.
-Package microtype Info: Applying patch `item' on input line 86.
-Package microtype Info: Applying patch `toc' on input line 86.
-Package microtype Info: Applying patch `eqnum' on input line 86.
-Package microtype Info: Applying patch `footnote' on input line 86.
-Package microtype Info: Applying patch `verbatim' on input line 86.
-LaTeX Info: Redefining \microtypesetup on input line 86.
+LaTeX Info: Redefining \microtypecontext on input line 85.
+Package microtype Info: Applying patch `item' on input line 85.
+Package microtype Info: Applying patch `toc' on input line 85.
+Package microtype Info: Applying patch `eqnum' on input line 85.
+Package microtype Info: Applying patch `footnote' on input line 85.
+Package microtype Info: Applying patch `verbatim' on input line 85.
+LaTeX Info: Redefining \microtypesetup on input line 85.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -964,23 +964,23 @@ File: ts1pplj.fd 2004/09/06 font definitions for TS1/pplj.
 \openout2 = `Sections/abstract.aux'.
 
  (Sections/abstract.tex)
-LaTeX Font Info:    Trying to load font information for U+zeur on input line 95.
+LaTeX Font Info:    Trying to load font information for U+zeur on input line 94.
  (C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/latex/eulervm\uzeur.fd
 File: uzeur.fd 2005/01/11 v4.0 (WaS)
 ) (C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-eur.cfg
 File: mt-eur.cfg 2006/07/31 v1.1 microtype config. file: AMS Euler Roman (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+zeus on input line 95.
+LaTeX Font Info:    Trying to load font information for U+zeus on input line 94.
  (C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/latex/eulervm\uzeus.fd
 File: uzeus.fd 2005/01/11 v4.0 (WaS)
 ) (C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-eus.cfg
 File: mt-eus.cfg 2006/07/28 v1.2 microtype config. file: AMS Euler Script (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+zeuex on input line 95.
+LaTeX Font Info:    Trying to load font information for U+zeuex on input line 94.
  (C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/latex/eulervm\uzeuex.fd
 File: uzeuex.fd 2005/01/11 v4.0 (WaS)
 )
-LaTeX Font Info:    Trying to load font information for OT1+zplm on input line 95.
+LaTeX Font Info:    Trying to load font information for OT1+zplm on input line 94.
  (C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1zplm.fd
 File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
 )
@@ -995,7 +995,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 
 
 ]
-Package tocbasic Info: character protrusion at toc deactivated on input line 102.
+Package tocbasic Info: character protrusion at toc deactivated on input line 101.
  (thesis.toc
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplj/m/sc/12'.
@@ -1013,7 +1013,7 @@ Package microtype Info: Character `029' is missing
 
 
 ]
-Package tocbasic Info: character protrusion at lof deactivated on input line 103.
+Package tocbasic Info: character protrusion at lof deactivated on input line 102.
  (thesis.lof)
 \tf@lof=\write4
 \openout4 = `thesis.lof'.
@@ -1049,7 +1049,7 @@ chapter 2.
 
 
 ]
-<IMG/laundering_patterns.jpg, id=179, 1064.778pt x 202.95825pt>
+<IMG/laundering_patterns.jpg, id=206, 1064.778pt x 202.95825pt>
 File: IMG/laundering_patterns.jpg Graphic file (type jpg)
 <use IMG/laundering_patterns.jpg>
 Package pdftex.def Info: IMG/laundering_patterns.jpg  used on input line 34.
@@ -1066,7 +1066,7 @@ chapter 3.
 
 
 ] [16]
-<IMG/AMLWorld.png, id=224, 684.156pt x 377.61075pt>
+<IMG/AMLWorld.png, id=251, 684.156pt x 377.61075pt>
 File: IMG/AMLWorld.png Graphic file (type png)
 <use IMG/AMLWorld.png>
 Package pdftex.def Info: IMG/AMLWorld.png  used on input line 38.
@@ -1082,21 +1082,88 @@ Package pdftex.def Info: IMG/AMLWorld.png  used on input line 38.
 
 ]
 chapter 4.
+LaTeX Font Info:    Trying to load font information for U+fplmbb on input line 6.
+(C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ufplmbb.fd
+File: ufplmbb.fd 2003/10/30 Fontinst v1.914 font definitions for U/fplmbb.
 ) [19]
+<IMG/dataset.png, id=278, 952.15726pt x 230.0595pt>
+File: IMG/dataset.png Graphic file (type png)
+<use IMG/dataset.png>
+Package pdftex.def Info: IMG/dataset.png  used on input line 29.
+(pdftex.def)             Requested size: 384.1122pt x 92.80849pt.
+LaTeX Font Info:    Trying to load font information for T1+fvm on input line 38.
+ (C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/latex/bera\t1fvm.fd
+File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
+)
+LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
+(Font)              scaled to size 10.20007pt on input line 38.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `fvm' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+ [20 <./IMG/dataset.png>]
+<IMG/accounts_head.png, id=290, 512.51476pt x 118.64325pt>
+File: IMG/accounts_head.png Graphic file (type png)
+<use IMG/accounts_head.png>
+Package pdftex.def Info: IMG/accounts_head.png  used on input line 69.
+(pdftex.def)             Requested size: 384.1122pt x 88.92065pt.
+<IMG/trans_head.png, id=291, 853.38824pt x 201.75375pt>
+File: IMG/trans_head.png Graphic file (type png)
+<use IMG/trans_head.png>
+Package pdftex.def Info: IMG/trans_head.png  used on input line 75.
+(pdftex.def)             Requested size: 384.1122pt x 90.80989pt.
+<IMG/patterns.png, id=292, 643.203pt x 1284.59924pt>
+File: IMG/patterns.png Graphic file (type png)
+<use IMG/patterns.png>
+Package pdftex.def Info: IMG/patterns.png  used on input line 81.
+(pdftex.def)             Requested size: 291.92316pt x 583.02347pt.
+<IMG/patterns_distr.png, id=294, 711.4078pt x 434.37282pt>
+File: IMG/patterns_distr.png Graphic file (type png)
+<use IMG/patterns_distr.png>
+Package pdftex.def Info: IMG/patterns_distr.png  used on input line 90.
+(pdftex.def)             Requested size: 307.29092pt x 187.63167pt.
+ [21]
+<IMG/amount.png, id=304, 354.123pt x 267.399pt>
+File: IMG/amount.png Graphic file (type png)
+<use IMG/amount.png>
+Package pdftex.def Info: IMG/amount.png  used on input line 104.
+(pdftex.def)             Requested size: 307.29092pt x 232.05179pt.
+<IMG/currencies.png, id=305, 354.123pt x 267.399pt>
+File: IMG/currencies.png Graphic file (type png)
+<use IMG/currencies.png>
+Package pdftex.def Info: IMG/currencies.png  used on input line 110.
+(pdftex.def)             Requested size: 307.29092pt x 232.05179pt.
+<IMG/format.png, id=306, 354.123pt x 267.399pt>
+File: IMG/format.png Graphic file (type png)
+<use IMG/format.png>
+Package pdftex.def Info: IMG/format.png  used on input line 116.
+(pdftex.def)             Requested size: 307.29092pt x 232.05179pt.
+<IMG/hourday.png, id=307, 715.473pt x 267.399pt>
+File: IMG/hourday.png Graphic file (type png)
+<use IMG/hourday.png>
+Package pdftex.def Info: IMG/hourday.png  used on input line 122.
+(pdftex.def)             Requested size: 307.29092pt x 114.84468pt.
+ [22 <./IMG/accounts_head.png> <./IMG/trans_head.png>] [23 <./IMG/patterns.png>]
+<IMG/banks.png, id=321, 1149.093pt x 357.7365pt>
+File: IMG/banks.png Graphic file (type png)
+<use IMG/banks.png>
+Package pdftex.def Info: IMG/banks.png  used on input line 130.
+(pdftex.def)             Requested size: 307.29092pt x 95.66763pt.
+) [24 <./IMG/patterns_distr.png>] [25 <./IMG/amount.png> <./IMG/currencies.png>] [26 <./IMG/format.png> <./IMG/hourday.png> <./IMG/banks.png>]
 \openout2 = `Sections/proposedModels.aux'.
 
- (Sections/proposedModels.tex [20
+ (Sections/proposedModels.tex
+chapter 5.
+) [27
 
 
 
 
 
 ]
-chapter 5.
-) [21]
 \openout2 = `Sections/experiments.aux'.
 
- (Sections/experiments.tex [22
+ (Sections/experiments.tex [28
 
 
 
@@ -1104,10 +1171,10 @@ chapter 5.
 
 ]
 chapter 6.
-) [23]
+) [29]
 \openout2 = `Sections/challenges.aux'.
 
- (Sections/challenges.tex [24
+ (Sections/challenges.tex [30
 
 
 
@@ -1115,10 +1182,10 @@ chapter 6.
 
 ]
 chapter 7.
-) [25]
+) [31]
 \openout2 = `Sections/conclusion.aux'.
 
- (Sections/conclusion.tex [26
+ (Sections/conclusion.tex [32
 
 
 
@@ -1126,10 +1193,10 @@ chapter 7.
 
 ]
 chapter 8.
-) [27]
+) [33]
 \openout2 = `Sections/futureDirections.aux'.
 
- (Sections/futureDirections.tex [28
+ (Sections/futureDirections.tex [34
 
 
 
@@ -1137,10 +1204,10 @@ chapter 8.
 
 ]
 chapter 9.
-) [29]
+) [35]
 \openout2 = `Sections/software.aux'.
 
- (Sections/software.tex [30
+ (Sections/software.tex [36
 
 
 
@@ -1148,46 +1215,35 @@ chapter 9.
 
 ]
 chapter A.
-) [31] (thesis.bbl (thesis.brf)
+) [37] (thesis.bbl (thesis.brf)
 \tf@brf=\write5
 \openout5 = `thesis.brf'.
 
- [32
+ [38
 
 
 
 
-]
-LaTeX Font Info:    Trying to load font information for T1+fvm on input line 21.
- (C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/latex/bera\t1fvm.fd
-File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
-)
-LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 10.20007pt on input line 21.
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `fvm' (encoding: T1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
- [33]) [34] (thesis.aux (Sections/titlePage.aux) (Sections/abstract.aux) (Sections/introduction.aux) (Sections/moneyLaundering.aux) (Sections/ethics-privacy-regulations.aux) (Sections/task.aux) (Sections/proposedModels.aux) (Sections/experiments.aux) (Sections/challenges.aux) (Sections/conclusion.aux) (Sections/futureDirections.aux) (Sections/software.aux))
+] [39]) [40] (thesis.aux (Sections/titlePage.aux) (Sections/abstract.aux) (Sections/introduction.aux) (Sections/moneyLaundering.aux) (Sections/ethics-privacy-regulations.aux) (Sections/task.aux) (Sections/proposedModels.aux) (Sections/experiments.aux) (Sections/challenges.aux) (Sections/conclusion.aux) (Sections/futureDirections.aux) (Sections/software.aux))
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2020/03/25>
  ***********
 Package rerunfilecheck Info: File `thesis.brf' has not changed.
-(rerunfilecheck)             Checksum: FAB8F43C55B7BD49B44AF9520249F6CF;1340.
+(rerunfilecheck)             Checksum: 7EBCBE92AEADAE26EAF01D58F99D50F3;1437.
  ) 
 Here is how much of TeX's memory you used:
- 29936 strings out of 467871
- 613006 string characters out of 5418376
- 1353942 words of memory out of 5000000
- 57777 multiletter control sequences out of 15000+600000
- 706030 words of font info for 422 fonts, out of 8000000 for 9000
+ 30102 strings out of 467871
+ 615992 string characters out of 5418376
+ 1354931 words of memory out of 5000000
+ 57887 multiletter control sequences out of 15000+600000
+ 709031 words of font info for 454 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  108i,23n,144p,11275b,1283s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/euex10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eufm10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eurb10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eurm10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eusm10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/fpl/fplbj8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/fpl/fplrc8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/bera/fvmr8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplb8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplr8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on thesis.pdf (37 pages, 780261 bytes).
+<C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/euex10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eufm10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eurb10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eurm10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eurm7.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eusm10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/fpl/fplbj8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/mathpazo/fplmbb.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/fpl/fplrc8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/bera/fvmr8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplb8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplr8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on thesis.pdf (43 pages, 1422204 bytes).
 PDF statistics:
- 480 PDF objects out of 1000 (max. 8388607)
- 87 named destinations out of 1000 (max. 500000)
- 89792 words of extra memory for PDF output out of 106986 (max. 10000000)
+ 592 PDF objects out of 1000 (max. 8388607)
+ 107 named destinations out of 1000 (max. 500000)
+ 89858 words of extra memory for PDF output out of 106986 (max. 10000000)
 

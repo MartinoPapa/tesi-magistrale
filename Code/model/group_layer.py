@@ -104,8 +104,9 @@ class GroupRepresentationLayer(nn.Module):
         edge_index_hat = torch.stack([row_hat[mask], col_hat[mask]], dim=0)
         
         # Remove duplicate edges in the new graph to keep it clean
-        # Using coalesce instead of unique(dim=1) to avoid CUDA merge_sort illegal memory access bugs
-        from torch_geometric.utils import coalesce
-        edge_index_hat = coalesce(edge_index_hat)
+        # Use CPU unique to bypass CUDA merge_sort illegal memory access bugs on RTX 50 series
+        # Also protect against empty tensors which cause crashes in unique(dim=1)
+        if edge_index_hat.size(1) > 0:
+            edge_index_hat = torch.unique(edge_index_hat.cpu(), dim=1).to(edge_index_hat.device).contiguous()
         
         return p_trans, X_hat, edge_index_hat, group_mapping

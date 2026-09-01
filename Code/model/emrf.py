@@ -23,6 +23,11 @@ class eMRFLayer(nn.Module):
         Returns:
             X3: Updated node embeddings (N x F)
         """
+        edge_index = edge_index.contiguous()
+        # Force FP32 for mathematical operations to avoid CUDA illegal instructions in BFloat16 AMP
+        X2_f32 = X2.float()
+        p_coarse_f32 = p_coarse.float()
+        
         N = X2.size(0)
         E = num_edges if num_edges is not None else edge_index.size(1) // 2
         if E == 0:
@@ -44,7 +49,7 @@ class eMRFLayer(nn.Module):
         
         # 2. Attribute similarity zeta(v_i, v_j)
         # Cosine similarity between all pairs
-        X2_norm = F.normalize(X2, p=2, dim=1)
+        X2_norm = F.normalize(X2_f32, p=2, dim=1)
         zeta = torch.mm(X2_norm, X2_norm.t())  # N x N
         
         # Regularization R_i: across all pairs as per paper
@@ -58,8 +63,8 @@ class eMRFLayer(nn.Module):
         # 4. Pairwise potential Psi(v_i, v_j) = -1^sigma * gamma
         # The paper specifies sigma=1 if same category, 0 otherwise (Hard binary indicator).
         # We use a Straight-Through Estimator (STE) to make this differentiable.
-        p_i = p_coarse.view(-1, 1) # N x 1
-        p_j = p_coarse.view(1, -1) # 1 x N
+        p_i = p_coarse_f32.view(-1, 1) # N x 1
+        p_j = p_coarse_f32.view(1, -1) # 1 x N
         
         # Soft continuous probability of same class
         sigma_soft = p_i * p_j + (1.0 - p_i) * (1.0 - p_j)
@@ -83,6 +88,6 @@ class eMRFLayer(nn.Module):
         # 5. Update X3 = X2 - Gamma * X2 * H2
         # Mean-field approximation step
         transformed_X2 = self.H2(X2)  # N x F
-        X3 = X2 - torch.mm(Gamma, transformed_X2)
+        X3 = X2 - torch.mm(Gamma.type_as(X2), transformed_X2)
         
         return X3

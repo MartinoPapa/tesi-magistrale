@@ -7,6 +7,8 @@ The scale of this phenomenon is staggering: the United Nations Office on Drugs a
 According to the Canadian Anti Fraud Centre (CAFC), 704 million dollars were lost because of frauds in 2025 only, confirming the raising trend of the previous years \cite{cafc_home}. 
 Consequently, developing robust mechanisms to identify and stop it is critically important to preserving both market integrity and social stability.
 
+The goal of this dissertation is to evaluate the effectiveness of GNN-based models on detecting Money Laundering patterns. We will focus on both precision and explainability proposing two different tasks; a binary classification to label transactions as licit or illicit, and a multiclass classification to detect the specific type of laundering strategy employed.
+
 \section{Traditional AML methods}
 Anti Money Laundering is a critical component of the global financial system. Financial institutions ought to implement robust mechanisms to comply with regulatory standards and protect the integrity of the financial system \cite{ruleBased}.
 
@@ -14,14 +16,14 @@ Rule-based models have long been employed to detect suspicious transactions. The
 The criteria are typically based on regulatory requirements, historical data, and known patterns of illicit behavior. For example we could decide to flag transactions that exceed a certain amount, that rapidly transfer funds between accounts or that involve a high-risk jurisdiction.
 
 The main advantage of this approach is its transparency and interpretability. Furthermore they are computationally inexpensive, easy to implement and they can operate in real-time \cite{ruleBased}. 
-Unfortunately there are also several limitations. They tend to produce a high amount of false positives, which leads to more work from human operators that will have to deal with the flagged transactions. They could be easily exploited by criminals who are aware of the rules and can tailor their illicit activities to avoid detection. This will be further discussed in Chapter \ref{moneyLaundering}.
+Unfortunately there are also several limitations. They tend to produce a high amount of false positives, which leads to more work from human operators that will have to deal with the flagged transactions. They could be easily exploited by criminals who are aware of the rules and can tailor their illicit activities to avoid detection. This will be further discussed in Section \ref{moneyLaundering}.
 
 Due to its tendency of producing a huge amount of false positives and the huge amount of data that nowadays is produced by financial institutions, the rule-based approach is becoming less and less effective.
 
 At the same time big datasets allow the usage of data-driven solutions that can learn directly from historical data.
 First attempts in this direction involved standard machine learning approaches such as logistic regression and support vector machines \cite{standardlearning}. Those models improved the state of the art but they still struggled to detect human brain-armed patterns due to their very limited parameter capacity \cite{mainpaper}.
 
-For this reason the research field shifted toward deep learning solutions which offer a much wider and complex hypothesis space, allowing to capture high order relationships between data, at the cost of a much worse interpretability. Nowadays the challenge is to combine high performance together with explainability to allow the usage of effective models in the highly regulated financial field, a necessity increasingly emphasized by both financial institutions and supervisory authorities~\cite{kuiper2021exploring}. We will discuss this further in Chapter \ref{ethics_privacy_regulations}
+For this reason the research field shifted toward deep learning solutions which offer a much wider and complex hypothesis space, allowing to capture high order relationships between data, at the cost of a much worse interpretability. Nowadays the challenge is to combine high performance together with explainability to allow the usage of effective models in the highly regulated financial field, a necessity increasingly emphasized by both financial institutions and supervisory authorities~\cite{kuiper2021exploring}. We will discuss this further in Section \ref{ethics_privacy_regulations}
 
 \section{The Growing Challenge}
 Detecting fraud is becoming increasingly difficult. The sheer volume and velocity of digital transactions make manual oversight impossible and heavily strain classical machine learning architectures. Furthermore, the rise of decentralized finance (DeFi), Web3, and cryptocurrencies has introduced a paradigm of pseudo-anonymity that complicates traditional tracing.
@@ -30,7 +32,7 @@ On top of that, criminals are constantly developing more and more sophisticated 
 As Cuèllar (2003) noted, \textit{"raising the marginal cost of perpetrating criminal activity can itself conceivably have counterintuitive effects. To the extent that criminals engaged in crimes for profit are acting rationally, then raising the cost of crime can discourage smaller operations and clear the market allowing more sophisticated criminal organizations to innovate and take more control from less organized criminals"}~\cite{cuellar2003tenuous}. 
 Hence, to prevent inadvertently incentivizing sophisticated criminal networks, detection mechanisms must be updated continuously. The framework proposed in this study leverages deep learning models that support online updates. This ensures that the detection algorithm remains aligned with the most recent transaction patterns.
 
-\section{GNN for fraud detection}
+\section{GNN for fraud detection}\label{sec:GNNintro}
 The necessity of capturing complex interactions between accounts and transactions led to the idea of modeling the financial feed as a graph, where accounts are nodes and transactions are edges \cite{singh2019anti}.
 
 \begin{definition}[Financial Graph]\label{financialGraph}

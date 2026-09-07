@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.8.25)  2 SEP 2026 11:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.8.25)  5 SEP 2026 16:37
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -821,7 +821,7 @@ File: bkm-pdftex.def 2026-05-21 v1.32 bookmark driver for pdfTeX (HO)
 LaTeX Font Info:    Trying to load font information for T1+pplj on input line 87.
  (C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\t1pplj.fd
 File: t1pplj.fd 2004/09/06 font definitions for T1/pplj.
-) (thesis.aux (Sections/titlePage.aux) (Sections/abstract.aux) (Sections/introduction.aux) (Sections/moneyLaundering.aux) (Sections/ethics-privacy-regulations.aux) (Sections/task.aux) (Sections/proposedModels.aux) (Sections/experiments.aux) (Sections/challenges.aux) (Sections/conclusion.aux) (Sections/futureDirections.aux) (Sections/software.aux))
+) (thesis.aux (Sections/titlePage.aux) (Sections/abstract.aux) (Sections/introduction.aux) (Sections/background.aux) (Sections/methodology.aux) (Sections/results.aux) (Sections/conclusion.aux) (Sections/software.aux))
 \openout1 = `thesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 87.
@@ -1000,25 +1000,25 @@ Package tocbasic Info: character protrusion at toc deactivated on input line 103
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplj/m/sc/12'.
 (microtype)             Ignoring protrusion settings for this character.
-)
-\tf@toc=\write3
-\openout3 = `thesis.toc'.
-
  [1
 
 
 
 
-] [2
+])
+\tf@toc=\write3
+\openout3 = `thesis.toc'.
 
-
-]
+ [2]
 Package tocbasic Info: character protrusion at lof deactivated on input line 104.
  (thesis.lof)
 \tf@lof=\write4
 \openout4 = `thesis.lof'.
 
- [3] [4
+ [3
+
+
+] [4
 
 
 ] [5] [6
@@ -1038,9 +1038,9 @@ Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplj/m/sc/10.95'.
 (microtype)             Ignoring protrusion settings for this character.
  [8] [9]) [10]
-\openout2 = `Sections/moneyLaundering.aux'.
+\openout2 = `Sections/background.aux'.
 
- (Sections/moneyLaundering.tex
+ (Sections/background.tex
 chapter 2.
 [11
 
@@ -1049,32 +1049,105 @@ chapter 2.
 
 
 ]
-<IMG/laundering_patterns.jpg, id=206, 1064.778pt x 202.95825pt>
+<IMG/laundering_patterns.jpg, id=259, 1064.778pt x 202.95825pt>
 File: IMG/laundering_patterns.jpg Graphic file (type jpg)
 <use IMG/laundering_patterns.jpg>
-Package pdftex.def Info: IMG/laundering_patterns.jpg  used on input line 34.
+Package pdftex.def Info: IMG/laundering_patterns.jpg  used on input line 35.
 (pdftex.def)             Requested size: 384.1122pt x 73.21666pt.
- [12] [13 <./IMG/laundering_patterns.jpg>]) [14]
-\openout2 = `Sections/ethics-privacy-regulations.aux'.
-
- (Sections/ethics-privacy-regulations.tex
-chapter 3.
-[15
-
-
-
-
-
-] [16]
-<IMG/AMLWorld.png, id=251, 684.156pt x 377.61075pt>
+ [12] [13 <./IMG/laundering_patterns.jpg>] [14] [15]
+<IMG/AMLWorld.png, id=299, 684.156pt x 377.61075pt>
 File: IMG/AMLWorld.png Graphic file (type png)
 <use IMG/AMLWorld.png>
-Package pdftex.def Info: IMG/AMLWorld.png  used on input line 38.
+Package pdftex.def Info: IMG/AMLWorld.png  used on input line 91.
 (pdftex.def)             Requested size: 384.1122pt x 212.0137pt.
-) [17 <./IMG/AMLWorld.png>]
-\openout2 = `Sections/task.aux'.
+ [16 <./IMG/AMLWorld.png>]
+LaTeX Font Info:    Trying to load font information for U+fplmbb on input line 102.
+ (C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ufplmbb.fd
+File: ufplmbb.fd 2003/10/30 Fontinst v1.914 font definitions for U/fplmbb.
+) [17]
+<IMG/dataset.png, id=323, 952.15726pt x 230.0595pt>
+File: IMG/dataset.png Graphic file (type png)
+<use IMG/dataset.png>
+Package pdftex.def Info: IMG/dataset.png  used on input line 125.
+(pdftex.def)             Requested size: 384.1122pt x 92.80849pt.
+LaTeX Font Info:    Trying to load font information for T1+fvm on input line 134.
+ (C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/latex/bera\t1fvm.fd
+File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
+)
+LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
+(Font)              scaled to size 10.20007pt on input line 134.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `fvm' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+ [18 <./IMG/dataset.png>]
+<IMG/accounts_head.png, id=335, 512.51476pt x 118.64325pt>
+File: IMG/accounts_head.png Graphic file (type png)
+<use IMG/accounts_head.png>
+Package pdftex.def Info: IMG/accounts_head.png  used on input line 165.
+(pdftex.def)             Requested size: 384.1122pt x 88.92065pt.
+<IMG/trans_head.png, id=336, 853.38824pt x 201.75375pt>
+File: IMG/trans_head.png Graphic file (type png)
+<use IMG/trans_head.png>
+Package pdftex.def Info: IMG/trans_head.png  used on input line 171.
+(pdftex.def)             Requested size: 384.1122pt x 90.80989pt.
+<IMG/patterns.png, id=337, 643.203pt x 1284.59924pt>
+File: IMG/patterns.png Graphic file (type png)
+<use IMG/patterns.png>
+Package pdftex.def Info: IMG/patterns.png  used on input line 177.
+(pdftex.def)             Requested size: 291.92316pt x 583.02347pt.
+<IMG/patterns_distr.png, id=340, 711.4078pt x 434.37282pt>
+File: IMG/patterns_distr.png Graphic file (type png)
+<use IMG/patterns_distr.png>
+Package pdftex.def Info: IMG/patterns_distr.png  used on input line 186.
+(pdftex.def)             Requested size: 307.29092pt x 187.63167pt.
+ [19 <./IMG/accounts_head.png> <./IMG/trans_head.png>] [20 <./IMG/patterns.png>] [21 <./IMG/patterns_distr.png>]
+<IMG/amount.png, id=362, 354.123pt x 267.399pt>
+File: IMG/amount.png Graphic file (type png)
+<use IMG/amount.png>
+Package pdftex.def Info: IMG/amount.png  used on input line 200.
+(pdftex.def)             Requested size: 307.29092pt x 232.05179pt.
+<IMG/currencies.png, id=363, 354.123pt x 267.399pt>
+File: IMG/currencies.png Graphic file (type png)
+<use IMG/currencies.png>
+Package pdftex.def Info: IMG/currencies.png  used on input line 206.
+(pdftex.def)             Requested size: 307.29092pt x 232.05179pt.
+<IMG/format.png, id=364, 354.123pt x 267.399pt>
+File: IMG/format.png Graphic file (type png)
+<use IMG/format.png>
+Package pdftex.def Info: IMG/format.png  used on input line 212.
+(pdftex.def)             Requested size: 307.29092pt x 232.05179pt.
+<IMG/hourday.png, id=365, 715.473pt x 267.399pt>
+File: IMG/hourday.png Graphic file (type png)
+<use IMG/hourday.png>
+Package pdftex.def Info: IMG/hourday.png  used on input line 218.
+(pdftex.def)             Requested size: 307.29092pt x 114.84468pt.
+<IMG/banks.png, id=367, 1149.093pt x 357.7365pt>
+File: IMG/banks.png Graphic file (type png)
+<use IMG/banks.png>
+Package pdftex.def Info: IMG/banks.png  used on input line 226.
+(pdftex.def)             Requested size: 307.29092pt x 95.66763pt.
+) [22 <./IMG/amount.png>] [23 <./IMG/currencies.png> <./IMG/format.png>] [24 <./IMG/hourday.png> <./IMG/banks.png>]
+\openout2 = `Sections/methodology.aux'.
 
- (Sections/task.tex [18
+ (Sections/methodology.tex
+chapter 3.
+[25
+
+
+
+
+
+] [26] [27]
+<IMG/wllimits.png, id=423, 3442.8625pt x 3523.1625pt>
+File: IMG/wllimits.png Graphic file (type png)
+<use IMG/wllimits.png>
+Package pdftex.def Info: IMG/wllimits.png  used on input line 110.
+(pdftex.def)             Requested size: 307.29092pt x 314.43675pt.
+ [28] [29 <./IMG/wllimits.png>] [30] [31] [32] [33] [34] [35] [36]) [37]
+\openout2 = `Sections/results.aux'.
+
+ (Sections/results.tex [38
 
 
 
@@ -1082,132 +1155,21 @@ Package pdftex.def Info: IMG/AMLWorld.png  used on input line 38.
 
 ]
 chapter 4.
-LaTeX Font Info:    Trying to load font information for U+fplmbb on input line 6.
-(C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ufplmbb.fd
-File: ufplmbb.fd 2003/10/30 Fontinst v1.914 font definitions for U/fplmbb.
-) [19]
-<IMG/dataset.png, id=278, 952.15726pt x 230.0595pt>
-File: IMG/dataset.png Graphic file (type png)
-<use IMG/dataset.png>
-Package pdftex.def Info: IMG/dataset.png  used on input line 29.
-(pdftex.def)             Requested size: 384.1122pt x 92.80849pt.
-LaTeX Font Info:    Trying to load font information for T1+fvm on input line 38.
- (C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/latex/bera\t1fvm.fd
-File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
-)
-LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 10.20007pt on input line 38.
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `fvm' (encoding: T1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
- [20 <./IMG/dataset.png>]
-<IMG/accounts_head.png, id=290, 512.51476pt x 118.64325pt>
-File: IMG/accounts_head.png Graphic file (type png)
-<use IMG/accounts_head.png>
-Package pdftex.def Info: IMG/accounts_head.png  used on input line 69.
-(pdftex.def)             Requested size: 384.1122pt x 88.92065pt.
-<IMG/trans_head.png, id=291, 853.38824pt x 201.75375pt>
-File: IMG/trans_head.png Graphic file (type png)
-<use IMG/trans_head.png>
-Package pdftex.def Info: IMG/trans_head.png  used on input line 75.
-(pdftex.def)             Requested size: 384.1122pt x 90.80989pt.
-<IMG/patterns.png, id=292, 643.203pt x 1284.59924pt>
-File: IMG/patterns.png Graphic file (type png)
-<use IMG/patterns.png>
-Package pdftex.def Info: IMG/patterns.png  used on input line 81.
-(pdftex.def)             Requested size: 291.92316pt x 583.02347pt.
-<IMG/patterns_distr.png, id=294, 711.4078pt x 434.37282pt>
-File: IMG/patterns_distr.png Graphic file (type png)
-<use IMG/patterns_distr.png>
-Package pdftex.def Info: IMG/patterns_distr.png  used on input line 90.
-(pdftex.def)             Requested size: 307.29092pt x 187.63167pt.
- [21]
-<IMG/amount.png, id=304, 354.123pt x 267.399pt>
-File: IMG/amount.png Graphic file (type png)
-<use IMG/amount.png>
-Package pdftex.def Info: IMG/amount.png  used on input line 104.
-(pdftex.def)             Requested size: 307.29092pt x 232.05179pt.
-<IMG/currencies.png, id=305, 354.123pt x 267.399pt>
-File: IMG/currencies.png Graphic file (type png)
-<use IMG/currencies.png>
-Package pdftex.def Info: IMG/currencies.png  used on input line 110.
-(pdftex.def)             Requested size: 307.29092pt x 232.05179pt.
-<IMG/format.png, id=306, 354.123pt x 267.399pt>
-File: IMG/format.png Graphic file (type png)
-<use IMG/format.png>
-Package pdftex.def Info: IMG/format.png  used on input line 116.
-(pdftex.def)             Requested size: 307.29092pt x 232.05179pt.
-<IMG/hourday.png, id=307, 715.473pt x 267.399pt>
-File: IMG/hourday.png Graphic file (type png)
-<use IMG/hourday.png>
-Package pdftex.def Info: IMG/hourday.png  used on input line 122.
-(pdftex.def)             Requested size: 307.29092pt x 114.84468pt.
- [22 <./IMG/accounts_head.png> <./IMG/trans_head.png>] [23 <./IMG/patterns.png>]
-<IMG/banks.png, id=321, 1149.093pt x 357.7365pt>
-File: IMG/banks.png Graphic file (type png)
-<use IMG/banks.png>
-Package pdftex.def Info: IMG/banks.png  used on input line 130.
-(pdftex.def)             Requested size: 307.29092pt x 95.66763pt.
-) [24 <./IMG/patterns_distr.png>] [25 <./IMG/amount.png> <./IMG/currencies.png>] [26 <./IMG/format.png> <./IMG/hourday.png> <./IMG/banks.png>]
-\openout2 = `Sections/proposedModels.aux'.
-
- (Sections/proposedModels.tex
-chapter 5.
-) [27
-
-
-
-
-
-]
-\openout2 = `Sections/experiments.aux'.
-
- (Sections/experiments.tex [28
-
-
-
-
-
-]
-chapter 6.
-) [29]
-\openout2 = `Sections/challenges.aux'.
-
- (Sections/challenges.tex [30
-
-
-
-
-
-]
-chapter 7.
-) [31]
+) [39]
 \openout2 = `Sections/conclusion.aux'.
 
- (Sections/conclusion.tex [32
+ (Sections/conclusion.tex [40
 
 
 
 
 
 ]
-chapter 8.
-) [33]
-\openout2 = `Sections/futureDirections.aux'.
-
- (Sections/futureDirections.tex [34
-
-
-
-
-
-]
-chapter 9.
-) [35]
+chapter 5.
+) [41]
 \openout2 = `Sections/software.aux'.
 
- (Sections/software.tex [36
+ (Sections/software.tex [42
 
 
 
@@ -1215,35 +1177,40 @@ chapter 9.
 
 ]
 chapter A.
-) [37] (thesis.bbl (thesis.brf)
+) [43] (thesis.bbl (thesis.brf)
 \tf@brf=\write5
 \openout5 = `thesis.brf'.
 
- [38
+ [44
 
 
 
 
-] [39]) [40] (thesis.aux (Sections/titlePage.aux) (Sections/abstract.aux) (Sections/introduction.aux) (Sections/moneyLaundering.aux) (Sections/ethics-privacy-regulations.aux) (Sections/task.aux) (Sections/proposedModels.aux) (Sections/experiments.aux) (Sections/challenges.aux) (Sections/conclusion.aux) (Sections/futureDirections.aux) (Sections/software.aux))
+] [45]
+Underfull \hbox (badness 1502) in paragraph at lines 80--80
+[]\T1/pplj/m/n/12 (+20) Ladislav Ram-pá²ek, Mikhail Galkin, Vi-jay Prakash Dwivedi,
+ []
+
+[46]) [47] (thesis.aux (Sections/titlePage.aux) (Sections/abstract.aux) (Sections/introduction.aux) (Sections/background.aux) (Sections/methodology.aux) (Sections/results.aux) (Sections/conclusion.aux) (Sections/software.aux))
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2020/03/25>
  ***********
 Package rerunfilecheck Info: File `thesis.brf' has not changed.
-(rerunfilecheck)             Checksum: 7EBCBE92AEADAE26EAF01D58F99D50F3;1437.
+(rerunfilecheck)             Checksum: 5B01DAFAAD48069A632A6C6FAF28E95C;2070.
  ) 
 Here is how much of TeX's memory you used:
- 30102 strings out of 467871
- 615992 string characters out of 5418376
- 1354931 words of memory out of 5000000
- 57887 multiletter control sequences out of 15000+600000
- 709031 words of font info for 454 fonts, out of 8000000 for 9000
+ 30295 strings out of 467871
+ 615027 string characters out of 5418376
+ 1355931 words of memory out of 5000000
+ 57920 multiletter control sequences out of 15000+600000
+ 726630 words of font info for 538 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,23n,144p,11275b,1283s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/euex10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eufm10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eurb10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eurm10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eurm7.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eusm10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/fpl/fplbj8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/mathpazo/fplmbb.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/fpl/fplrc8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/bera/fvmr8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplb8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplr8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on thesis.pdf (43 pages, 1422222 bytes).
+ 108i,23n,144p,11275b,1342s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/euex10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eufm10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eurb10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eurm10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eurm7.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eusm10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/fpl/fplbj8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/mathpazo/fplmbb.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/fpl/fplrc8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/fpl/fplrij8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/bera/fvmr8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplb8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplbi8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplr8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on thesis.pdf (50 pages, 1779542 bytes).
 PDF statistics:
- 592 PDF objects out of 1000 (max. 8388607)
- 107 named destinations out of 1000 (max. 500000)
- 89858 words of extra memory for PDF output out of 106986 (max. 10000000)
+ 859 PDF objects out of 1000 (max. 8388607)
+ 183 named destinations out of 1000 (max. 500000)
+ 114639 words of extra memory for PDF output out of 128383 (max. 10000000)
 

@@ -56,6 +56,10 @@ class CommunityCentricEncoder(nn.Module):
         # 2. eMRF Layer
         self.emrf = eMRFLayer(out_channels, beta=beta)
 
+        # GPSConv-only: normalise X3 after the eMRF dense N×N matmul to prevent
+        # gradient magnitudes from scaling with batch size N.
+        self.post_emrf_norm = nn.LayerNorm(out_channels) if gnn_type == 'gps_conv' else None
+
         # 3. Node classification MLP
         # Generates X(4) = sigmoid(NN_t(X(3), W_t))
         # The paper says NN_t is set at 128 to extend the original node feature
@@ -142,6 +146,7 @@ class CommunityCentricEncoder(nn.Module):
             layer_out = out_channels if i == num_layers - 1 else hidden_channels
             mlp = nn.Sequential(
                 nn.Linear(layer_in, gin_mlp_hidden_dim),
+                nn.LayerNorm(gin_mlp_hidden_dim),
                 nn.ReLU(),
                 nn.Linear(gin_mlp_hidden_dim, layer_out),
             )
@@ -175,6 +180,7 @@ class CommunityCentricEncoder(nn.Module):
             # Local message-passing module: a GINConv with a 2-layer MLP
             local_mlp = nn.Sequential(
                 nn.Linear(hidden_channels, gin_mlp_hidden_dim),
+                nn.LayerNorm(gin_mlp_hidden_dim),
                 nn.ReLU(),
                 nn.Linear(gin_mlp_hidden_dim, hidden_channels),
             )
@@ -215,6 +221,10 @@ class CommunityCentricEncoder(nn.Module):
         # eMRF Layer requires a coarse prediction of the label
         p_coarse = torch.sigmoid(self.coarse_classifier(x2))
         x3 = self.emrf(x2, edge_index, p_coarse, num_edges=num_edges)  # X^(3)
+
+        # GPSConv: tame the O(N) scale introduced by the dense N×N matmul in eMRF
+        if self.post_emrf_norm is not None:
+            x3 = self.post_emrf_norm(x3)
 
         # Classification (return logits directly for numerical stability in BCEWithLogitsLoss)
         x4 = self.nn_t(x3)  # X^(4)

@@ -1,0 +1,11 @@
+{
+  "max_norm": 5.0,
+  "hidden_dim": 64,
+  "out_dim": 64,
+  "heads": 5,
+  "num_layers": 2,
+  "mlp_hidden_dim": 128,
+  "lr": 0.0005,
+  "laundry_weight": 1.0,
+  "nn_t_hidden_dim": 128
+}

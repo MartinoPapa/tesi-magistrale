@@ -50,7 +50,7 @@ class GAGNNLoss(nn.Module):
             else:
                 l_trans = F.binary_cross_entropy_with_logits(p_trans, y_trans, pos_weight=pos_weight)
         elif self.task == 'multiclass':
-            weight = self.laundry_weight.to(p_trans.device) if isinstance(self.laundry_weight, torch.Tensor) else None
+            weight = self.laundry_weight.to(device=p_trans.device, dtype=p_trans.dtype) if isinstance(self.laundry_weight, torch.Tensor) else None
             if trans_mask is not None:
                 if trans_mask.any():
                     l_trans = F.cross_entropy(p_trans[trans_mask], y_trans[trans_mask].squeeze().long(), weight=weight)

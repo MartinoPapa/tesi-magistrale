@@ -150,6 +150,14 @@ class DataPreparation:
             df_temp['Timestamp'] = pd.to_datetime(df_temp['Timestamp'])
             
         df_temp = df_temp.merge(illicit_df, on=['Timestamp', 'Account', 'Account.1', 'Amount Paid'], how='left')
+        
+        # Drop illicit transactions lacking a specific pattern label
+        mask_to_drop = (df_temp['Is Laundering'] > 0) & (df_temp['Laundering_Type'].isna())
+        dropped_count = mask_to_drop.sum()
+        if dropped_count > 0:
+            print(f"Dropped {dropped_count} illicit transactions lacking a specific multiclass pattern label.")
+            df_temp = df_temp[~mask_to_drop].copy()
+            
         df_temp['Laundering_Type'] = df_temp['Laundering_Type'].fillna(0).astype(int)
         
         print(f"Matched {(df_temp['Laundering_Type'] > 0).sum()} illicit transactions from patterns file.")

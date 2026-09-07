@@ -93,14 +93,13 @@ class GAGNN(nn.Module):
         # Step 3: Compute y_group
         num_groups = X_hat.size(0)
         if y_node is not None:
-            # Paper definition: group is ML if ANY constituent node has a ground-truth ML label.
-            # y_node may be soft [0,1] — threshold at 0.5 to obtain binary assignment.
-            node_is_ml = (y_node.view(-1) > 0.5).float()
-            y_group_raw = torch.zeros(num_groups, dtype=torch.float, device=x.device)
-            y_group_raw.scatter_reduce_(0, group_mapping, node_is_ml, reduce='amax', include_self=True)
-            y_group = y_group_raw.unsqueeze(1)  # (Num_Groups x 1)
+            y_group = torch.zeros(num_groups, dtype=torch.float, device=x.device)
+            # Since y_node contains floats (usually 0 or 1), scatter_reduce with 'amax' gets the max.
+            # Using scatter_reduce_ (PyTorch >= 1.12) to compute max for each group
+            y_group.scatter_reduce_(0, group_mapping, y_node.view(-1).float(), reduce='amax', include_self=False)
+            y_group = (y_group > 0).float().unsqueeze(1)
         else:
-            # Inference fallback: a group is suspicious if it contains more than 1 node
+            # A group is illicit if it contains more than 1 account, licit otherwise
             group_sizes = torch.zeros(num_groups, dtype=torch.float, device=x.device)
             group_sizes.scatter_add_(0, group_mapping, torch.ones_like(group_mapping, dtype=torch.float))
             y_group = (group_sizes > 1).float().unsqueeze(1)

@@ -52,7 +52,7 @@ class StandaloneGNNLoss(nn.Module):
                 loss = torch.tensor(0.0, device=p_trans.device, requires_grad=True)
         elif self.task == 'multiclass':
             if isinstance(self.laundry_weight, torch.Tensor):
-                weight = self.laundry_weight.to(p_trans.device)
+                weight = self.laundry_weight.to(device=p_trans.device, dtype=p_trans.dtype)
             else:
                 weight = None
             if trans_mask is not None and trans_mask.any():
@@ -236,6 +236,7 @@ class StandaloneGNN(nn.Module):
             layer_out = out_dim if i == num_layers - 1 else hidden_dim
             mlp = nn.Sequential(
                 nn.Linear(layer_in, gin_mlp_hidden_dim),
+                nn.LayerNorm(gin_mlp_hidden_dim),
                 nn.ReLU(),
                 nn.Linear(gin_mlp_hidden_dim, layer_out),
             )
@@ -265,6 +266,7 @@ class StandaloneGNN(nn.Module):
         for _ in range(num_layers):
             local_mlp = nn.Sequential(
                 nn.Linear(hidden_dim, gin_mlp_hidden_dim),
+                nn.LayerNorm(gin_mlp_hidden_dim),
                 nn.ReLU(),
                 nn.Linear(gin_mlp_hidden_dim, hidden_dim),
             )

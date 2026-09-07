@@ -7,66 +7,58 @@ Reallocating 'name_of_file' (item size: 1) to 22 items.
 A level-1 auxiliary file: Sections/abstract.aux
 Reallocating 'name_of_file' (item size: 1) to 26 items.
 A level-1 auxiliary file: Sections/introduction.aux
-Reallocating 'name_of_file' (item size: 1) to 29 items.
-A level-1 auxiliary file: Sections/moneyLaundering.aux
-Reallocating 'name_of_file' (item size: 1) to 40 items.
-A level-1 auxiliary file: Sections/ethics-privacy-regulations.aux
-Reallocating 'name_of_file' (item size: 1) to 18 items.
-A level-1 auxiliary file: Sections/task.aux
-Reallocating 'name_of_file' (item size: 1) to 28 items.
-A level-1 auxiliary file: Sections/proposedModels.aux
-Reallocating 'name_of_file' (item size: 1) to 25 items.
-A level-1 auxiliary file: Sections/experiments.aux
 Reallocating 'name_of_file' (item size: 1) to 24 items.
-A level-1 auxiliary file: Sections/challenges.aux
+A level-1 auxiliary file: Sections/background.aux
+Reallocating 'name_of_file' (item size: 1) to 25 items.
+A level-1 auxiliary file: Sections/methodology.aux
+Reallocating 'name_of_file' (item size: 1) to 21 items.
+A level-1 auxiliary file: Sections/results.aux
 Reallocating 'name_of_file' (item size: 1) to 24 items.
 A level-1 auxiliary file: Sections/conclusion.aux
-Reallocating 'name_of_file' (item size: 1) to 30 items.
-A level-1 auxiliary file: Sections/futureDirections.aux
 Reallocating 'name_of_file' (item size: 1) to 22 items.
 A level-1 auxiliary file: Sections/software.aux
 Reallocating 'name_of_file' (item size: 1) to 6 items.
 The style file: plain.bst
 Reallocating 'name_of_file' (item size: 1) to 5 items.
 Database file #1: refs.bib
-You've used 16 entries,
+You've used 19 entries,
             2118 wiz_defined-function locations,
-            604 strings with 7405 characters,
-and the built_in function-call counts, 5179 in all, are:
-= -- 477
-> -- 312
-< -- 1
-+ -- 125
-- -- 108
-* -- 362
-:= -- 904
-add.period$ -- 47
-call.type$ -- 16
-change.case$ -- 102
+            614 strings with 7889 characters,
+and the built_in function-call counts, 6571 in all, are:
+= -- 601
+> -- 401
+< -- 3
++ -- 160
+- -- 140
+* -- 462
+:= -- 1122
+add.period$ -- 56
+call.type$ -- 19
+change.case$ -- 127
 chr.to.int$ -- 0
-cite$ -- 16
-duplicate$ -- 163
-empty$ -- 375
-format.name$ -- 108
-if$ -- 1050
+cite$ -- 19
+duplicate$ -- 218
+empty$ -- 478
+format.name$ -- 140
+if$ -- 1346
 int.to.chr$ -- 0
-int.to.str$ -- 16
-missing$ -- 11
-newline$ -- 81
-num.names$ -- 32
-pop$ -- 119
+int.to.str$ -- 19
+missing$ -- 14
+newline$ -- 96
+num.names$ -- 38
+pop$ -- 154
 preamble$ -- 1
-purify$ -- 86
+purify$ -- 108
 quote$ -- 0
-skip$ -- 125
+skip$ -- 166
 stack$ -- 0
-substring$ -- 228
-swap$ -- 25
-text.length$ -- 1
+substring$ -- 291
+swap$ -- 45
+text.length$ -- 3
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 62
+type$ -- 74
 warning$ -- 0
-while$ -- 41
-width$ -- 18
-write$ -- 167
+while$ -- 50
+width$ -- 21
+write$ -- 199

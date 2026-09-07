@@ -71,6 +71,13 @@ Xiaoqi Li, Wenkai Li, Zhijie Liu, Meikang Qiu, Zhiquan Liu, Sen Nie, Zongwei
 Adetoyese Omoseebi, Godwin Ola, and Jackson Tyler.
 \newblock Rule-based systems in aml, 03 2025.
 
+\bibitem{rampasek2022gps}
+Ladislav Ramp\'{a}\v{s}ek, Mikhail Galkin, Vijay~Prakash Dwivedi, Anh~Tuan Luu,
+  Guy Wolf, and Dominique Beaini.
+\newblock Recipe for a general, powerful, scalable graph transformer.
+\newblock In {\em Advances in Neural Information Processing Systems},
+  volume~35, pages 14501--14515, 2022.
+
 \bibitem{singh2019anti}
 K.~Singh and P.~Best.
 \newblock Anti-money laundering: Using data visualization to identify
@@ -89,6 +96,17 @@ Toyotaro Suzumura and Hiroki Kanezashi.
 \newblock {\em Estimating illicit financial flows resulting from drug
   trafficking and other transnational organized crimes}.
 \newblock UNODC Vienna, 2011.
+
+\bibitem{velickovic2018gat}
+Petar Veli\v{c}kovi\'{c}, Guillem Cucurull, Arantxa Casanova, Adriana Romero,
+  Pietro Li\`{o}, and Yoshua Bengio.
+\newblock Graph attention networks.
+\newblock In {\em International Conference on Learning Representations}, 2018.
+
+\bibitem{xu2019gin}
+Keyulu Xu, Weihua Hu, Jure Leskovec, and Stefanie Jegelka.
+\newblock How powerful are graph neural networks?
+\newblock In {\em International Conference on Learning Representations}, 2019.
 
 \bibitem{AMLgentex}
 Johan Östman, Edvin Callisen, Anton Chen, Kristiina Ausmees, Emanuel Gårdh,

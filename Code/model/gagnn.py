@@ -46,7 +46,7 @@ class GAGNN(nn.Module):
         )
 
         self.training_losses = []
-        self.val_F1 = []
+        self.val_losses = []
         
         # 1. Base community-centric encoder
         self.encoder = CommunityCentricEncoder(
@@ -118,7 +118,7 @@ class GAGNN(nn.Module):
         torch.save({
             'state_dict': self.state_dict(),
             'training_losses': self.training_losses,
-            'val_F1': self.val_F1,
+            'val_losses': self.val_losses,
             'init_kwargs': self._init_kwargs
         }, path)
 
@@ -152,7 +152,7 @@ class GAGNN(nn.Module):
         model = cls(**init_kwargs)
         model.load_state_dict(checkpoint['state_dict'])
         model.training_losses = checkpoint.get('training_losses', [])
-        model.val_F1 = checkpoint.get('val_F1', [])
+        model.val_losses = checkpoint.get('val_losses', [])
         model.eval()
         return model
 
@@ -162,13 +162,13 @@ class GAGNN(nn.Module):
         checkpoint = torch.load(path)
         self.load_state_dict(checkpoint['state_dict'])
         self.training_losses = checkpoint.get('training_losses', [])
-        self.val_F1 = checkpoint.get('val_F1', [])
+        self.val_losses = checkpoint.get('val_losses', [])
         self.eval()
         
     def plot_training_history(self):
         """Plots the training and validation losses recorded during training."""
         import matplotlib.pyplot as plt
-        if not self.training_losses and not getattr(self, 'val_F1', []):
+        if not self.training_losses and not getattr(self, 'val_losses', []):
             print("No training history to plot.")
             return
             
@@ -176,19 +176,16 @@ class GAGNN(nn.Module):
         
         if self.training_losses:
             ax1.plot(self.training_losses, label='Training Loss', color='blue', linewidth=2)
-            ax1.set_ylabel('Loss (log scale)', color='blue')
-            ax1.tick_params(axis='y', labelcolor='blue')
-            ax1.set_yscale('log')
             
+        if hasattr(self, 'val_losses') and self.val_losses:
+            ax1.plot(self.val_losses, label='Validation Loss', color='orange', linewidth=2)
+            
+        ax1.set_ylabel('Loss (log scale)')
+        ax1.set_yscale('log')
         ax1.set_xlabel('Training Iterations / Epochs')
-        
-        if hasattr(self, 'val_F1') and self.val_F1:
-            ax2 = ax1.twinx()
-            ax2.plot(self.val_F1, label='Validation F1-Score', color='orange', linewidth=2)
-            ax2.set_ylabel('F1-Score', color='orange')
-            ax2.tick_params(axis='y', labelcolor='orange')
+        ax1.legend()
             
-        plt.title('Training Loss and Validation F1-Score Over Time')
+        plt.title('Training and Validation Loss Over Time')
         fig.tight_layout()
         plt.grid(True, linestyle='--', alpha=0.7)
         plt.show()

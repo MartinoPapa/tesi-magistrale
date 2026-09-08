@@ -149,7 +149,7 @@ class StandaloneGNN(nn.Module):
 
         # Training-history buffers (same interface as GAGNN)
         self.training_losses: list[float] = []
-        self.val_F1: list[float] = []
+        self.val_losses: list[float] = []
 
         # -----------------------------------------------------------------
         # 1. GNN layer stack (no eMRF)
@@ -334,7 +334,7 @@ class StandaloneGNN(nn.Module):
         torch.save({
             'state_dict': self.state_dict(),
             'training_losses': self.training_losses,
-            'val_F1': self.val_F1,
+            'val_losses': self.val_losses,
             'init_kwargs': self._init_kwargs,
         }, path)
 
@@ -360,15 +360,15 @@ class StandaloneGNN(nn.Module):
         model = cls(**init_kwargs)
         model.load_state_dict(checkpoint['state_dict'])
         model.training_losses = checkpoint.get('training_losses', [])
-        model.val_F1 = checkpoint.get('val_F1', [])
+        model.val_losses = checkpoint.get('val_losses', [])
         model.eval()
         return model
 
     def plot_training_history(self) -> None:
-        """Plots training loss and validation F1 over time."""
+        """Plots training loss and validation loss over time."""
         import matplotlib.pyplot as plt
 
-        if not self.training_losses and not self.val_F1:
+        if not self.training_losses and not getattr(self, 'val_losses', []):
             print("No training history to plot.")
             return
 
@@ -377,20 +377,17 @@ class StandaloneGNN(nn.Module):
         if self.training_losses:
             ax1.plot(self.training_losses, label='Training Loss',
                      color='blue', linewidth=2)
-            ax1.set_ylabel('Loss (log scale)', color='blue')
-            ax1.tick_params(axis='y', labelcolor='blue')
-            ax1.set_yscale('log')
 
-        ax1.set_xlabel('Epochs')
-
-        if self.val_F1:
-            ax2 = ax1.twinx()
-            ax2.plot(self.val_F1, label='Validation F1-Score',
+        if hasattr(self, 'val_losses') and self.val_losses:
+            ax1.plot(self.val_losses, label='Validation Loss',
                      color='orange', linewidth=2)
-            ax2.set_ylabel('F1-Score', color='orange')
-            ax2.tick_params(axis='y', labelcolor='orange')
 
-        plt.title('Baseline — Training Loss and Validation F1-Score Over Time')
+        ax1.set_ylabel('Loss (log scale)')
+        ax1.set_yscale('log')
+        ax1.set_xlabel('Epochs')
+        ax1.legend()
+
+        plt.title('Baseline — Training and Validation Loss Over Time')
         fig.tight_layout()
         plt.grid(True, linestyle='--', alpha=0.7)
         plt.show()

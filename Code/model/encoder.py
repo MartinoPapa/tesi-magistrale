@@ -56,9 +56,9 @@ class CommunityCentricEncoder(nn.Module):
         # 2. eMRF Layer
         self.emrf = eMRFLayer(out_channels, beta=beta)
 
-        # GPSConv-only: normalise X3 after the eMRF dense N×N matmul to prevent
+        # Normalise X3 after the eMRF dense N×N matmul to prevent
         # gradient magnitudes from scaling with batch size N.
-        self.post_emrf_norm = nn.LayerNorm(out_channels) if gnn_type == 'gps_conv' else None
+        self.post_emrf_norm = nn.LayerNorm(out_channels) if gnn_type in ['gps_conv', 'gin'] else None
 
         # 3. Node classification MLP
         # Generates X(4) = sigmoid(NN_t(X(3), W_t))

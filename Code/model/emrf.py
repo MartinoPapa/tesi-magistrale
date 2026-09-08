@@ -87,7 +87,7 @@ class eMRFLayer(nn.Module):
         
         # 5. Update X3 = X2 - Gamma * X2 * H2
         # Mean-field approximation step
-        transformed_X2 = self.H2(X2)  # N x F
-        X3 = X2 - torch.mm(Gamma.type_as(X2), transformed_X2)
+        transformed_X2 = self.H2(X2).float()  # N x F
+        X3 = X2_f32 - torch.mm(Gamma, transformed_X2)
         
         return X3

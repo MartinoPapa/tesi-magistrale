@@ -6,10 +6,9 @@
 %--------------------------------------------------------------
 
 This chapter describes the GNN architectures for edge-level money laundering detection proposed in this dissertation.
-We will propose a total of six different models; Graph Attention Networks (GAT, Section~\ref{sec:gat}) and Graph Isomorphism Networks (GIN, Section~\ref{sec:gin}) will be used as evaluation baselines;
-Graph Transformers (GPSConv, Section~\ref{sec:gps}) will be then introduced to overcome the limitations (Section~\ref{sec:mp_limits}) of the two previous models;
-Finally we will consider the architecture proposed in the paper Group-Aware Graph Neural Network ~\cite{mainpaper} (Section~\ref{sec:gagnn}) which, by aggregating nodes that are involved in suspicious transactions into gangs, and running a GNN on the obtained grouped graph, tries to detect money laundering organizations. 
-we will consider three variants of the model one based on a GAT, one based on a GIN and one based on a Graph Transformer.
+We will propose a total of four different models; Graph Attention Networks (GAT, Section~\ref{sec:gat}) and Graph Isomorphism Networks (GIN, Section~\ref{sec:gin}) will be used as evaluation baselines;
+Finally, to mitigate the limitations (Section~\ref{sec:mp_limits}) of the two previous models, we will consider the architecture proposed in the paper Group-Aware Graph Neural Network ~\cite{mainpaper} (Section~\ref{sec:gagnn}) which, by aggregating nodes that are involved in suspicious transactions into gangs, and running a GNN on the obtained grouped graph, tries to detect money laundering organizations. 
+We will consider two variants of the model one based on a GAT and one based on a GIN.
 
 \section{Building the Financial Graph}
 Before describing the models we define how the graph itself is built . Since the IBM AMLSim Dataset account (Node) features are very limited, we will leverage the transaction (Edge) features to derive the Node's ones.
@@ -127,60 +126,7 @@ This gets worse across graph bottlenecks, where signals from distant nodes $u$ a
 ~\cite{Cheng_2025}.
 \bigskip
 
-To overcome those limits we propose two possible solutions. Graph Transformers (Section~\ref{sec:gps}), adding global attention to the message passing mechanism, and Group-Aware GNNs (GAGNNs) \cite{mainpaper} (Section~\ref{sec:gagnn}), introducing a clustering mechanism to merge nodes that are suspected to be doing ML toghether and predicting their labels as a groups.
-
-%--------------------------------------------------------------
-\section{Graph Transformers}
-\label{sec:gps}
-%--------------------------------------------------------------
-
-Graph Transformers leverage the transformers self-attention mechanism to enrich the local message passing mechanism with global context awareness. 
-In this work we adopt the \emph{General, Powerful, Scalable} (GPS) architecture ~\cite{rampasek2022gps}, implemented in PyTorch Geometric as \texttt{GPSConv}.
-The main idea is to combine, within each layer, local message-passing toghether with global self-attention, allowing the model to capture both local structural information and long-range dependencies.
-
-\subsection{GPSConv Layer}
-In each GPSConv layer the node embeddings are updated by two parallel procedures, local message passing and global attention; the two outputs are then combined to produce the final output. 
-
-\paragraph{Local Message Passing}
-The local message passing is performed by a Graph Isomorphic Network (GIN), as the one presented in Section~\ref{sec:gin}.
-\begin{equation}
-  h_i^{\text{local},(k)} = \operatorname{MLP}_{\text{local}}^{(k)}\!\left(
-    \left(1 + \varepsilon^{(k)}\right) h_i^{(k-1)}
-    + \sum_{j \in \mathcal{N}(i)} h_j^{(k-1)}
-  \right)
-\end{equation}
-
-\paragraph{Global Attention}
-A standard multi-head self-attention module is applied over all nodes, capturing long-range interactions without the locality constraint of message passing:
-\begin{equation}
-  h_i^{\text{global},(k)} = \operatorname{MHA}^{(k)}\!\left(
-    h_i^{(k-1)},\;\left\{h_j^{(k-1)}\right\}_{j \in V}
-  \right)
-\end{equation}
-with $H$ parallel attention heads.
-\bigskip
-
-The outputs of both branches are then summed toghether to obtain the final node representation:
-\begin{equation}
-  h_i^{(k)} = h_i^{\text{local},(k)} + h_i^{\text{global},(k)}
-\end{equation}
-
-\subsection{Input/Output Projections}
-
-GPSConv operates with a fixed channel dimension $d_h$ across all layers.
-Since the original node features $x_i \in \mathbb{R}^{d_{\text{feat}}}$ and
-the desired output dimension $d_{\text{out}}$ generally differ from $d_h$,
-two linear projections are added:
-\begin{align}
-  \tilde{x}_i &= W_{\text{in}}\, x_i, \quad W_{\text{in}} \in \mathbb{R}^{d_h \times d_{\text{feat}}} \\
-  X^{(L)} &= W_{\text{out}}\, H^{(L)}, \quad W_{\text{out}} \in \mathbb{R}^{d_{\text{out}} \times d_h}
-\end{align}
-where $H^{(L)} \in \mathbb{R}^{N \times d_h}$ is the matrix containing the final node embeddings $h_i^{(L)}$ for nodes after the $L$-th layer.
-Notice that the constraint $d_h \bmod H = 0$ must be satisfied to allow MHA to split the embedding evenly across attention heads.
-
-The intermediate representations produced by each head are then concatenated along the feature dimension and linearly projected to form the final multi-head attention output.
-
-By combining local GIN message passing with global multi-head self-attention, GPSConv overcomes the WL ceiling and oversquashing.
+To overcome those limits we will leverage Group-Aware GNNs (GAGNNs) \cite{mainpaper} (Section~\ref{sec:gagnn}), introducing a clustering mechanism to merge nodes that are suspected to be doing ML toghether and predicting their labels as a groups.
 
 %--------------------------------------------------------------
 \section{Group-Aware Graph Neural Networks}
@@ -189,7 +135,7 @@ By combining local GIN message passing with global multi-head self-attention, GP
 
 As introduced in Section~\ref{moneyLaundering}, money laundering is inherently an organized crime. Illicit transactions are not isolated events scattered randomly across the graph, but are rather concentrated among clusters of colluding accounts acting as gangs \cite{mainpaper}. Detecting fraud solely at the node or edge level tends to ignore this crucial group structure. 
 
-To overcome these limitations, we adopt the \emph{Group-Aware Graph Neural Network} (GAGNN) architecture proposed by Cheng et al. \cite{mainpaper}. GAGNN is a multi-component pipeline that can embed any of the previously described GNNs (GAT, GIN, or GPSConv) as backbone and enriches them with two key mechanisms:
+To overcome these limitations, we adopt the \emph{Group-Aware Graph Neural Network} (GAGNN) architecture proposed by Cheng et al. \cite{mainpaper}. GAGNN is a multi-component pipeline that can embed any of the previously described GNNs (GAT and GIN) as backbone and enriches them with two key mechanisms:
 \begin{enumerate}
   \item An \emph{eMRF layer} (Edge Markov Random Field) that encourages nodes involved in the same fraud ring to receive similar embeddings.
   \item A \emph{Group Representation Layer} that explicitly detects and groups suspicious accounts into super-nodes, adding a community-level classification.
@@ -199,7 +145,7 @@ The overall GAGNN pipeline proceeds in five steps.
 
 \subsection{Community-Centric Encoder}
 \label{sec:encoder}
-The first step employs a standard GNN backbone (GAT, GIN, or GPSConv) to transform the raw node feature matrix $X^{(1)} \in \mathbb{R}^{N \times d_{\text{feat}}}$ into enriched embeddings $X^{(2)} \in \mathbb{R}^{N \times d_{\text{out}}}$ by stacking $L$ message passing layers;
+The first step employs a standard GNN backbone (GAT or GIN) to transform the raw node feature matrix $X^{(1)} \in \mathbb{R}^{N \times d_{\text{feat}}}$ into enriched embeddings $X^{(2)} \in \mathbb{R}^{N \times d_{\text{out}}}$ by stacking $L$ message passing layers;
 \begin{equation}
   X^{(2)} = f_{\text{GNN}}^{(L)}\!\left(\cdots f_{\text{GNN}}^{(1)}\!\left(X^{(1)}, E\right)\cdots\right)
 \end{equation}
@@ -261,11 +207,11 @@ Considering an edge \(e_{ij}\), the two accounts \(i\) and \(j\) will be grouped
 \begin{equation}
   \hat{x}_g = \frac{1}{|\mathcal{G}_i|} \sum_{v \in \mathcal{G}_i} x_v
 \end{equation}
-Each group \(\mathcal{G}\) is considered illicit if it contains more than one account, licit otherwise. Formally we define the group label as:
+Each group \(\mathcal{G}\) is considered illicit if it contains at least one illicit account, licit otherwise. Formally we define the group label as:
 \begin{equation}
-  \hat{y}_g = \begin{cases}
-    1 & \text{if } |\mathcal{G}_i| > 1 \\
-    0 & \text{if } |\mathcal{G}_i| = 1
+  \hat{y}_\mathcal{G} = \begin{cases}
+    1 & \text{if } \exists V \; \vert  \; V \text{ is ML} \wedge V \in \mathcal{G} \\
+    0 & \text{otherwise}
   \end{cases}
 \end{equation}
 
@@ -281,7 +227,7 @@ where $\hat{X}^{(3)}$ is the resulting group-level embedding, and $p_{\text{grou
 
 \subsection{Multi-Task Loss}
 \label{sec:loss}
-Unlike standard GNNs that optimize a single objective, GAGNN is trained jointly on three supervised signals. The total loss $\mathcal{L}$ is a weighted sum of the node-level, transaction-level, and group-level losses:
+Unlike standard GNNs that optimize a single objective, GAGNN relies on three supervised signals. The total loss $\mathcal{L}$ is a weighted sum of the node-level, transaction-level, and group-level losses:
 \begin{equation}
   \mathcal{L} = c_1\,\mathcal{L}_{\text{group}} + c_2\,\mathcal{L}_{\text{node}} + c_3\,\mathcal{L}_{\text{trans}}
 \end{equation}
@@ -305,31 +251,137 @@ The positive-class weight $w$ is tuned to penalize false negatives, in the finan
 \section{Experimental Settings}
 
 \subsection{Data Preparation}\label{dataprep}
-Before feeding the data into our models, we performed a series of preprocessing steps to organize the original features and ensure numerical stability.
+In regard to enhance the performance of the models we perform some preprocessing steps on the dataset.
+First of all, categorical features need to be converted in a numerical format; we opted for One-Hot Encoding, which works particulary well for our architecture since, when we average the features to create the nodes and groups representations, the one-hot vectors translate into proportions of the different categories providing like that meaningfull information. 
 
-First, categorical attributes were transformed using One-Hot Encoding. This encoding strategy is particularly effective for our architecture because when features are averaged (to derive node features from edges, or to collapse communities into super-nodes) the one-hot vectors naturally translate into proportions, preserving meaningful semantic information.
+Secondly, we elaborated the timestamp by extrapolating from it the hour of the day, using cyclic encoding, and the day of the week, using a one-hot encoder. The cyclic representation is fundamental to preserve the daily periodicity of transactions.
 
-To capture the temporal dynamics of financial behavior, we engineered new features from the provided timestamps. In particular, we applied a cyclic encoding (using sine and cosine transformations) to the hour of the day. This cyclic representation is crucial for preserving the daily periodicity of transactions without introducing artificial discontinuities (e.g., the jump from 23:59 to 00:00).
-
-For the multiclass classification task, we required specific labels for the different money laundering patterns. We mapped illicit transactions to their specific typology using the provided dataset metadata. Since not all illicit transactions were annotated with this information, transactions lacking a specific pattern label were dropped from the multiclass analysis.
-
-Finally, we normalized the continuous financial amounts. Because money laundering datasets are typically heavily skewed by extreme outliers (e.g., massive illicit transfers), standard normalization techniques are often inadequate. Therefore, we employed a Robust Scaler, which normalizes features using the median and the interquartile range (IQR), according to the following formula:
+We then normalized the financial amounts. Since money laundering datasets present a high number of outliers standard normalization techniques often tend to move the value of the legitimate transactions close to zero. For this reason a Robust Scaler was prefered to the standard one. It normalizes features using the median and the interquartile range (IQR), according to the following formula:
 \begin{equation}
     x_{\text{scaled}} = \frac{x - Q_2(x)}{Q_3(x) - Q_1(x)}
 \end{equation}
-where $Q_2(x)$ is the median, and $Q_1(x)$ and $Q_3(x)$ are the 25th and 75th percentiles of the feature values, respectively. This ensures that extreme values do not distort the feature space.
+where $Q_2(x)$ is the median, and $Q_1(x)$ and $Q_3(x)$ are the 25th and 75th percentiles of the feature values. This prevents extreme values from distorting the distribution of the data.
 
-\subsubsection{Train, Validation and Test Split}
-Financial transaction graphs are inherently dynamic and time-dependent. Consequently, a random split of the dataset would inevitably cause future information to leak into the past, compromising the model's evaluation. To prevent this, the data must be split chronologically. This chronological division closely mirrors real-world scenarios, where a model is trained on historical data to predict the legitimacy of new, incoming transactions.
+Finally, we extrapolated the multiclass labels from \texttt{HI-Small\_Patterns.txt} obtaining the categorical feature. As before, we then apply one-hot encoding to allow the model to understand it.
 
-While Cheng et al.~\cite{mainpaper} divided their dataset sequentially by weeks, our dataset spans a much shorter time frame of just a single week. To adapt to this constraint, we selected specific timestamp thresholds to partition the data: transactions occurring before September 7, 2022 at 14:55:00 were assigned to the training set ($\approx 70\%$); transactions between this time and September 8, 2022 at 16:12:00 constituted the validation set ($\approx 10\%$); and all subsequent transactions were allocated to the test set ($\approx 20\%$).
+\subsection{Train, Validation and Test Split}
+Anti Money Laundering algorithms are usually performed on the new incoming transactions to detect fraudulent activity. This means that the models must learn from the past to predict the future. For this reason, splitting the dataset randomly would inevitably cause future information to leak into the past. To avoid that we decided to split our dataset by using 2 temporal thresholds \(t_1, t_2\) that define the training, validation and test sets as follows.
+\begin{align}
+    \mathcal{D}_\text{train} &= \{d \in \mathcal{D} \vert t(d) \le t_1 \} \\
+    \mathcal{D}_\text{val}   &= \{d \in \mathcal{D} \vert t_1 < t(d) \le t_2 \} \\
+    \mathcal{D}_\text{test}  &= \{d \in \mathcal{D} \vert t(d) > t_2 \}
+\end{align}
+where \(t(d)\) is the timestamp of the transaction $d$, and \(t_1\) and \(t_2\) are specially picked so that \(|\mathcal{D}_\text{train}| \approx 0.7 |\mathcal{D}|\), \(|\mathcal{D}_\text{val}| \approx 0.1 |\mathcal{D}|\) and \(|\mathcal{D}_\text{test}| \approx 0.2 |\mathcal{D}|\).
 
-To address the severe class imbalance typical of AML datasets, we applied a downsampling strategy on the training set. The process involved identifying all fraudulent and legitimate accounts across the graph. We then randomly sampled the legitimate accounts to match the exact count of fraudulent accounts, achieving a balanced 1:1 ratio. After selecting these nodes, the graph was pruned by discarding any transaction where either the sender or the receiver was not among the sampled accounts. This ensures class balance at the node level while preserving the topological connections between the remaining actors.
+Afterwards we handled the class imbalance by applying downsampling on the training set; the validation and test sets remain untouched so that we can have a realistic evaluation. We performed downsampling by random sampling legitimate accounts untill they matched the number of the fraudulent ones, achieving like that a 1:1 ratio. 
 
-Crucially, to strictly prevent any form of data leakage, the feature standardization process was isolated. The Robust Scaler was fitted exclusively on the transactions belonging to the training split, and the resulting parameters ($Q_1, Q_2, Q_3$) were then used to independently transform the validation and test sets.
+Finally, it's important to mention that, in order to prevent data leakage, the Robust Scaler was fitted exclusively on the transactions belonging to the training split, and the resulting parameters ($Q_1, Q_2, Q_3$) were then used to independently transform the validation and test sets.
 
-\subsection{Hyperparameters Selection}
+\section{Model Selection and Training settings}
 
-\subsection{Model Selection and Training settings}
-%--------------------------------------------------------------
-% spiego come ho allenato i modelli
+\subsection{Optimizer}
+All models were trained using the Adam optimizer \cite{adam}. While Cheng et al. \cite{mainpaper} suggest a learning rate of $0.001$, we adopted a significantly lower learning rate of $\eta = 0.0001$. This decision was motivated by the observation that the higher learning rate led to unstable convergence on our dataset, with the validation loss oscillating rather than steadily decreasing. The reduced learning rate, combined with gradient clipping at a maximum norm of $5.0$, ensured smoother and more reliable training dynamics.
+
+To prevent overfitting, we employed an \textbf{early stopping} mechanism that monitors the validation loss. Training is halted when no improvement is observed for a specified number of consecutive epochs (the \emph{patience}). During the model selection phase, we set the patience to $100$ epochs; during the final training phase, we increased it to $200$--$300$ epochs to allow the model to fully converge on the selected hyperparameters.
+
+Additionally, we leveraged mixed-precision training via \texttt{torch.amp.GradScaler} to reduce GPU memory consumption without sacrificing numerical stability.
+
+\subsection{Subgraph Sampling}
+As noted by Cheng et al. \cite{mainpaper}, training graph neural networks on the entire graph structure is computationally prohibitive for large-scale financial networks, both in terms of memory and time. To address this, we employed a mini-batch subgraph sampling strategy using a \texttt{NeighborLoader} from PyTorch Geometric.
+
+Specifically, for each target node in the batch, we sample $10$ neighbors per hop across $L = 2$ hops (\texttt{num\_neighbors = [10, 10]}). The 2-hop neighborhood is consistent with our choice of $L = 2$ GNN layers, ensuring that each target node aggregates information from its full receptive field. Sampling $10$ neighbors per hop strikes a balance between preserving the local graph topology and keeping the computational cost manageable.
+
+We used a batch size of $512$ for all models, which maximizes GPU utilization and provides enough variance within each mini-batch for stable gradient estimates. During \textbf{validation}, we set \texttt{num\_neighbors = [-1, -1]}, meaning all neighbors are included. This guarantees an unbiased evaluation of the model's performance, as no information is lost to sampling.
+
+\subsection{Hyperparameters}
+Tuning all hyperparameters simultaneously via an exhaustive grid search is computationally infeasible. We therefore adopted a \textbf{two-phase tuning strategy} that decouples the loss function hyperparameters from the architectural ones.
+
+A critical design choice concerns the evaluation metric for Phase~1. Since the validation loss $\mathcal{L}_{\text{val}}$ is itself a weighted combination of the individual losses (Equation~\ref{sec:loss}), its absolute value depends directly on the choice of $c_1, c_2, c_3$. This makes it an invalid metric for comparing models trained with different weight configurations. We therefore used the \textbf{macro F1-score} on the validation set as the selection criterion in Phase~1, while still relying on the validation loss to trigger early stopping within each individual training run.
+
+Because the transaction-level loss function $\mathcal{L}_{\text{trans}}$ changes between tasks (Binary Cross-Entropy for binary classification, Cross-Entropy for multiclass), the optimal loss weights will naturally differ. Therefore, the full two-phase tuning process was conducted separately for the binary and the multiclass task. However, within each task, the same loss weights ($c_1, c_2, c_3$) were shared across both GAGNN variants (GAT-based and GIN-based) to ensure a fair comparison.
+
+\subsubsection{Loss Function hyperparameters}
+\label{sec:loss_hp}
+
+\textbf{Phase 1 (Loss Weights Selection).} The goal of this phase is to find the optimal multi-task loss weights ($c_1, c_2, c_3$) and, for the binary task, the positive-class weight $w$ used in the BCE loss. During this phase, all architectural hyperparameters were kept fixed to reference values inspired by Cheng et al. \cite{mainpaper}: hidden dimension $128$, output dimension $128$, number of attention heads $5$ (for GAT), $L = 2$ layers, and $\beta = 0.44$.
+
+For the binary classification task, we explored the following grid:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{l l l}
+\hline
+\textbf{Parameter} & \textbf{Searched values} & \textbf{Rationale} \\
+\hline
+$c_1$ & $\{0.75\}$ & Fixed as suggested by \cite{mainpaper} \\
+$c_2$ & $\{0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 1.0\}$ & Fine grid around 0.75 \\
+$c_3$ & $\{0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 1.0\}$ & Fine grid around 0.75 \\
+$w$ (laundry weight) & $\{1.0, 1.5, 2.0, 2.5\}$ & Penalize false negatives \\
+\hline
+\end{tabular}
+\caption{Phase~1 grid search for binary loss function hyperparameters.}
+\label{tab:phase1_binary}
+\end{table}
+
+The weight $c_1$ was fixed to $0.75$ following \cite{mainpaper}, as preliminary experiments confirmed its effectiveness. We explored a fine grid for $c_2$ and $c_3$ centered around the paper's suggested value of $0.75$. The positive-class weight $w$ was tuned to control how aggressively the model penalizes missed fraudulent transactions, which is critical in anti-money laundering where false negatives are far more costly than false positives.
+
+\begin{lstlisting}[caption={Best Phase~1 parameters (binary task)}, label=lst:best_phase1_binary]
+% TODO: insert best c1, c2, c3, w after running pre-model selection
+\end{lstlisting}
+
+For the \textbf{multiclass} task, Phase~1 was repeated with the same $c_1, c_2, c_3$ grid, but the positive-class weight $w$ was replaced by automatically computed per-class weights using \texttt{sklearn.utils.class\_weight.compute\_class\_weight} with \texttt{class\_weight='balanced'}. The architectural hyperparameters were initialized to the best values found for the binary task.
+
+\begin{lstlisting}[caption={Best Phase~1 parameters (multiclass task)}, label=lst:best_phase1_multi]
+% TODO: insert best c1, c2, c3 after running pre-model selection
+\end{lstlisting}
+
+\subsubsection{GAGNN hyperparameters}
+\label{sec:gagnn_hp}
+
+\textbf{Phase 2 (Architecture Selection).} Once the optimal loss weights were identified and fixed, we proceeded to tune the architectural hyperparameters of the GAGNN models. The following grid was explored:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{l l l}
+\hline
+\textbf{Parameter} & \textbf{Searched values} & \textbf{Rationale} \\
+\hline
+Hidden dim & $\{64, 128\}$ & 64 suggested by \cite{mainpaper}; 128 for more capacity \\
+Output dim & $\{128, 256\}$ & Controls the final embedding size \\
+MLP hidden dim & $\{64, 128, 256\}$ & Classification head capacity \\
+$\texttt{nn\_t}$ hidden dim & $\{128, 256\}$ & Transaction classifier; 128 suggested by \cite{mainpaper} \\
+Attention heads (GAT only) & $\{5\}$ & Following \cite{mainpaper} \\
+Number of layers $L$ & $\{2\}$ & Following \cite{mainpaper} \\
+$\beta$ (eMRF) & $\{0.44\}$ & Following \cite{mainpaper} \\
+\texttt{gin\_mlp\_hidden} (GIN only) & $\{128, 256\}$ & GIN-specific MLP capacity \\
+\hline
+\end{tabular}
+\caption{Phase~2 grid search for GAGNN architectural hyperparameters.}
+\label{tab:phase2_arch}
+\end{table}
+
+Several parameters were kept fixed based on the recommendations of \cite{mainpaper}. The number of layers $L = 2$ ensures a 2-hop receptive field, which is sufficient for capturing local community structure while avoiding over-smoothing. The eMRF tradeoff parameter $\beta = 0.44$ balances the contribution of the original node features and the message-passing updates. For GAT, the number of attention heads was set to $5$, allowing the model to attend to different aspects of the neighborhood simultaneously.
+
+The parameters that were actively searched control the model's representation capacity. The hidden dimension determines how much information each layer can encode; we tested both the paper's original value of $64$ and a larger value of $128$ to see if the additional capacity benefits our dataset. The MLP hidden dimensions control the capacity of the classification heads, which must be expressive enough to separate the learned embeddings into the correct classes.
+
+For the GIN variant, the attention heads parameter does not apply; instead, GIN introduces a \texttt{gin\_mlp\_hidden\_dim} that controls the capacity of the MLP used within each GIN layer to transform the aggregated messages. The remaining parameters were kept identical to the GAT variant to ensure a fair comparison.
+
+The same Phase~2 grid was used for both the binary and multiclass tasks.
+
+\begin{lstlisting}[caption={Best Phase~2 parameters (binary task)}, label=lst:best_phase2_binary]
+% TODO: insert best architectural parameters after running model selection
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Best Phase~2 parameters (multiclass task)}, label=lst:best_phase2_multi]
+% TODO: insert best architectural parameters after running model selection
+\end{lstlisting}
+
+\subsubsection{Baseline models hyperparameters}
+\label{sec:baseline_hp}
+
+The baseline models (standalone GAT and standalone GIN without the GAGNN pipeline) were trained using the same best architectural hyperparameters found for the corresponding GAGNN variants. This includes the hidden dimensions, output dimensions, number of layers, learning rate, and gradient clipping norm. By reusing these parameters, we ensure that any performance difference between the baseline and the GAGNN models is attributable to the group-aware architecture rather than to differences in model capacity or training configuration.
+
+\begin{lstlisting}[caption={Baseline model parameters}, label=lst:baseline_params]
+% TODO: insert baseline parameters (inherited from GAGNN best params)
+\end{lstlisting}
+

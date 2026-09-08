@@ -1,7 +1,7 @@
 {
     "max_norm": 5.0,
     "hidden_dim": 128,
-    "out_dim": 256,
+    "out_dim": 128,
     "heads": 5,
     "num_layers": 2,
     "beta": 0.44,
@@ -10,6 +10,5 @@
     "lr": 0.0005,
     "c1": 0.75,
     "c2": 0.75,
-    "c3": 0.9,
-    "laundry_weight": 2.0
+    "c3": 0.9
 }

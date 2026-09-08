@@ -1,0 +1,15 @@
+Total configurations tested: 49
+
+Hyperparameter grids:
+pre_max_norm_clipping: [5.0]
+pre_hidden_dims: [128]
+pre_out_dims: [128]
+pre_heads_list: [5]
+pre_num_layers_list: [2]
+pre_betas: [0.44]
+pre_mlp_hidden_dims: [128]
+pre_nn_t_hidden_dims: [128]
+pre_learning_rates: [0.0001]
+pre_c1_list: [0.75]
+pre_c2_list: [0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 1.0]
+pre_c3_list: [0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 1.0]

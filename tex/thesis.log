@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.8.25)  5 SEP 2026 16:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.8.25)  8 SEP 2026 17:48
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1139,26 +1139,65 @@ chapter 3.
 
 
 ] [26] [27]
-<IMG/wllimits.png, id=423, 3442.8625pt x 3523.1625pt>
+<IMG/wllimits.png, id=422, 3442.8625pt x 3523.1625pt>
 File: IMG/wllimits.png Graphic file (type png)
 <use IMG/wllimits.png>
-Package pdftex.def Info: IMG/wllimits.png  used on input line 110.
+Package pdftex.def Info: IMG/wllimits.png  used on input line 109.
 (pdftex.def)             Requested size: 307.29092pt x 314.43675pt.
- [28] [29 <./IMG/wllimits.png>] [30] [31] [32] [33] [34] [35] [36]) [37]
+ [28] [29 <./IMG/wllimits.png>]
+Overfull \hbox (13.47044pt too wide) in paragraph at lines 129--130
+[]\T1/pplj/m/n/12 (-20) To over-come those lim-its we will lever-age Group-Aware GNNs (GAGNNs)
+ []
+
+[30] [31] [32] [33] [34]
+Overfull \hbox (17.58379pt too wide) in paragraph at lines 265--266
+[]\T1/pplj/m/n/12 (-20) Finally, we ex-trap-o-lated the mul-ti-class la-bels from \T1/fvm/m/n/12 HI-Small_Patterns.txt
+ []
+
+[35]
+
+Package natbib Warning: Citation `adam' on page 36 undefined on input line 283.
+
+
+Overfull \hbox (41.73058pt too wide) in paragraph at lines 287--288
+[]\T1/pplj/m/n/12 (-20) Additionally, we lever-aged mixed-precision train-ing via \T1/fvm/m/n/12 torch.amp.GradScaler
+ []
+
+[36] [37]
+Overfull \hbox (39.15164pt too wide) in paragraph at lines 312--322
+ [][] 
+ []
+
+LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
+(Font)              scaled to size 9.30756pt on input line 328.
+
+Overfull \hbox (60.5344pt too wide) in paragraph at lines 332--333
+\T1/pplj/m/n/12 (-20) puted per-class weights us-ing \T1/fvm/m/n/12 sklearn.utils.class_weight.compute_class_weight
+ []
+
+
+Overfull \hbox (116.05977pt too wide) in paragraph at lines 345--359
+ [][] 
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[38] [39]) [40]
 \openout2 = `Sections/results.aux'.
 
- (Sections/results.tex [38
+ (Sections/results.tex
+chapter 4.
+) [41
 
 
 
 
 
 ]
-chapter 4.
-) [39]
 \openout2 = `Sections/conclusion.aux'.
 
- (Sections/conclusion.tex [40
+ (Sections/conclusion.tex [42
 
 
 
@@ -1166,10 +1205,10 @@ chapter 4.
 
 ]
 chapter 5.
-) [41]
+) [43]
 \openout2 = `Sections/software.aux'.
 
- (Sections/software.tex [42
+ (Sections/software.tex [44
 
 
 
@@ -1177,40 +1216,39 @@ chapter 5.
 
 ]
 chapter A.
-) [43] (thesis.bbl (thesis.brf)
+) [45] (thesis.bbl (thesis.brf)
 \tf@brf=\write5
 \openout5 = `thesis.brf'.
 
- [44
+ [46
 
 
 
 
-] [45]
-Underfull \hbox (badness 1502) in paragraph at lines 80--80
-[]\T1/pplj/m/n/12 (+20) Ladislav Ram-pá²ek, Mikhail Galkin, Vi-jay Prakash Dwivedi,
- []
+] [47])
 
-[46]) [47] (thesis.aux (Sections/titlePage.aux) (Sections/abstract.aux) (Sections/introduction.aux) (Sections/background.aux) (Sections/methodology.aux) (Sections/results.aux) (Sections/conclusion.aux) (Sections/software.aux))
+Package natbib Warning: There were undefined citations.
+
+[48] (thesis.aux (Sections/titlePage.aux) (Sections/abstract.aux) (Sections/introduction.aux) (Sections/background.aux) (Sections/methodology.aux) (Sections/results.aux) (Sections/conclusion.aux) (Sections/software.aux))
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2020/03/25>
  ***********
 Package rerunfilecheck Info: File `thesis.brf' has not changed.
-(rerunfilecheck)             Checksum: 5B01DAFAAD48069A632A6C6FAF28E95C;2070.
+(rerunfilecheck)             Checksum: 3486936118F03AAC03F7DCA170FE90BE;2749.
  ) 
 Here is how much of TeX's memory you used:
- 30295 strings out of 467871
- 615027 string characters out of 5418376
- 1355931 words of memory out of 5000000
- 57920 multiletter control sequences out of 15000+600000
- 726630 words of font info for 538 fonts, out of 8000000 for 9000
+ 31137 strings out of 467871
+ 623772 string characters out of 5418376
+ 1370931 words of memory out of 5000000
+ 58761 multiletter control sequences out of 15000+600000
+ 727006 words of font info for 534 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,23n,144p,11275b,1342s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 108i,23n,144p,11275b,1752s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/euex10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eufm10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eurb10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eurm10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eurm7.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eusm10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/fpl/fplbj8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/mathpazo/fplmbb.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/fpl/fplrc8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/fpl/fplrij8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/bera/fvmr8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplb8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplbi8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplr8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on thesis.pdf (50 pages, 1779542 bytes).
+Output written on thesis.pdf (51 pages, 1795325 bytes).
 PDF statistics:
- 859 PDF objects out of 1000 (max. 8388607)
- 183 named destinations out of 1000 (max. 500000)
- 114639 words of extra memory for PDF output out of 128383 (max. 10000000)
+ 880 PDF objects out of 1000 (max. 8388607)
+ 193 named destinations out of 1000 (max. 500000)
+ 116175 words of extra memory for PDF output out of 128383 (max. 10000000)
 

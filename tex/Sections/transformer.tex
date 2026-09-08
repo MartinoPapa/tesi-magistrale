@@ -1,0 +1,52 @@
+%--------------------------------------------------------------
+\section{Graph Transformers}
+\label{sec:gps}
+%--------------------------------------------------------------
+
+Graph Transformers leverage the transformers self-attention mechanism to enrich the local message passing mechanism with global context awareness. 
+In this work we adopt the \emph{General, Powerful, Scalable} (GPS) architecture ~\cite{rampasek2022gps}, implemented in PyTorch Geometric as \texttt{GPSConv}.
+The main idea is to combine, within each layer, local message-passing toghether with global self-attention, allowing the model to capture both local structural information and long-range dependencies.
+
+\subsection{GPSConv Layer}
+In each GPSConv layer the node embeddings are updated by two parallel procedures, local message passing and global attention; the two outputs are then combined to produce the final output. 
+
+\paragraph{Local Message Passing}
+The local message passing is performed by a Graph Isomorphic Network (GIN), as the one presented in Section~\ref{sec:gin}.
+\begin{equation}
+  h_i^{\text{local},(k)} = \operatorname{MLP}_{\text{local}}^{(k)}\!\left(
+    \left(1 + \varepsilon^{(k)}\right) h_i^{(k-1)}
+    + \sum_{j \in \mathcal{N}(i)} h_j^{(k-1)}
+  \right)
+\end{equation}
+
+\paragraph{Global Attention}
+A standard multi-head self-attention module is applied over all nodes, capturing long-range interactions without the locality constraint of message passing:
+\begin{equation}
+  h_i^{\text{global},(k)} = \operatorname{MHA}^{(k)}\!\left(
+    h_i^{(k-1)},\;\left\{h_j^{(k-1)}\right\}_{j \in V}
+  \right)
+\end{equation}
+with $H$ parallel attention heads.
+\bigskip
+
+The outputs of both branches are then summed toghether to obtain the final node representation:
+\begin{equation}
+  h_i^{(k)} = h_i^{\text{local},(k)} + h_i^{\text{global},(k)}
+\end{equation}
+
+\subsection{Input/Output Projections}
+
+GPSConv operates with a fixed channel dimension $d_h$ across all layers.
+Since the original node features $x_i \in \mathbb{R}^{d_{\text{feat}}}$ and
+the desired output dimension $d_{\text{out}}$ generally differ from $d_h$,
+two linear projections are added:
+\begin{align}
+  \tilde{x}_i &= W_{\text{in}}\, x_i, \quad W_{\text{in}} \in \mathbb{R}^{d_h \times d_{\text{feat}}} \\
+  X^{(L)} &= W_{\text{out}}\, H^{(L)}, \quad W_{\text{out}} \in \mathbb{R}^{d_{\text{out}} \times d_h}
+\end{align}
+where $H^{(L)} \in \mathbb{R}^{N \times d_h}$ is the matrix containing the final node embeddings $h_i^{(L)}$ for nodes after the $L$-th layer.
+Notice that the constraint $d_h \bmod H = 0$ must be satisfied to allow MHA to split the embedding evenly across attention heads.
+
+The intermediate representations produced by each head are then concatenated along the feature dimension and linearly projected to form the final multi-head attention output.
+
+By combining local GIN message passing with global multi-head self-attention, GPSConv overcomes the WL ceiling and oversquashing.

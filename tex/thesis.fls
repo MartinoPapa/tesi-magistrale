@@ -626,11 +626,6 @@ INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\palatino\pplr9
 INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplr8r.tfm
 INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\tfm\public\mathpazo\fplmr.tfm
 INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplrc8r.tfm
-INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\tfm\public\bera\fvmr8t.tfm
-INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\tfm\public\bera\fvmr8t.tfm
-INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\tfm\public\bera\fvmr8t.tfm
-INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\vf\public\bera\fvmr8t.vf
-INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\tfm\public\bera\fvmr8r.tfm
 INPUT .\Sections\results.tex
 INPUT .\Sections\results.tex
 OUTPUT Sections\results.aux

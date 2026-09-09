@@ -53,6 +53,17 @@ Mariano-Florentino Cu{\'e}llar.
 \newblock Does crime still pay? criminal asset recovery in the eu.
 \newblock Technical report, Europol, 2016.
 
+\bibitem{pyg}
+Matthias Fey and Jan~E. Lenssen.
+\newblock Fast graph representation learning with {PyTorch Geometric}.
+\newblock In {\em ICLR Workshop on Representation Learning on Graphs and
+  Manifolds}, 2019.
+
+\bibitem{adam}
+Diederik~P. Kingma and Jimmy Ba.
+\newblock Adam: A method for stochastic optimization.
+\newblock {\em arXiv preprint arXiv:1412.6980}, 2014.
+
 \bibitem{kuiper2021exploring}
 Ouren Kuiper, Martin van~den Berg, Joost van~der Burgt, and Stefan Leijnen.
 \newblock Exploring explainable ai in the financial sector: Perspectives of

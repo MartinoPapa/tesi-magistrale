@@ -126,7 +126,7 @@ This gets worse across graph bottlenecks, where signals from distant nodes $u$ a
 ~\cite{Cheng_2025}.
 \bigskip
 
-To overcome those limits we will leverage Group-Aware GNNs (GAGNNs) \cite{mainpaper} (Section~\ref{sec:gagnn}), introducing a clustering mechanism to merge nodes that are suspected to be doing ML toghether and predicting their labels as a groups.
+To overcome those limits we will leverage Group-Aware GNNs (GAGNNs) \cite{mainpaper} (Section~\ref{sec:gagnn}), introducing a clustering mechanism to merge nodes that are suspected to be doing ML together and predicting their labels as a groups.
 
 %--------------------------------------------------------------
 \section{Group-Aware Graph Neural Networks}
@@ -155,7 +155,7 @@ where $E$ denotes the set of edges. A classifier then uses these embeddings to p
 \end{equation}
 where $\sigma$ is the sigmoid activation function. Notice that $p_{\text{fraud}}$ represents the probability of a node being illicit. Because the node classification step focuses strictly on detecting the presence of laundering, this prediction remains binary even in multiclass scenarios. The differentiation of specific laundering patterns is handled exclusively at the transaction level later in the pipeline.
 
-\subsection{Edge Markov Random Field Layer}
+\subsection{Extended Markov Random Field Layer}
 \label{sec:emrf}
 The eMRF layer refines the embeddings $X^{(2)}$ by pulling together nodes that belong to the same community and repelling those that do not. This community similarity is derived from both the graph topology and the node attributes.
 
@@ -264,124 +264,192 @@ where $Q_2(x)$ is the median, and $Q_1(x)$ and $Q_3(x)$ are the 25th and 75th pe
 
 Finally, we extrapolated the multiclass labels from \texttt{HI-Small\_Patterns.txt} obtaining the categorical feature. As before, we then apply one-hot encoding to allow the model to understand it.
 
-\subsection{Train, Validation and Test Split}
-Anti Money Laundering algorithms are usually performed on the new incoming transactions to detect fraudulent activity. This means that the models must learn from the past to predict the future. For this reason, splitting the dataset randomly would inevitably cause future information to leak into the past. To avoid that we decided to split our dataset by using 2 temporal thresholds \(t_1, t_2\) that define the training, validation and test sets as follows.
+\subsection{Train, Patience, Validation and Test Split}
+Anti Money Laundering algorithms are usually performed on the new incoming transactions to detect fraudulent activity. This means that the models must learn from the past to predict the future. For this reason, splitting the dataset randomly would inevitably cause future information to leak into the past. To avoid that we decided to split our dataset by using 3 temporal thresholds \(t_1, t_2, t_3\) that define the training, patience, validation and test sets as follows.
 \begin{align}
     \mathcal{D}_\text{train} &= \{d \in \mathcal{D} \vert t(d) \le t_1 \} \\
-    \mathcal{D}_\text{val}   &= \{d \in \mathcal{D} \vert t_1 < t(d) \le t_2 \} \\
-    \mathcal{D}_\text{test}  &= \{d \in \mathcal{D} \vert t(d) > t_2 \}
+    \mathcal{D}_\text{patience} &= \{d \in \mathcal{D} \vert t_1 < t(d) \le t_2 \} \\
+    \mathcal{D}_\text{val}   &= \{d \in \mathcal{D} \vert t_2 < t(d) \le t_3 \} \\
+    \mathcal{D}_\text{test}  &= \{d \in \mathcal{D} \vert t(d) > t_3 \}
 \end{align}
-where \(t(d)\) is the timestamp of the transaction $d$, and \(t_1\) and \(t_2\) are specially picked so that \(|\mathcal{D}_\text{train}| \approx 0.7 |\mathcal{D}|\), \(|\mathcal{D}_\text{val}| \approx 0.1 |\mathcal{D}|\) and \(|\mathcal{D}_\text{test}| \approx 0.2 |\mathcal{D}|\).
+where \(t(d)\) is the timestamp of the transaction $d$, and \(t_1, t_2\) and \(t_3\) are specially picked so that \(|\mathcal{D}_\text{train}| \approx 0.7 |\mathcal{D}|\), \(|\mathcal{D}_\text{patience}| \approx 0.075 |\mathcal{D}|\), \(|\mathcal{D}_\text{val}| \approx 0.075 |\mathcal{D}|\) and \(|\mathcal{D}_\text{test}| \approx 0.15 |\mathcal{D}|\). 
+The patience set is exclusively used to trigger early stopping during both model selection and training. The validation set is instead kept strictly for evaluating and comparing models during the selection phase, preventing the evaluation metric from being biased by the early stopping mechanism.
 
-Afterwards we handled the class imbalance by applying downsampling on the training set; the validation and test sets remain untouched so that we can have a realistic evaluation. We performed downsampling by random sampling legitimate accounts untill they matched the number of the fraudulent ones, achieving like that a 1:1 ratio. 
+During the training phase, since we no longer need 4 different subsets, the train set becomes \(\mathcal{D}_\text{train} \gets \mathcal{D}_\text{train} \cup \mathcal{D}_\text{patience}\), the validation will be used for the early stopping \(\mathcal{D}_\text{patience} \gets \mathcal{D_\text{val}}\) and the test set remains untouched to provide an unbiased evaluation of the model performance.
+This ensures that the model always trains on a contiguous block of time and prevents data from the future to leak into the past.
 
-Finally, it's important to mention that, in order to prevent data leakage, the Robust Scaler was fitted exclusively on the transactions belonging to the training split, and the resulting parameters ($Q_1, Q_2, Q_3$) were then used to independently transform the validation and test sets.
+It's important to mention that, in order to prevent data leakage, the Robust Scaler was fitted exclusively on the transactions belonging to the training split, and the resulting parameters ($Q_1, Q_2, Q_3$) were then used to independently transform the patience, validation and test sets.
+
+Finally, in order to address the class imbalance, we decided to apply downsampling on the training set.
+For the binary task, the majority class (legitimate accounts) is downsampled to match the number of illicit accounts, achieving a 1:1 ratio. 
+For the multiclass task, the legitimate class is downsampled to match the total sum of all illicit instances across the different illicit patterns. This achieves a 1:1 ratio between legitimate and overall illicit samples, while preserving the natural distribution and relative frequencies among the specific illicit classes. 
+The validations and test sets remain untouched.
 
 \section{Model Selection and Training settings}
+In this section we describe and explain our choices for the training settings and the modles' hyperparameters. We first discuss the general settings shared amongst all the experiments, then we deep dive into the architectural choices and hyperparameter tuning for each class of models we evaluated. 
 
 \subsection{Optimizer}
-All models were trained using the Adam optimizer \cite{adam}. While Cheng et al. \cite{mainpaper} suggest a learning rate of $0.001$, we adopted a significantly lower learning rate of $\eta = 0.0001$. This decision was motivated by the observation that the higher learning rate led to unstable convergence on our dataset, with the validation loss oscillating rather than steadily decreasing. The reduced learning rate, combined with gradient clipping at a maximum norm of $5.0$, ensured smoother and more reliable training dynamics.
-
-To prevent overfitting, we employed an \textbf{early stopping} mechanism that monitors the validation loss. Training is halted when no improvement is observed for a specified number of consecutive epochs (the \emph{patience}). During the model selection phase, we set the patience to $100$ epochs; during the final training phase, we increased it to $200$--$300$ epochs to allow the model to fully converge on the selected hyperparameters.
-
-Additionally, we leveraged mixed-precision training via \texttt{torch.amp.GradScaler} to reduce GPU memory consumption without sacrificing numerical stability.
+As suggested by Cheng et al. \cite{mainpaper}, we decided to adopt the Adam optimizer \cite{adam} as the optimization algorithm for all our models. The original implementation suggested a learning rate of \(0.001\) and a batch size of \(128\). 
+With our dataset these settings led to a very unstable convergence, therefore we decided to lower the learning rate to \(\eta = 0.0001\) which, together with gradient clipping at a maximum norm of \(5.0\), ensured smoother and more reliable training dynamics. Furthermore we also changed the batch size to \(256\) to better exploit the GPU usage.
 
 \subsection{Subgraph Sampling}
-As noted by Cheng et al. \cite{mainpaper}, training graph neural networks on the entire graph structure is computationally prohibitive for large-scale financial networks, both in terms of memory and time. To address this, we employed a mini-batch subgraph sampling strategy using a \texttt{NeighborLoader} from PyTorch Geometric.
+Due to the prohibitive dimension of the financial graph, fitting the models directly to the entirety of it is not a feasible option in both terms of memory and tim.
 
-Specifically, for each target node in the batch, we sample $10$ neighbors per hop across $L = 2$ hops (\texttt{num\_neighbors = [10, 10]}). The 2-hop neighborhood is consistent with our choice of $L = 2$ GNN layers, ensuring that each target node aggregates information from its full receptive field. Sampling $10$ neighbors per hop strikes a balance between preserving the local graph topology and keeping the computational cost manageable.
+To address this, we employed a mini-batch subgraph sampling strategy using \texttt{NeighborLoader} from PyTorch Geometric~\cite{pyg}.
+The loader operates by sampling a fixed number of neighbors per hop. This is governed by the \texttt{num\_neighbors} \(=[a,b,c,\dots]\) parameter. Meaning that for each target node in the batch, the loader samples $a$ of its immediate neighbors; for each of those \(a\) sampled neighbors, it further samples $b$ of their neighbors and so on. 
+In our experiments, we set \texttt{num\_neighbors = [15, 10, 10]} across $L = 2$ or \(L=3\) hops depending on the model architecture. This preserves the local graph topology while keeping the computational cost manageable.
 
-We used a batch size of $512$ for all models, which maximizes GPU utilization and provides enough variance within each mini-batch for stable gradient estimates. During \textbf{validation}, we set \texttt{num\_neighbors = [-1, -1]}, meaning all neighbors are included. This guarantees an unbiased evaluation of the model's performance, as no information is lost to sampling.
+This sampling strategy is only used during {training}. For validation and {testing}, we set \texttt{num\_neighbors = [-1, -1, -1]}, meaning that all neighbors are included. This guarantees an unbiased evaluation of the model's performance on the realistic, imbalanced data.
+
+\subsection{Early Stopping}
+To prevent overfitting we employed an early stopping mechanism that monitors the loss on the patience set \(\mathcal{D}_\text{patience}\). Training is stopped when no improvement is observed for a specified number of consecutive epochs (the \emph{patience}). During the model selection phases, we set a maximum of $3000$ epochs with a patience value of $p_{\text{selection}}=100$; during the final training phase, we set a maximum of $6000$ epochs with a patience value of $p_{\text{training}}=150 $, to allow the model to fully converge on the selected hyperparameters. These settings are shared across all the experiments.
 
 \subsection{Hyperparameters}
-Tuning all hyperparameters simultaneously via an exhaustive grid search is computationally infeasible. We therefore adopted a \textbf{two-phase tuning strategy} that decouples the loss function hyperparameters from the architectural ones.
+We begin by listing the hyperparameters that will need to be tuned across all the different models.
+\paragraph{Loss function hyperparameters} 
+\begin{itemize}
+  \item \(c_1\): Weight for the group-level loss \(\mathcal{L}_{\text{group}}\).
+  \item \(c_2\): Weight for the node-level loss \(\mathcal{L}_{\text{node}}\).
+  \item \(c_3\): Weight for the transaction-level loss \(\mathcal{L}_{\text{trans}}\).
+  \item \(w\) (\texttt{laundry\_weight}): Positive-class weight used in the BCE loss.
+\end{itemize}
+\paragraph{GAGNN hyperparameters}
+\begin{itemize}
+  \item \(\beta\): Trade-off parameter in the Extended Markov Random Field (eMRF) layer that balances the influence of topological similarity \(\varepsilon\) and attribute similarity \(R_\zeta\) (Section~\ref{sec:emrf}).
+  \item \texttt{mlp\_hidden\_dim}: Dimension of the hidden layers in the \(\operatorname{MLP}_{\text{node}}\), used to map the refined embeddings \(X^{(3)}\) to node-level classification logits (Section~\ref{sec:node_clf}).
+  \item \texttt{nn\_t\_hidden\_dim}: Dimension of the hidden layers in the \(\operatorname{MLP}_{\text{edge}}\), used to compute the transaction probability \(p_{\text{trans}}\) (Section~\ref{sec:group_layer}).
+  \item \texttt{out\_dim}: Dimension \(d_{\text{out}}\) of the enriched embeddings \(X^{(2)}\) (Section~\ref{sec:encoder}).
+\end{itemize}
+\paragraph{GAT hyperparameters}
+\begin{itemize}
+  \item \texttt{hidden\_dim}: Dimension of the hidden layers in the message passing steps.
+  \item \(L\) (\texttt{num\_layers}): Number of message passing layers, determining the multi-hop receptive field of the GNN.
+  \item \(H\) (\texttt{heads}): Number of attention heads.
+\end{itemize}
+\paragraph{GIN hyperparameters}
+\begin{itemize}
+  \item \texttt{hidden\_dim}: Dimension of the hidden layers in the message passing steps.
+  \item \(L\) (\texttt{num\_layers}): Number of message passing layers, determining the multi-hop receptive field of the GNN.
+  \item \texttt{gin\_mlp\_hidden}: Dimension of the hidden layers of the \(\operatorname{MLP}\) used inside the GIN UPDATE function (Section~\ref{sec:gin}).
+\end{itemize}
+Due to the very high number of hyperparameters that need to be tuned, we decided to split the model selection process into two distinct phases. The first one concetrates on finding the best values for the parameters involved in the loss function by keeping the architectural hyperparameters fixed to reference values suggested by Cheng et al. \cite{mainpaper}. 
+The second phase instead focuses on tuning the architectural hyperparameters (hidden dimension, number of layers, number of attention heads, etc.) keeping the loss function weights fixed to the values found in the first one.
 
-A critical design choice concerns the evaluation metric for Phase~1. Since the validation loss $\mathcal{L}_{\text{val}}$ is itself a weighted combination of the individual losses (Equation~\ref{sec:loss}), its absolute value depends directly on the choice of $c_1, c_2, c_3$. This makes it an invalid metric for comparing models trained with different weight configurations. We therefore used the \textbf{macro F1-score} on the validation set as the selection criterion in Phase~1, while still relying on the validation loss to trigger early stopping within each individual training run.
-
-Because the transaction-level loss function $\mathcal{L}_{\text{trans}}$ changes between tasks (Binary Cross-Entropy for binary classification, Cross-Entropy for multiclass), the optimal loss weights will naturally differ. Therefore, the full two-phase tuning process was conducted separately for the binary and the multiclass task. However, within each task, the same loss weights ($c_1, c_2, c_3$) were shared across both GAGNN variants (GAT-based and GIN-based) to ensure a fair comparison.
-
-\subsubsection{Loss Function hyperparameters}
+\subsubsection{Loss Function Hyperparameters}
 \label{sec:loss_hp}
 
-\textbf{Phase 1 (Loss Weights Selection).} The goal of this phase is to find the optimal multi-task loss weights ($c_1, c_2, c_3$) and, for the binary task, the positive-class weight $w$ used in the BCE loss. During this phase, all architectural hyperparameters were kept fixed to reference values inspired by Cheng et al. \cite{mainpaper}: hidden dimension $128$, output dimension $128$, number of attention heads $5$ (for GAT), $L = 2$ layers, and $\beta = 0.44$.
+In this phase we search for the optimal values of the parameters \(c_1, c_2, c_3\) and \(w\) (used only in the binary task), involved in the loss functions. 
 
-For the binary classification task, we explored the following grid:
+To save computational resources, the grid search for the loss weights is performed exclusively on the GAGNN model with the GAT backbone, assuming that the optimal weights found for GAT apply directly to the GIN backbone as well for their respective tasks. During this phase, all architectural hyperparameters were kept fixed to reference values suggested by Cheng et al. \cite{mainpaper}; when not explictly stated we opted for feasible and reasonable values according to the literature. The fixed architectural hyperparameters are repoted in Table \ref{tab:fixed_arch_hp}.
 
 \begin{table}[h]
 \centering
 \begin{tabular}{l l l}
 \hline
-\textbf{Parameter} & \textbf{Searched values} & \textbf{Rationale} \\
+\textbf{Parameter} & \textbf{Value} & \textbf{Rationale} \\
 \hline
-$c_1$ & $\{0.75\}$ & Fixed as suggested by \cite{mainpaper} \\
-$c_2$ & $\{0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 1.0\}$ & Fine grid around 0.75 \\
-$c_3$ & $\{0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 1.0\}$ & Fine grid around 0.75 \\
-$w$ (laundry weight) & $\{1.0, 1.5, 2.0, 2.5\}$ & Penalize false negatives \\
+L & 2 &  original paper value \\
+H & 5 &  original paper value \\
+\(\beta\) & 0.44 & original paper value \\
+\texttt{hidden\_dim} & 64 & original paper value \\
+\texttt{nn\_t\_hidden\_dim} & 128 & original paper value \\
+\texttt{out\_dim} & 128 & assumed as \texttt{hidden\_dim} \(* 2\) \\
+\texttt{mlp\_hidden\_dim} & 128 & assumed as \texttt{hidden\_dim} \(* 2\)\\
 \hline
 \end{tabular}
-\caption{Phase~1 grid search for binary loss function hyperparameters.}
+\caption{Fixed architectural hyperparameters for Phase 1}
+\label{tab:fixed_arch_hp}
+\end{table}
+
+A critical design choice in this phase concerns the evaluation metric. Since the validation loss $\mathcal{L}_{\text{val}}$ is directly affected by the parameters \(c_1,c_2,c_3\) and \(w\), using it as a selection criterion would be a mistake. We therefore leveraged the macro F1-score on the validation set as the model selection criterion. Validation loss still served to trigger the early stopping.
+
+The hyperparameters grids for binary and multiclass tasks are reported in Table \ref{tab:phase1_binary} and Table \ref{tab:phase1_multi} respectively.
+
+For the multiclass task the weight $w$ is replaced by automatically computed per-class weights using \texttt{sklearn} with \texttt{class\_weight='balanced'}.
+
+\begin{table}
+\centering
+\begin{tabular}{l l l}
+\hline
+\textbf{Parameter} & \textbf{Searched values} & \textbf{Rationale} \\
+\hline
+$c_1$ & $\{0.75\}$ & Fixed \\
+$c_2$ & $\{0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 1.0\}$ & grid around 0.75 \\
+$c_3$ & $\{0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 1.0\}$ & grid around 0.75 \\
+$w$ (laundry weight) & $\{1.0, 1.5, 2.0, 2.5\}$ & to penalize false negatives \\
+\hline
+\end{tabular}
+\caption{Grid search for binary loss function hyperparameters}
 \label{tab:phase1_binary}
 \end{table}
 
-The weight $c_1$ was fixed to $0.75$ following \cite{mainpaper}, as preliminary experiments confirmed its effectiveness. We explored a fine grid for $c_2$ and $c_3$ centered around the paper's suggested value of $0.75$. The positive-class weight $w$ was tuned to control how aggressively the model penalizes missed fraudulent transactions, which is critical in anti-money laundering where false negatives are far more costly than false positives.
-
-\begin{lstlisting}[caption={Best Phase~1 parameters (binary task)}, label=lst:best_phase1_binary]
-% TODO: insert best c1, c2, c3, w after running pre-model selection
-\end{lstlisting}
-
-For the \textbf{multiclass} task, Phase~1 was repeated with the same $c_1, c_2, c_3$ grid, but the positive-class weight $w$ was replaced by automatically computed per-class weights using \texttt{sklearn.utils.class\_weight.compute\_class\_weight} with \texttt{class\_weight='balanced'}. The architectural hyperparameters were initialized to the best values found for the binary task.
-
-\begin{lstlisting}[caption={Best Phase~1 parameters (multiclass task)}, label=lst:best_phase1_multi]
-% TODO: insert best c1, c2, c3 after running pre-model selection
-\end{lstlisting}
-
-\subsubsection{GAGNN hyperparameters}
-\label{sec:gagnn_hp}
-
-\textbf{Phase 2 (Architecture Selection).} Once the optimal loss weights were identified and fixed, we proceeded to tune the architectural hyperparameters of the GAGNN models. The following grid was explored:
-
-\begin{table}[h]
+\begin{table}
 \centering
 \begin{tabular}{l l l}
 \hline
 \textbf{Parameter} & \textbf{Searched values} & \textbf{Rationale} \\
 \hline
-Hidden dim & $\{64, 128\}$ & 64 suggested by \cite{mainpaper}; 128 for more capacity \\
-Output dim & $\{128, 256\}$ & Controls the final embedding size \\
-MLP hidden dim & $\{64, 128, 256\}$ & Classification head capacity \\
-$\texttt{nn\_t}$ hidden dim & $\{128, 256\}$ & Transaction classifier; 128 suggested by \cite{mainpaper} \\
-Attention heads (GAT only) & $\{5\}$ & Following \cite{mainpaper} \\
-Number of layers $L$ & $\{2\}$ & Following \cite{mainpaper} \\
-$\beta$ (eMRF) & $\{0.44\}$ & Following \cite{mainpaper} \\
-\texttt{gin\_mlp\_hidden} (GIN only) & $\{128, 256\}$ & GIN-specific MLP capacity \\
+$c_1$ & $\{0.75\}$ & Fixed \\
+$c_2$ & $\{0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 1.0\}$ & grid around 0.75 \\
+$c_3$ & $\{0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 1.0\}$ & grid around 0.75 \\
 \hline
 \end{tabular}
-\caption{Phase~2 grid search for GAGNN architectural hyperparameters.}
-\label{tab:phase2_arch}
+\caption{Grid search for multiclass loss function hyperparameters}
+\label{tab:phase1_multi}
 \end{table}
 
-Several parameters were kept fixed based on the recommendations of \cite{mainpaper}. The number of layers $L = 2$ ensures a 2-hop receptive field, which is sufficient for capturing local community structure while avoiding over-smoothing. The eMRF tradeoff parameter $\beta = 0.44$ balances the contribution of the original node features and the message-passing updates. For GAT, the number of attention heads was set to $5$, allowing the model to attend to different aspects of the neighborhood simultaneously.
+We denote the optimal values produced by the grid searches as \(c_1^{*\text{binary}}\), \(c_2^{*\text{binary}}\), \(c_3^{*\text{binary}}\), \(w^*\) and $c_1^{*\text{multi}}$, $c_2^{*\text{multi}}$, $c_3^{*\text{multi}}$.
 
-The parameters that were actively searched control the model's representation capacity. The hidden dimension determines how much information each layer can encode; we tested both the paper's original value of $64$ and a larger value of $128$ to see if the additional capacity benefits our dataset. The MLP hidden dimensions control the capacity of the classification heads, which must be expressive enough to separate the learned embeddings into the correct classes.
+\subsubsection{Architecture Hyperparameters}
+\label{sec:gagnn_hp}
+The second phase consists in finding the optimal values for the architectural hyperparameters, keeping the loss function weights fixed to the values found in the first phase. This allows to use the \textit{validation loss} \(\mathcal{L}_{\text{val}}\) instead of the validation F1-score as selection criterion; this is a better choice in this case since the F1-score metric is defined by strict decisions boundaries and therefore is not continuous and more sensitive to small fluctuations.
 
-For the GIN variant, the attention heads parameter does not apply; instead, GIN introduces a \texttt{gin\_mlp\_hidden\_dim} that controls the capacity of the MLP used within each GIN layer to transform the aggregated messages. The remaining parameters were kept identical to the GAT variant to ensure a fair comparison.
+We will perform four different model selections, one for each experiment: GAGNN with GAT backbone for the binary task, GAGNN with GIN backbone for the binary task, GAGNN with GAT backbone for the multiclass task and GAGNN with GIN backbone for the multiclass task. Two hyperparameters grid are used, since they are shared between binary and multiclass tasks with the same backbone GNN. As possible values we chose options around those of the reference paper; the hyperparameters grids for GAT and GIN backbones are reported in Table \ref{tab:phase2_gat} and Table \ref{tab:phase2_gin} respectively.
 
-The same Phase~2 grid was used for both the binary and multiclass tasks.
+Trying more parameters, expecially for the number of layers, number of heads, \(\beta\) and coefficients of the loss function could lead to much better results. However, due to the limitiations on the computational resources, we had to limit the grid search to a reasonable number of combinations. We will discuss this further in Section \ref{Limitations}.
 
-\begin{lstlisting}[caption={Best Phase~2 parameters (binary task)}, label=lst:best_phase2_binary]
-% TODO: insert best architectural parameters after running model selection
-\end{lstlisting}
+\begin{table}
+\centering
+\begin{tabular}{l l}
+\hline
+\textbf{Parameter} & \textbf{Searched values} \\
+\hline
+\(H\) & 5 \\
+\(L\) & [2,3] \\
+\(\beta\) & 0.44 \\
+\texttt{hidden\_dim} & [64, 128]\\
+\texttt{nn\_t\_hidden\_dim} & [128, 256]\\
+\texttt{out\_dim} & [128, 256]\\
+\texttt{mlp\_hidden\_dim} & [128, 256]\\
+\hline
+\end{tabular}
+\caption{Grid search for GAGNN with GAT}
+\label{tab:phase2_gat}
+\end{table}
 
-\begin{lstlisting}[caption={Best Phase~2 parameters (multiclass task)}, label=lst:best_phase2_multi]
-% TODO: insert best architectural parameters after running model selection
-\end{lstlisting}
+\begin{table}
+\centering
+\begin{tabular}{l l}
+\hline
+\textbf{Parameter} & \textbf{Searched values}\\
+\hline
+\(L\) & [2,3] \\
+\(\beta\) & 0.44 \\
+\texttt{hidden\_dim} & [64, 128]\\
+\texttt{nn\_t\_hidden\_dim} & [128, 256]\\
+\texttt{out\_dim} & [128, 256]\\
+\texttt{mlp\_hidden\_dim} & [128, 256]\\
+\texttt{gin\_mlp\_hidden} & $[128, 256]$\\
+\hline
+\end{tabular}
+\caption{Grid search for GAGNN with GIN}
+\label{tab:phase2_gin}
+\end{table}
 
-\subsubsection{Baseline models hyperparameters}
+\subsubsection{Baseline Models Hyperparameters}
 \label{sec:baseline_hp}
 
-The baseline models (standalone GAT and standalone GIN without the GAGNN pipeline) were trained using the same best architectural hyperparameters found for the corresponding GAGNN variants. This includes the hidden dimensions, output dimensions, number of layers, learning rate, and gradient clipping norm. By reusing these parameters, we ensure that any performance difference between the baseline and the GAGNN models is attributable to the group-aware architecture rather than to differences in model capacity or training configuration.
+For the baseline models (GIN and GAT) we used as hyperparameters the same values obtained for the internal GNN encoder of their respective GAGNN counterpart. 
+This choice stems from the need to understand how much the GAGNN architecture enhances the GNNs capacity of detecting fraudulent transactions, without the confounding factor of different hyperparameter settings. 
 
-\begin{lstlisting}[caption={Baseline model parameters}, label=lst:baseline_params]
-% TODO: insert baseline parameters (inherited from GAGNN best params)
-\end{lstlisting}
 

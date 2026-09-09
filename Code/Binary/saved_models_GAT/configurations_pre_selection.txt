@@ -2,7 +2,7 @@ Total configurations tested: 196
 
 Hyperparameter grids:
 pre_max_norm_clipping: [5.0]
-pre_hidden_dims: [128]
+pre_hidden_dims: [64]
 pre_out_dims: [128]
 pre_heads_list: [5]
 pre_num_layers_list: [2]

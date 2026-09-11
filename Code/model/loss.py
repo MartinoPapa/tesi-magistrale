@@ -53,9 +53,9 @@ class GAGNNLoss(nn.Module):
             weight = self.laundry_weight.to(device=p_trans.device, dtype=p_trans.dtype) if isinstance(self.laundry_weight, torch.Tensor) else None
             if trans_mask is not None:
                 if trans_mask.any():
-                    l_trans = F.cross_entropy(p_trans[trans_mask], y_trans[trans_mask].squeeze().long(), weight=weight)
+                    l_trans = F.cross_entropy(p_trans[trans_mask], y_trans[trans_mask].view(-1).long(), weight=weight)
             else:
-                l_trans = F.cross_entropy(p_trans, y_trans.squeeze().long(), weight=weight)
+                l_trans = F.cross_entropy(p_trans, y_trans.view(-1).long(), weight=weight)
             
         l_group = torch.tensor(0.0, device=p_group.device)
         if group_mask is not None:

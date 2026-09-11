@@ -47,13 +47,14 @@
 \contentsline {subsubsection}{Architecture Hyperparameters}{40}{table.caption.19}%
 \contentsline {subsubsection}{Baseline Models Hyperparameters}{41}{table.caption.21}%
 \contentsline {chapter}{\numberline {4}Results}{43}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Binary Classification Results}{43}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}GAGNN}{43}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Baseline models}{43}{subsection.4.1.2}%
-\contentsline {section}{\numberline {4.2}Multi-class Classification Results}{43}{section.4.2}%
+\contentsline {section}{\numberline {4.1}Model Selection}{43}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Binary Classification Results}{43}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}GAGNN}{43}{subsection.4.2.1}%
 \contentsline {subsection}{\numberline {4.2.2}Baseline models}{43}{subsection.4.2.2}%
-\contentsline {section}{\numberline {4.3}Limitations}{43}{section.4.3}%
+\contentsline {section}{\numberline {4.3}Multi-class Classification Results}{43}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}GAGNN}{43}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Baseline models}{43}{subsection.4.3.2}%
+\contentsline {section}{\numberline {4.4}Limitations}{43}{section.4.4}%
 \contentsline {chapter}{\numberline {5}Conclusions}{45}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Future Directions}{45}{section.5.1}%
 \contentsline {chapter}{\numberline {A}Software}{47}{appendix.A}%

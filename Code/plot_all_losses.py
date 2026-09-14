@@ -1,5 +1,32 @@
 import os
-import torch
+import sys
+
+# --- Workaround for Windows Application Control policy blocking caffe2_nvrtc.dll ---
+dll_path = r"C:\Users\marti\AppData\Local\Programs\Python\Python312\Lib\site-packages\torch\lib\caffe2_nvrtc.dll"
+dll_renamed = False
+if os.path.exists(dll_path):
+    try:
+        os.rename(dll_path, dll_path + ".bak")
+        dll_renamed = True
+        print("Temporarily renamed caffe2_nvrtc.dll to bypass App Control policy.")
+    except Exception as e:
+        print(f"Failed to rename DLL: {e}")
+
+try:
+    import torch
+except ImportError as e:
+    print("Failed to import torch.")
+    raise e
+finally:
+    # Restore the DLL immediately after importing torch
+    if dll_renamed and os.path.exists(dll_path + ".bak"):
+        try:
+            os.rename(dll_path + ".bak", dll_path)
+            print("Restored caffe2_nvrtc.dll.")
+        except Exception as e:
+            print(f"Failed to restore DLL: {e}")
+# -----------------------------------------------------------------------------------
+
 import matplotlib.pyplot as plt
 
 # User preference for smoothing training losses

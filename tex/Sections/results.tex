@@ -150,16 +150,14 @@ We begin by providing some considerations regarding training dynamics that are c
 
 As we can see in Figures \ref{fig:loss_gagnn_gat_bin}, \ref{fig:loss_gagnn_gat_multi}, \ref{fig:loss_gagnn_gin_bin}, \ref{fig:loss_gagnn_gin_multi}, \ref{fig:loss_baseline_gat_bin}, \ref{fig:loss_baseline_gat_multi}, \ref{fig:loss_baseline_gin_bin} and \ref{fig:loss_baseline_gin_multi}, the training loss and the patience loss, albeit less for the latter, tend to be a bit noisy. This is mainly due to the fact that the losses are computed on mini batches of 256 nodes instead of on the entire dataset. Furthermore, while is true that for the validation loss we consider all the neighborhood of the sampled nodes (\texttt{num\_neighbors} = [-1,-1,-1]); for the training mini-batches, in regard to reduce the computational cost, we only considered 15 of the adjacent neighbors, 10 neighbors for each of those 15 and, in case of a 3 layer GNN, another 10 neighbors for each of those 10 \(\times\) 15 (\texttt{num\_neighbors} = [15, 10, 10]). This introduces further noise in the loss computation and it's probably the reason why in some experiments the training loss is not as smooth as we expect it to be. 
 
-% spiego oscillazioni nelle loss function (batch)
+Another intresting thing is how the GIN models tend to converge faster than the GAT ones; this is probably due to the five heads (\(H=5\)) used in the GAT model which introduces more parameters to train and with that a larger search space for the optimization algorithm to explore. Probably for the same reasons, baseline models converge faster than GAGNN models, which again introduce more parameters to train. 
 
-\subsection{GAGNN with GAT (Binary Classification)}
+An important thing to mention about the graph plots is that they show the training loss and the patience loss only up to the point in which the early stopping policy was triggered. This is clear when we look at the training history for the GAGNN-GIN Multiclass task (Figure \ref{fig:loss_gagnn_gin_multi}), where the model fails to converge and the best value reached in the 12th epoch and doesn't improve in the following 150 epochs. 
 
-\subsection{GAGNN with GAT (Multiclass Classification)}
+\subsection{Binary Classification task}
 
-\subsection{GAGNN with GIN (Binary Classification)}
-% modello non abbastanza complesso per risolvere la task ma dataset troppo piccolo per non causare overfitting
+\subsection{Multiclass Classification task}
 
-\subsection{GAGNN with GIN (Multiclass Classification)}
 % non converge magari c1 c2 c3 non si traducono da GAT a GIN
 % modello non abbastanza complesso per risolvere la task ma dataset troppo piccolo per non causare overfitting
 
@@ -220,7 +218,6 @@ As we can see in Figures \ref{fig:loss_gagnn_gat_bin}, \ref{fig:loss_gagnn_gat_m
 \end{figure}
 
 % ----- BASELINE
-\subsection{Graph Attention Network (Binary Classification)}
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{IMG/GAT_baseline_graph.png}
@@ -235,7 +232,6 @@ As we can see in Figures \ref{fig:loss_gagnn_gat_bin}, \ref{fig:loss_gagnn_gat_m
   \label{fig:cm_baseline_gat_bin}
 \end{figure}
 
-\subsection{Graph Isomorphism Network (Binary Classification)}
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{IMG/GAT_baseline_graph.png}
@@ -250,7 +246,6 @@ As we can see in Figures \ref{fig:loss_gagnn_gat_bin}, \ref{fig:loss_gagnn_gat_m
   \label{fig:cm_baseline_gin_bin}
 \end{figure}
 
-\subsection{Graph Attention Network (Multiclass Classification)}
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{IMG/GAT_baseline_multiclass_graph.png}
@@ -265,7 +260,6 @@ As we can see in Figures \ref{fig:loss_gagnn_gat_bin}, \ref{fig:loss_gagnn_gat_m
   \label{fig:cm_baseline_gat_multi}
 \end{figure}
 
-\subsection{Graph Isomorphism Network (Multiclass Classification)}
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{IMG/GIN_baseline_multiclass_graph.png}

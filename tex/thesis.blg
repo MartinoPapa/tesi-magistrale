@@ -1,48 +1,64 @@
 This is BibTeX, Version 0.99e
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: thesis.aux
-I found no \citation commands---while reading file thesis.aux
-I found no \bibdata command---while reading file thesis.aux
-I found no \bibstyle command---while reading file thesis.aux
-You've used 0 entries,
-            0 wiz_defined-function locations,
-            83 strings with 486 characters,
-and the built_in function-call counts, 0 in all, are:
-= -- 0
-> -- 0
-< -- 0
-+ -- 0
-- -- 0
-* -- 0
-:= -- 0
-add.period$ -- 0
-call.type$ -- 0
-change.case$ -- 0
+Reallocating 'name_of_file' (item size: 1) to 23 items.
+A level-1 auxiliary file: Sections/titlePage.aux
+Reallocating 'name_of_file' (item size: 1) to 22 items.
+A level-1 auxiliary file: Sections/abstract.aux
+Reallocating 'name_of_file' (item size: 1) to 26 items.
+A level-1 auxiliary file: Sections/introduction.aux
+Reallocating 'name_of_file' (item size: 1) to 24 items.
+A level-1 auxiliary file: Sections/background.aux
+Reallocating 'name_of_file' (item size: 1) to 25 items.
+A level-1 auxiliary file: Sections/methodology.aux
+Reallocating 'name_of_file' (item size: 1) to 21 items.
+A level-1 auxiliary file: Sections/results.aux
+Reallocating 'name_of_file' (item size: 1) to 24 items.
+A level-1 auxiliary file: Sections/conclusion.aux
+Reallocating 'name_of_file' (item size: 1) to 22 items.
+A level-1 auxiliary file: Sections/software.aux
+Reallocating 'name_of_file' (item size: 1) to 6 items.
+The style file: plain.bst
+Reallocating 'name_of_file' (item size: 1) to 5 items.
+Database file #1: refs.bib
+You've used 20 entries,
+            2118 wiz_defined-function locations,
+            617 strings with 7896 characters,
+and the built_in function-call counts, 6421 in all, are:
+= -- 581
+> -- 394
+< -- 1
++ -- 157
+- -- 136
+* -- 439
+:= -- 1120
+add.period$ -- 59
+call.type$ -- 20
+change.case$ -- 128
 chr.to.int$ -- 0
-cite$ -- 0
-duplicate$ -- 0
-empty$ -- 0
-format.name$ -- 0
-if$ -- 0
+cite$ -- 20
+duplicate$ -- 215
+empty$ -- 476
+format.name$ -- 136
+if$ -- 1305
 int.to.chr$ -- 0
-int.to.str$ -- 0
-missing$ -- 0
-newline$ -- 0
-num.names$ -- 0
-pop$ -- 0
-preamble$ -- 0
-purify$ -- 0
+int.to.str$ -- 20
+missing$ -- 15
+newline$ -- 101
+num.names$ -- 40
+pop$ -- 157
+preamble$ -- 1
+purify$ -- 108
 quote$ -- 0
-skip$ -- 0
+skip$ -- 155
 stack$ -- 0
-substring$ -- 0
-swap$ -- 0
-text.length$ -- 0
+substring$ -- 248
+swap$ -- 32
+text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 0
+type$ -- 78
 warning$ -- 0
-while$ -- 0
-width$ -- 0
-write$ -- 0
-(There were 3 error messages)
+while$ -- 49
+width$ -- 22
+write$ -- 207

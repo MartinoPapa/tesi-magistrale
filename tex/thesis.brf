@@ -36,8 +36,11 @@
 \backcite {mainpaper}{{30}{3.4.3}{subsection.3.4.3}}
 \backcite {mainpaper}{{30}{3.5}{section.3.5}}
 \backcite {mainpaper}{{30}{3.5}{section.3.5}}
-\backcite {mainpaper}{{36}{3.7.1}{subsection.3.7.1}}
-\backcite {adam}{{36}{3.7.1}{subsection.3.7.1}}
+\backcite {mainpaper}{{37}{3.7.1}{subsection.3.7.1}}
+\backcite {adam}{{37}{3.7.1}{subsection.3.7.1}}
 \backcite {pyg}{{37}{3.7.2}{subsection.3.7.2}}
 \backcite {mainpaper}{{39}{3.7.4}{subsection.3.7.4}}
-\backcite {mainpaper}{{39}{3.7.4}{subsection.3.7.4}}
+\backcite {mainpaper}{{40}{3.7.4}{subsection.3.7.4}}
+\backcite {AMLWorld}{{45}{4}{chapter.4}}
+\backcite {mainpaper}{{46}{4.1.2}{subsection.4.1.2}}
+\backcite {mainpaper}{{47}{4.1.2}{subsection.4.1.2}}

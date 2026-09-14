@@ -285,6 +285,29 @@ For the binary task, the majority class (legitimate accounts) is downsampled to 
 For the multiclass task, the legitimate class is downsampled to match the total sum of all illicit instances across the different illicit patterns. This achieves a 1:1 ratio between legitimate and overall illicit samples, while preserving the natural distribution and relative frequencies among the specific illicit classes. 
 The validations and test sets remain untouched.
 
+\subsubsection{Test set problem}
+By analysing the test set we noticed a flaw in the IBM AMLSim dataset. The amount of ML transactions suddendly increases in the last rows, corresponding to the newer transactions, of the dataset. Because of that we initially ended up with a test set that didn't really represented the real world scenario. The distribution of the ML attemps in the last rows is displayed in Table \ref{tab:distributionlastrow}.
+\begin{table}
+\centering
+\begin{tabular}{l l }
+\hline
+\textbf{Interval} & \textbf{Percentage of ML transactions} \\
+\hline
+Last 100,000 rows & 0.9\% \\
+Last 10,000 rows & 6.7\% \\
+Last 5,000 rows & 13.2\% \\
+Last 1,000 rows & 59.0\% \\
+\hline
+\end{tabular}
+\caption{ML transactions distribution in the last rows of the dataset}
+\label{tab:distributionlastrow}
+\end{table}
+For this reason we decided to get rid of the last 5000 rows by re-defining the test set as:
+\begin{equation}
+  \mathcal{D}_\text{test} = \{d \in \mathcal{D} \vert t_3 < t(d) \le t_4 \}
+\end{equation}
+where \(t_4\) is specially chosen to achive the objective. 
+
 \section{Model Selection and Training settings}
 In this section we describe and explain our choices for the training settings and the modles' hyperparameters. We first discuss the general settings shared amongst all the experiments, then we deep dive into the architectural choices and hyperparameter tuning for each class of models we evaluated. 
 
@@ -342,7 +365,7 @@ In this phase we search for the optimal values of the parameters \(c_1, c_2, c_3
 
 To save computational resources, the grid search for the loss weights is performed exclusively on the GAGNN model with the GAT backbone, assuming that the optimal weights found for GAT apply directly to the GIN backbone as well for their respective tasks. During this phase, all architectural hyperparameters were kept fixed to reference values suggested by Cheng et al. \cite{mainpaper}; when not explictly stated we opted for feasible and reasonable values according to the literature. The fixed architectural hyperparameters are repoted in Table \ref{tab:fixed_arch_hp}.
 
-\begin{table}[h]
+\begin{table}
 \centering
 \begin{tabular}{l l l}
 \hline
@@ -374,9 +397,9 @@ For the multiclass task the weight $w$ is replaced by automatically computed per
 \textbf{Parameter} & \textbf{Searched values} & \textbf{Rationale} \\
 \hline
 $c_1$ & $\{0.75\}$ & Fixed \\
-$c_2$ & $\{0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 1.0\}$ & grid around 0.75 \\
-$c_3$ & $\{0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 1.0\}$ & grid around 0.75 \\
-$w$ (laundry weight) & $\{1.0, 1.5, 2.0, 2.5\}$ & to penalize false negatives \\
+$c_2$ & $\{0.5, 0.6, 0.75, 0.9, 1.0\}$ & grid around 0.75 \\
+$c_3$ & $\{0.5, 0.6, 0.75, 0.9, 1.0\}$ & grid around 0.75 \\
+$w$ (laundry weight) & $\{1.0, 2.0\}$ & to penalize false negatives \\
 \hline
 \end{tabular}
 \caption{Grid search for binary loss function hyperparameters}
@@ -390,8 +413,8 @@ $w$ (laundry weight) & $\{1.0, 1.5, 2.0, 2.5\}$ & to penalize false negatives \\
 \textbf{Parameter} & \textbf{Searched values} & \textbf{Rationale} \\
 \hline
 $c_1$ & $\{0.75\}$ & Fixed \\
-$c_2$ & $\{0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 1.0\}$ & grid around 0.75 \\
-$c_3$ & $\{0.5, 0.6, 0.7, 0.75, 0.8, 0.9, 1.0\}$ & grid around 0.75 \\
+$c_2$ & $\{0.5, 0.6, 0.75, 0.9, 1.0\}$ & grid around 0.75 \\
+$c_3$ & $\{0.5, 0.6, 0.75, 0.9, 1.0\}$ & grid around 0.75 \\
 \hline
 \end{tabular}
 \caption{Grid search for multiclass loss function hyperparameters}

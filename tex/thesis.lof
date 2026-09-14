@@ -17,6 +17,22 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {13}{\ignorespaces Non-isomorphic graphs that are not discriminated by the 1-WL test}}{29}{figure.caption.16}%
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {14}{\ignorespaces Training and patience loss for GAGNN-GAT (Binary task)}}{50}{figure.caption.29}%
+\contentsline {figure}{\numberline {15}{\ignorespaces Confusion matrix for GAGNN-GAT (Binary task)}}{50}{figure.caption.30}%
+\contentsline {figure}{\numberline {16}{\ignorespaces Training and patience loss for GAGNN-GIN (Binary task)}}{51}{figure.caption.31}%
+\contentsline {figure}{\numberline {17}{\ignorespaces Confusion matrix for GAGNN-GIN (Binary task)}}{51}{figure.caption.32}%
+\contentsline {figure}{\numberline {18}{\ignorespaces Training and patience loss for GAGNN-GAT (Multiclass task)}}{52}{figure.caption.33}%
+\contentsline {figure}{\numberline {19}{\ignorespaces Confusion matrix for GAGNN-GAT (Multiclass task)}}{52}{figure.caption.34}%
+\contentsline {figure}{\numberline {20}{\ignorespaces Training and patience loss for GAGNN-GIN (Multiclass task)}}{53}{figure.caption.35}%
+\contentsline {figure}{\numberline {21}{\ignorespaces Confusion matrix for GAGNN-GIN (Multiclass task)}}{53}{figure.caption.36}%
+\contentsline {figure}{\numberline {22}{\ignorespaces Training and patience loss for GAT baseline (Binary task)}}{54}{figure.caption.37}%
+\contentsline {figure}{\numberline {23}{\ignorespaces Confusion matrix for GAT baseline (Binary task)}}{55}{figure.caption.38}%
+\contentsline {figure}{\numberline {24}{\ignorespaces Training and patience loss for GIN baseline (Binary task)}}{55}{figure.caption.39}%
+\contentsline {figure}{\numberline {25}{\ignorespaces Confusion matrix for GIN baseline (Binary task)}}{56}{figure.caption.40}%
+\contentsline {figure}{\numberline {26}{\ignorespaces Training and patience loss for GAT baseline (Multiclass task)}}{56}{figure.caption.41}%
+\contentsline {figure}{\numberline {27}{\ignorespaces Confusion matrix for GAT baseline (Multiclass task)}}{57}{figure.caption.42}%
+\contentsline {figure}{\numberline {28}{\ignorespaces Training and patience loss for GIN baseline (Multiclass task)}}{57}{figure.caption.43}%
+\contentsline {figure}{\numberline {29}{\ignorespaces Confusion matrix for GIN baseline (Multiclass task)}}{58}{figure.caption.44}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \def \@chapapp {\appendixname }

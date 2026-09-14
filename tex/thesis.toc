@@ -34,29 +34,36 @@
 \contentsline {section}{\numberline {3.6}Experimental Settings}{34}{section.3.6}%
 \contentsline {subsection}{\numberline {3.6.1}Data Preparation}{34}{subsection.3.6.1}%
 \contentsline {subsection}{\numberline {3.6.2}Train, Patience, Validation and Test Split}{35}{subsection.3.6.2}%
-\contentsline {section}{\numberline {3.7}Model Selection and Training settings}{36}{section.3.7}%
-\contentsline {subsection}{\numberline {3.7.1}Optimizer}{36}{subsection.3.7.1}%
+\contentsline {subsubsection}{Test set problem}{36}{equation.3.32}%
+\contentsline {section}{\numberline {3.7}Model Selection and Training settings}{37}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}Optimizer}{37}{subsection.3.7.1}%
 \contentsline {subsection}{\numberline {3.7.2}Subgraph Sampling}{37}{subsection.3.7.2}%
-\contentsline {subsection}{\numberline {3.7.3}Early Stopping}{37}{subsection.3.7.3}%
+\contentsline {subsection}{\numberline {3.7.3}Early Stopping}{38}{subsection.3.7.3}%
 \contentsline {subsection}{\numberline {3.7.4}Hyperparameters}{38}{subsection.3.7.4}%
 \contentsline {paragraph}{Loss function hyperparameters}{38}{subsection.3.7.4}%
 \contentsline {paragraph}{GAGNN hyperparameters}{38}{subsection.3.7.4}%
-\contentsline {paragraph}{GAT hyperparameters}{38}{subsection.3.7.4}%
+\contentsline {paragraph}{GAT hyperparameters}{39}{subsection.3.7.4}%
 \contentsline {paragraph}{GIN hyperparameters}{39}{subsection.3.7.4}%
 \contentsline {subsubsection}{Loss Function Hyperparameters}{39}{subsection.3.7.4}%
-\contentsline {subsubsection}{Architecture Hyperparameters}{40}{table.caption.19}%
-\contentsline {subsubsection}{Baseline Models Hyperparameters}{41}{table.caption.21}%
-\contentsline {chapter}{\numberline {4}Results}{43}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Model Selection}{43}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Binary Classification Results}{43}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}GAGNN}{43}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Baseline models}{43}{subsection.4.2.2}%
-\contentsline {section}{\numberline {4.3}Multi-class Classification Results}{43}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}GAGNN}{43}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Baseline models}{43}{subsection.4.3.2}%
-\contentsline {section}{\numberline {4.4}Limitations}{43}{section.4.4}%
-\contentsline {chapter}{\numberline {5}Conclusions}{45}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Future Directions}{45}{section.5.1}%
-\contentsline {chapter}{\numberline {A}Software}{47}{appendix.A}%
+\contentsline {subsubsection}{Architecture Hyperparameters}{41}{table.caption.20}%
+\contentsline {subsubsection}{Baseline Models Hyperparameters}{41}{table.caption.22}%
+\contentsline {chapter}{\numberline {4}Results}{45}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Hyperparameter Selection Results}{45}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Loss Function Hyperparameters}{45}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Architectural Hyperparameters}{46}{subsection.4.1.2}%
+\contentsline {section}{\numberline {4.2}Models Results}{49}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}General considerations}{49}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}GAGNN with GAT (Binary Classification)}{54}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}GAGNN with GAT (Multiclass Classification)}{54}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}GAGNN with GIN (Binary Classification)}{54}{subsection.4.2.4}%
+\contentsline {subsection}{\numberline {4.2.5}GAGNN with GIN (Multiclass Classification)}{54}{subsection.4.2.5}%
+\contentsline {subsection}{\numberline {4.2.6}Graph Attention Network (Binary Classification)}{54}{subsection.4.2.6}%
+\contentsline {subsection}{\numberline {4.2.7}Graph Isomorphism Network (Binary Classification)}{54}{subsection.4.2.7}%
+\contentsline {subsection}{\numberline {4.2.8}Graph Attention Network (Multiclass Classification)}{54}{subsection.4.2.8}%
+\contentsline {subsection}{\numberline {4.2.9}Graph Isomorphism Network (Multiclass Classification)}{54}{subsection.4.2.9}%
+\contentsline {section}{\numberline {4.3}Limitations}{54}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Conclusions}{59}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Future Directions}{59}{section.5.1}%
+\contentsline {chapter}{\numberline {A}Software}{61}{appendix.A}%
 \def \@chapapp {\appendixname }
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

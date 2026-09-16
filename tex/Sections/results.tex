@@ -145,6 +145,30 @@ In this section we present and discuss the results obtained by training GAGNN wi
 
 As expected the binary task was easier to solve. Due to our hardware limitations we cannot afford to use a larger dataset that would allow the training of bigger models and with that better performances on the multiclass tak. The question that we will try to answer is whether the GAGNN architecture could be usefull also for multiclass detection or if it only performs well on the binary task. 
 
+\subsection{Evaluation Metrics}\label{subsec:eval_metrics}
+ Let \(TP\) be the number of True Positives, \(TN\) the number of True Negatives, \(FP\) the number of False Positives, and \(FN\) the number of False Negatives.
+In regard to evalutate the performance of our models, we will leverage the following classification metrics.
+\begin{itemize}
+    \item \textbf{Accuracy}: The ratio of correctly predicted observations to the total observations.
+    \begin{equation}
+        \text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}
+    \end{equation}
+    \item \textbf{Precision}: The ratio of correctly predicted positive observations to the total predicted positive observations.
+    \begin{equation}
+        \text{Precision} = \frac{TP}{TP + FP}
+    \end{equation}
+    \item \textbf{Recall}: The ratio of correctly predicted positive observations to all observations in actual class.
+    \begin{equation}
+        \text{Recall} = \frac{TP}{TP + FN}
+    \end{equation}
+    \item \textbf{F1-Score}: The harmonic mean of Precision and Recall, which provides a balance between the two.
+    \begin{equation}
+        \text{F1-Score} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}
+    \end{equation}
+    \item \textbf{ROC-AUC}: The Area Under the Receiver Operating Characteristic (ROC) Curve. The ROC curve plots the True Positive Rate (\(\text{TPR} = \text{Recall}\)) against the False Positive Rate (\(\text{FPR} = \frac{FP}{FP + TN}\)) across all possible classification thresholds. While TPR measures the proportion of actual illicit transactions correctly identified, FPR measures the proportion of legitimate transactions incorrectly flagged as illicit. The AUC (Area Under the Curve) provides an aggregate measure of performance independent of any specific threshold, representing the probability that the model ranks a randomly chosen positive example higher than a randomly chosen negative one. A value of \(0.5\) indicates a model that performs no better than random guessing, while a value of \(1.0\) represents a perfect classifier. The ROC-AUC is especially informative in tasks with highly imbalanced classes, such as Anti-Money Laundering, where standard accuracy can be misleading due to the overwhelming majority of legitimate transactions.
+\end{itemize}
+In the multiclass setting, these metrics are computed using a macro or weighted average by treating each class as a separate binary classification problem.
+
 \subsection{General considerations}
 We begin by providing some considerations regarding training dynamics that are common to all the models.
 
@@ -154,12 +178,21 @@ Another intresting thing is how the GIN models tend to converge faster than the 
 
 An important thing to mention about the graph plots is that they show the training loss and the patience loss only up to the point in which the early stopping policy was triggered. This is clear when we look at the training history for the GAGNN-GIN Multiclass task (Figure \ref{fig:loss_gagnn_gin_multi}), where the model fails to converge and the best value reached in the 12th epoch and doesn't improve in the following 150 epochs. 
 
+Finally, it is important to reflect on the theoretical strengths of the different architectures employed and how they map to specific money laundering patterns. Group-aware models like GAGNN are explicitly designed to capture organized, gang-level behaviors. Theoretically, they should excel at identifying structures as fraudulent (though not necessarily telling them apart) such as gather-scatter, fan-in, fan-out, bipartite, and stack patterns. This is because it should be fairly easy for the model to merge the fraudulent edges in those structures into a single community node. It is important to clarify that while this merging mechanism is extremely beneficial in the binary classification task for distinguishing illicit clusters from normal traffic, it may actually hinder performance in the multiclass task: grouping nodes into supernodes might help detect that a transaction is fraudulent, but it obfuscates the specific topological structure needed to accurately classify the exact pattern. Nonetheless, the multiclass results partially support this theoretical advantage, as GAGNN-GAT proved competitive on the gather-scatter pattern. However, this good performance might also depend on the fact that gather-scatter is the best-represented class in the dataset, with 716 labeled edges (see Figure \ref{fig:patterns_distr}).
+
+For random and cycle patterns, the situation is different. Since these patterns can involve an arbitrary number of nodes, and our GNNs are restricted to 2 or 3 layers, the limited receptive field makes it difficult to group all of the involved nodes into a single community. Nevertheless, GAGNN should still improve the binary detection of those patterns compared to a standard GNN by allowing different nodes to merge, thus indirectly expanding the receptive field of the nodes. In our experiments, however, the model struggled significantly with the cycle class. This is likely due to the extreme scarcity of this pattern, as there are only 287 edges labeled as cycle in the entire dataset (Figure \ref{fig:patterns_distr}), which prevented the complex group-aggregation layers from learning the pattern without overfitting.
+
+Furthermore, we must mention that the bipartite class is not correctly represented in the IBM AMLSim dataset, as it is not implemented as described in the original AMLWorld paper. Comparing the theoretical representation of the bipartite class shown in Figure \ref{fig:launderingPatterns} with the actual dataset implementation provided in Figure \ref{fig:patternsIBM}, it is clear that the topological structure differs significantly. This discrepancy is likely the main reason why the bipartite class is not well recognized in the multiclass task and could also lead to a lower performance in the binary classification task.
+
+Regarding the backbone architectures, the core strength of GAT lies in its ability to compute hidden representations by attending over neighbors with different, learnable weights. This makes it highly effective for hub-and-spoke structures such as fan-in and fan-out patterns. The attention mechanism allows the model to assign disproportionately high weights to the anomalous edges connecting to the central hub account, effectively filtering out the noise from legitimate transactions. Lastly, GIN is theoretically proven to be as discriminative as the Weisfeiler-Lehman graph isomorphism test, making it exceptionally powerful at distinguishing exact structural graph topologies. Since it relies on sum-aggregation to capture the exact multiset of neighborhood features, GIN is best suited for rigid, structurally distinct patterns like stack or specific chained topologies, where the exact structural signature is the defining characteristic of the laundering behavior.
+
 \subsection{Binary Classification task}
 
-\subsection{Multiclass Classification task}
+When analyzing the results for the binary classification task, it is crucial to establish the priority of the metrics involved. In the context of Anti-Money Laundering (AML), the primary objective is to detect as many illicit transactions as possible. Therefore, achieving a high Recall on the fraudulent class (labeled as \textit{Laundering}) is far more important than maximizing overall accuracy or precision. Failing to flag a money laundering attempt as suspicious (a False Negative) could lead to severe legal and financial repercussions for a financial institution, which vastly outweigh the operational cost of investigating a legitimate account that was falsely flagged (a False Positive).
 
-% non converge magari c1 c2 c3 non si traducono da GAT a GIN
-% modello non abbastanza complesso per risolvere la task ma dataset troppo piccolo per non causare overfitting
+Bearing this in mind, the GAGNN-GIN model yielded the most compelling results from a strict risk-aversion standpoint. It achieved an outstanding recall of \(0.86\) on the Laundering class, significantly outperforming the standard GIN baseline (\(0.71\)). However, this high sensitivity came at the cost of precision (\(0.54\)), leading to a higher number of false positives which dragged its overall accuracy down to \(0.8778\). 
+
+If a more balanced approach is desired, the GAGNN-GAT model proved to be the best overall performer. It achieved the highest Accuracy (\(0.9268\)), ROC-AUC (\(0.9065\)), and F1-Score (\(0.75\)) on the minority class among all the tested models. Crucially, it maintained a strong recall of \(0.76\) while keeping precision relatively high (\(0.73\)), proving that the GAGNN architecture successfully improved upon the standard GAT baseline across every single metric.
 
 \begin{figure}
   \centering
@@ -173,6 +206,31 @@ An important thing to mention about the graph plots is that they show the traini
   \includegraphics[width=0.8\textwidth]{IMG/GAT_cm.png}
   \caption{Confusion matrix for GAGNN-GAT (Binary task)}
   \label{fig:cm_gagnn_gat_bin}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \begin{minipage}{0.65\textwidth}
+\footnotesize
+\begin{verbatim}
+==================================================
+       GAGNN-GAT EVALUATION REPORT (Binary)
+==================================================
+  Accuracy  : 0.9268
+  ROC-AUC   : 0.9065
+--------------------------------------------------
+              precision    recall  f1-score   support
+
+       Legit       0.96      0.95      0.96      5443
+  Laundering       0.73      0.76      0.75       898
+
+    accuracy                           0.93      6341
+   macro avg       0.85      0.86      0.85      6341
+weighted avg       0.93      0.93      0.93      6341
+\end{verbatim}
+  \end{minipage}
+  \caption{Evaluation report for GAGNN-GAT (Binary task)}
+  \label{fig:eval_gagnn_gat_bin}
 \end{figure}
 
 \begin{figure}
@@ -191,33 +249,29 @@ An important thing to mention about the graph plots is that they show the traini
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.8\textwidth]{IMG/GAT_multiclass_graph.png}
-  \caption{Training and patience loss for GAGNN-GAT (Multiclass task)}
-  \label{fig:loss_gagnn_gat_multi}
+  \begin{minipage}{0.65\textwidth}
+\footnotesize
+\begin{verbatim}
+==================================================
+       GAGNN-GIN EVALUATION REPORT (Binary)
+==================================================
+  Accuracy  : 0.8778
+  ROC-AUC   : 0.9025
+--------------------------------------------------
+              precision    recall  f1-score   support
+
+       Legit       0.97      0.88      0.93      5443
+  Laundering       0.54      0.86      0.67       898
+
+    accuracy                           0.88      6341
+   macro avg       0.76      0.87      0.80      6341
+weighted avg       0.91      0.88      0.89      6341
+\end{verbatim}
+  \end{minipage}
+  \caption{Evaluation report for GAGNN-GIN (Binary task)}
+  \label{fig:eval_gagnn_gin_bin}
 \end{figure}
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.8\textwidth]{IMG/GAT_multiclass_cm.png}
-  \caption{Confusion matrix for GAGNN-GAT (Multiclass task)}
-  \label{fig:cm_gagnn_gat_multi}
-\end{figure}
-
-\begin{figure}
-  \centering
-  \includegraphics[width=0.8\textwidth]{IMG/GIN_multiclass_graph.png}
-  \caption{Training and patience loss for GAGNN-GIN (Multiclass task)}
-  \label{fig:loss_gagnn_gin_multi}
-\end{figure}
-
-\begin{figure}
-  \centering
-  \includegraphics[width=0.8\textwidth]{IMG/GIN_multiclass_cm.png}
-  \caption{Confusion matrix for GAGNN-GIN (Multiclass task)}
-  \label{fig:cm_gagnn_gin_multi}
-\end{figure}
-
-% ----- BASELINE
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{IMG/GAT_baseline_graph.png}
@@ -234,16 +288,172 @@ An important thing to mention about the graph plots is that they show the traini
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.8\textwidth]{IMG/GAT_baseline_graph.png}
+  \begin{minipage}{0.65\textwidth}
+\footnotesize
+\begin{verbatim}
+==================================================
+          GAT EVALUATION REPORT (Binary)
+==================================================
+  Accuracy  : 0.9226
+  ROC-AUC   : 0.9053
+--------------------------------------------------
+              precision    recall  f1-score   support
+
+       Legit       0.96      0.95      0.95      5443
+  Laundering       0.72      0.73      0.73       898
+
+    accuracy                           0.92      6341
+   macro avg       0.84      0.84      0.84      6341
+weighted avg       0.92      0.92      0.92      6341
+\end{verbatim}
+  \end{minipage}
+  \caption{Evaluation report for GAT baseline (Binary task)}
+  \label{fig:eval_baseline_gat_bin}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{IMG/GIN_baseline_graph.png}
   \caption{Training and patience loss for GIN baseline (Binary task)}
   \label{fig:loss_baseline_gin_bin}
 \end{figure}
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.8\textwidth]{IMG/GAT_baseline_cm.png}
+  \includegraphics[width=0.8\textwidth]{IMG/GIN_baseline_cm.png}
   \caption{Confusion matrix for GIN baseline (Binary task)}
   \label{fig:cm_baseline_gin_bin}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \begin{minipage}{0.65\textwidth}
+\footnotesize
+\begin{verbatim}
+==================================================
+          GIN EVALUATION REPORT (Binary)
+==================================================
+  Accuracy  : 0.9260
+  ROC-AUC   : 0.8889
+--------------------------------------------------
+              precision    recall  f1-score   support
+
+       Legit       0.95      0.96      0.96      5443
+  Laundering       0.75      0.71      0.73       898
+
+    accuracy                           0.93      6341
+   macro avg       0.85      0.84      0.84      6341
+weighted avg       0.92      0.93      0.93      6341
+\end{verbatim}
+  \end{minipage}
+  \caption{Evaluation report for GIN baseline (Binary task)}
+  \label{fig:eval_baseline_gin_bin}
+\end{figure}
+
+\subsection{Multiclass Classification task}
+
+Unlike the binary setting, the multiclass classification task proved to be exceedingly difficult for the GAGNN architecture. The best performance was surprisingly achieved by the standard GIN baseline model, which reached an accuracy of \(0.4526\) and a ROC-AUC of \(0.7408\). In contrast, the GAGNN models struggled significantly: the GAGNN-GAT achieved an accuracy of only \(0.2810\), while the GAGNN-GIN model effectively failed to learn, halting its convergence early with an accuracy of \(0.1187\). 
+
+There are several factors that could explain why the GAGNN models failed in this scenario.
+
+First and foremost is the fact that the GNN, whether it's a GAT or a GIN, shares the same weights for both group level and node level prediction. Since after the grouping stage nodes are pooled and aggregated together, the task of predicting what pattern generated that group becomes very difficult for the GNN layers. While is true that \(\mathcal{L}_{groups}\) and \(\mathcal{L}_{nodes}\) both are BCE even in the multiclass task, there is a high probability that the group level loss activly prevents the model from learning the right patterns. Also in this case future work regarding a wider exploration of the Hypothesis Space \(\mathcal{H}\) by trying more values for \(c_1\) could better explain this phenomenon.
+
+The second major factor is the extreme data imbalance combined with the small size of the dataset. While the binary task simply grouped all anomalous topologies into a single \textit{Laundering} class, the multiclass task splits them into eight distinct laundering patterns (e.g., \textit{CYCLE}, \textit{FAN-IN}, \textit{BIPARTITE}, \dots).
+Since the GAGNN architectures introduce a significantly higher number of trainable parameters and a much more complex optimization landscape compared to standard GNNs, when forced to learn complex decision boundaries for 9 different classes with such limited data, the model is likely to suffer from severe overfitting and often fails to generalize. The simpler baseline models, having fewer parameters, were slightly more robust to this lack of data.
+This doesn't necessary mean that the GAGNN architectures are not suitable for this task but it's clear that a bigger dataset is necessary to properly leverage its architectural complexity. 
+
+Regarding the failure to converge for the GAGNN-GIN model, this can also be blamed on the assumption that optimal values of \(c_1,c_2\) and \(c_3\) found for the GAT model can be directly translated to the GIN model. The two architectures, albeit very similar, could work better with different degrees of importance assigned to the different loss components. 
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{IMG/GAT_multiclass_graph.png}
+  \caption{Training and patience loss for GAGNN-GAT (Multiclass task)}
+  \label{fig:loss_gagnn_gat_multi}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{IMG/GAT_multiclass_cm.png}
+  \caption{Confusion matrix for GAGNN-GAT (Multiclass task)}
+  \label{fig:cm_gagnn_gat_multi}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \begin{minipage}{0.65\textwidth}
+\footnotesize
+\begin{verbatim}
+==================================================
+     GAGNN-GAT EVALUATION REPORT (Multiclass)
+==================================================
+  Accuracy  : 0.2810
+  ROC-AUC   : 0.6639
+--------------------------------------------------
+                precision    recall  f1-score   support
+
+         LEGIT       0.84      0.29      0.43      1160
+       FAN-OUT       0.06      0.34      0.10        62
+        FAN-IN       0.29      0.89      0.44        56
+         CYCLE       0.02      0.02      0.02        52
+GATHER-SCATTER       0.42      0.39      0.41       122
+SCATTER-GATHER       0.00      0.00      0.00       105
+     BIPARTITE       0.02      0.23      0.04        40
+         STACK       0.09      0.17      0.12        81
+        RANDOM       0.05      0.02      0.03        41
+
+      accuracy                           0.28      1719
+     macro avg       0.20      0.26      0.18      1719
+  weighted avg       0.62      0.28      0.35      1719
+\end{verbatim}
+  \end{minipage}
+  \caption{Evaluation report for GAGNN-GAT (Multiclass task)}
+  \label{fig:eval_gagnn_gat_multi}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{IMG/GIN_multiclass_graph.png}
+  \caption{Training and patience loss for GAGNN-GIN (Multiclass task)}
+  \label{fig:loss_gagnn_gin_multi}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{IMG/GIN_multiclass_cm.png}
+  \caption{Confusion matrix for GAGNN-GIN (Multiclass task)}
+  \label{fig:cm_gagnn_gin_multi}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \begin{minipage}{0.65\textwidth}
+\footnotesize
+\begin{verbatim}
+==================================================
+     GAGNN-GIN EVALUATION REPORT (Multiclass)
+==================================================
+  Accuracy  : 0.1187
+  ROC-AUC   : 0.5777
+--------------------------------------------------
+                precision    recall  f1-score   support
+
+         LEGIT       0.87      0.11      0.19      1160
+       FAN-OUT       0.04      0.44      0.07        62
+        FAN-IN       0.06      0.75      0.10        56
+         CYCLE       0.00      0.00      0.00        52
+GATHER-SCATTER       0.24      0.03      0.06       122
+SCATTER-GATHER       0.00      0.00      0.00       105
+     BIPARTITE       0.04      0.10      0.06        40
+         STACK       0.00      0.00      0.00        81
+        RANDOM       0.00      0.00      0.00        41
+
+      accuracy                           0.12      1719
+     macro avg       0.14      0.16      0.05      1719
+  weighted avg       0.61      0.12      0.14      1719
+\end{verbatim}
+  \end{minipage}
+  \caption{Evaluation report for GAGNN-GIN (Multiclass task)}
+  \label{fig:eval_gagnn_gin_multi}
 \end{figure}
 
 \begin{figure}
@@ -262,6 +472,38 @@ An important thing to mention about the graph plots is that they show the traini
 
 \begin{figure}
   \centering
+  \begin{minipage}{0.65\textwidth}
+\footnotesize
+\begin{verbatim}
+==================================================
+        GAT EVALUATION REPORT (Multiclass)
+==================================================
+  Accuracy  : 0.3595
+  ROC-AUC   : 0.7104
+--------------------------------------------------
+                precision    recall  f1-score   support
+
+         LEGIT       0.99      0.38      0.55      1160
+       FAN-OUT       0.11      0.16      0.13        62
+        FAN-IN       0.42      0.79      0.55        56
+         CYCLE       0.06      0.17      0.09        52
+GATHER-SCATTER       0.35      0.46      0.40       122
+SCATTER-GATHER       0.33      0.15      0.21       105
+     BIPARTITE       0.04      0.42      0.07        40
+         STACK       0.09      0.25      0.14        81
+        RANDOM       0.05      0.07      0.06        41
+
+      accuracy                           0.36      1719
+     macro avg       0.27      0.32      0.24      1719
+  weighted avg       0.74      0.36      0.45      1719
+\end{verbatim}
+  \end{minipage}
+  \caption{Evaluation report for GAT baseline (Multiclass task)}
+  \label{fig:eval_baseline_gat_multi}
+\end{figure}
+
+\begin{figure}
+  \centering
   \includegraphics[width=0.8\textwidth]{IMG/GIN_baseline_multiclass_graph.png}
   \caption{Training and patience loss for GIN baseline (Multiclass task)}
   \label{fig:loss_baseline_gin_multi}
@@ -274,11 +516,46 @@ An important thing to mention about the graph plots is that they show the traini
   \label{fig:cm_baseline_gin_multi}
 \end{figure}
 
+\begin{figure}
+  \centering
+  \begin{minipage}{0.65\textwidth}
+\footnotesize
+\begin{verbatim}
+==================================================
+        GIN EVALUATION REPORT (Multiclass)
+==================================================
+  Accuracy  : 0.4526
+  ROC-AUC   : 0.7408
+--------------------------------------------------
+                precision    recall  f1-score   support
+
+         LEGIT       0.87      0.49      0.63      1160
+       FAN-OUT       0.47      0.44      0.45        62
+        FAN-IN       0.53      0.71      0.61        56
+         CYCLE       0.09      0.15      0.11        52
+GATHER-SCATTER       0.34      0.33      0.34       122
+SCATTER-GATHER       0.26      0.38      0.31       105
+     BIPARTITE       0.09      0.47      0.15        40
+         STACK       0.12      0.38      0.18        81
+        RANDOM       0.02      0.05      0.03        41
+
+      accuracy                           0.45      1719
+     macro avg       0.31      0.38      0.31      1719
+  weighted avg       0.67      0.45      0.52      1719
+\end{verbatim}
+  \end{minipage}
+  \caption{Evaluation report for GIN baseline (Multiclass task)}
+  \label{fig:eval_baseline_gin_multi}
+\end{figure}
 
 \section{Limitations}
 \label{Limitations}
 
-% c1 c2 c3 non si traducono direttamente da GAT a GIN
-% database di dimensioni troppo piccole per multitask class
-% sample more than 15,10,10 to reduce noise on the training 
-% scarsa esplorazione dello spazio degli iper-parametri (Hypothesis space piccolo) vedi methodology, i modelli in multiclass hanno raggiunto i valori agli estremi della model selction. Potrebbero esserci valori migliori
+Here we resume the limitations encountered during the study. Most of them are related to the poor hardware resources that we had available during this work.
+
+The first major limitation is the fact that we didn't explored the hypothesis space of the parameters as much as we would have liked to. The assumption that $c_1,c_2,c_3$ translate directly from GAT to GIN, didn't always hold as we discovered during the experimentation. Furthermore the value of \(c_1\) was kept fixed to 0.75 for all experiments, this allowed us to highly reduce the model selection computational cost, but it is possible that, especially for the multiclass task where from a theoretical analysis we belive that the group loss should hold less importance, we could have found better configurations. On top of that for architectural hyperparameters we often found the optimal values at the edges of the explored space, this suggests that the true best settings could lie outside of it.
+
+Another problem came with the small size of the dataset, with the binary task it worked fine but for the multiclass one the need of a bigger dataset, that would have allowed the training of bigger models without overfitting, is clearly visible in both the training and test results.
+This limitation is interconnected with the first one since a bigger dataset would probably allow to train bigger models and thus we would have to further expand the hypothesis space.
+
+Finally, limiting the number of neighbors during the training of the models to 15, 10 and 10 for the first three layers respectively (\texttt{num\_neighbors} = [15,10,10]), in order to reduce the computational cost, introduced further noise in the loss computation and it's probably the reason why in some experiments the training loss is not as smooth as we expect it to be. Furthermore the fact that a froudolent neighbor could not be sampled amongst the 15 ones the detection of the fraudulent community could be seriously compromised. 

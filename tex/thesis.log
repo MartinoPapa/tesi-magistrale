@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.8.25)  14 SEP 2026 16:35
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.8.25)  16 SEP 2026 16:05
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -823,7 +823,7 @@ File: bkm-pdftex.def 2026-05-21 v1.32 bookmark driver for pdfTeX (HO)
 LaTeX Font Info:    Trying to load font information for T1+pplj on input line 88.
  (C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\t1pplj.fd
 File: t1pplj.fd 2004/09/06 font definitions for T1/pplj.
-) (thesis.aux (Sections/titlePage.aux) (Sections/abstract.aux) (Sections/introduction.aux) (Sections/background.aux) (Sections/methodology.aux) (Sections/results.aux) (Sections/conclusion.aux) (Sections/software.aux))
+) (thesis.aux (Sections/titlePage.aux) (Sections/abstract.aux) (Sections/introduction.aux) (Sections/background.aux) (Sections/methodology.aux) (Sections/results.aux) (Sections/conclusion.aux))
 \openout1 = `thesis.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 88.
@@ -1019,41 +1019,81 @@ Overfull \hbox (13.82405pt too wide) in paragraph at lines 21--21
  []
 
 
-Overfull \hbox (12.0896pt too wide) in paragraph at lines 23--23
+Overfull \hbox (13.73285pt too wide) in paragraph at lines 22--22
+ [][] [][]\T1/pplj/m/n/12 (-20) Evaluation re-port for GAGNN-GAT (Bi-nary task)[] []  
+ []
+
+
+Overfull \hbox (12.0896pt too wide) in paragraph at lines 24--24
  [][] [][]\T1/pplj/m/n/12 (-20) Confusion ma-trix for GAGNN-GIN (Bi-nary task)[] []  
  []
 
 
-Overfull \hbox (32.51884pt too wide) in paragraph at lines 25--25
- [][] [][]\T1/pplj/m/n/12 (-20) Confusion ma-trix for GAGNN-GAT (Mul-ti-class task)[] []  
+Overfull \hbox (11.9984pt too wide) in paragraph at lines 25--25
+ [][] [][]\T1/pplj/m/n/12 (-20) Evaluation re-port for GAGNN-GIN (Bi-nary task)[] []  
  []
 
 
-Overfull \hbox (30.7844pt too wide) in paragraph at lines 27--27
- [][] [][]\T1/pplj/m/n/12 (-20) Confusion ma-trix for GAGNN-GIN (Mul-ti-class task)[] []  
- []
-
-
-Overfull \hbox (8.24408pt too wide) in paragraph at lines 29--29
+Overfull \hbox (8.24408pt too wide) in paragraph at lines 27--27
  [][] [][]\T1/pplj/m/n/12 (-20) Confusion ma-trix for GAT base-line (Bi-nary task)[] []  
  []
 
 
-Overfull \hbox (6.50963pt too wide) in paragraph at lines 31--31
+Overfull \hbox (8.15288pt too wide) in paragraph at lines 28--28
+ [][] [][]\T1/pplj/m/n/12 (-20) Evaluation re-port for GAT base-line (Bi-nary task)[] []  
+ []
+
+
+Overfull \hbox (6.50963pt too wide) in paragraph at lines 30--30
  [][] [][]\T1/pplj/m/n/12 (-20) Confusion ma-trix for GIN base-line (Bi-nary task)[] []  
+ []
+
+
+Overfull \hbox (6.41843pt too wide) in paragraph at lines 31--31
+ [][] [][]\T1/pplj/m/n/12 (-20) Evaluation re-port for GIN base-line (Bi-nary task)[] []  
+ []
+
+
+Overfull \hbox (32.51884pt too wide) in paragraph at lines 33--33
+ [][] [][]\T1/pplj/m/n/12 (-20) Confusion ma-trix for GAGNN-GAT (Mul-ti-class task)[] []  
  []
 
 [3
 
 
 ]
-Overfull \hbox (26.93887pt too wide) in paragraph at lines 33--33
+Overfull \hbox (32.42764pt too wide) in paragraph at lines 34--34
+ [][] [][]\T1/pplj/m/n/12 (-20) Evaluation re-port for GAGNN-GAT (Mul-ti-class task)[] []  
+ []
+
+
+Overfull \hbox (30.7844pt too wide) in paragraph at lines 36--36
+ [][] [][]\T1/pplj/m/n/12 (-20) Confusion ma-trix for GAGNN-GIN (Mul-ti-class task)[] []  
+ []
+
+
+Overfull \hbox (30.69319pt too wide) in paragraph at lines 37--37
+ [][] [][]\T1/pplj/m/n/12 (-20) Evaluation re-port for GAGNN-GIN (Mul-ti-class task)[] []  
+ []
+
+
+Overfull \hbox (26.93887pt too wide) in paragraph at lines 39--39
  [][] [][]\T1/pplj/m/n/12 (-20) Confusion ma-trix for GAT base-line (Mul-ti-class task)[] []  
  []
 
 
-Overfull \hbox (25.20442pt too wide) in paragraph at lines 35--35
+Overfull \hbox (26.84767pt too wide) in paragraph at lines 40--40
+ [][] [][]\T1/pplj/m/n/12 (-20) Evaluation re-port for GAT base-line (Mul-ti-class task)[] []  
+ []
+
+
+Overfull \hbox (25.20442pt too wide) in paragraph at lines 42--42
  [][] [][]\T1/pplj/m/n/12 (-20) Confusion ma-trix for GIN base-line (Mul-ti-class task)[] []  
+ []
+
+
+Overfull \hbox (25.11322pt too wide) in paragraph at lines 43--43
+ [][] [][]\T1/pplj/m/n/12 (-20) Evaluation re-port for GIN base-line (Mul-ti-class task)[] []  
  []
 
 )
@@ -1075,278 +1115,777 @@ chapter 1.
 
 
 
-]
+])
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplj/m/sc/10.95'.
 (microtype)             Ignoring protrusion settings for this character.
- [8] [9]) [10]
+ [8]
 \openout2 = `Sections/background.aux'.
 
  (Sections/background.tex
 chapter 2.
-[11
+[9
 
 
 
 
 
 ]
-<IMG/laundering_patterns.jpg, id=303, 1064.778pt x 202.95825pt>
+<IMG/laundering_patterns.jpg, id=275, 1064.778pt x 202.95825pt>
 File: IMG/laundering_patterns.jpg Graphic file (type jpg)
 <use IMG/laundering_patterns.jpg>
-Package pdftex.def Info: IMG/laundering_patterns.jpg  used on input line 35.
+Package pdftex.def Info: IMG/laundering_patterns.jpg  used on input line 36.
 (pdftex.def)             Requested size: 384.1122pt x 73.21666pt.
- [12] [13 <./IMG/laundering_patterns.jpg>] [14] [15]
-<IMG/AMLWorld.png, id=343, 684.156pt x 377.61075pt>
+ [10] [11 <./IMG/laundering_patterns.jpg>] [12] [13]
+<IMG/AMLWorld.png, id=318, 684.156pt x 377.61075pt>
 File: IMG/AMLWorld.png Graphic file (type png)
 <use IMG/AMLWorld.png>
-Package pdftex.def Info: IMG/AMLWorld.png  used on input line 91.
+Package pdftex.def Info: IMG/AMLWorld.png  used on input line 92.
 (pdftex.def)             Requested size: 384.1122pt x 212.0137pt.
- [16 <./IMG/AMLWorld.png>]
-LaTeX Font Info:    Trying to load font information for U+fplmbb on input line 102.
+ [14 <./IMG/AMLWorld.png>] [15]
+LaTeX Font Info:    Trying to load font information for U+fplmbb on input line 126.
  (C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ufplmbb.fd
 File: ufplmbb.fd 2003/10/30 Fontinst v1.914 font definitions for U/fplmbb.
-) [17]
-<IMG/dataset.png, id=367, 952.15726pt x 230.0595pt>
+) [16] [17] [18] [19] [20] [21]
+<IMG/wllimits.png, id=416, 3442.8625pt x 3523.1625pt>
+File: IMG/wllimits.png Graphic file (type png)
+<use IMG/wllimits.png>
+Package pdftex.def Info: IMG/wllimits.png  used on input line 257.
+(pdftex.def)             Requested size: 307.29092pt x 314.43675pt.
+ [22 <./IMG/wllimits.png>]
+Overfull \hbox (13.47044pt too wide) in paragraph at lines 277--278
+[]\T1/pplj/m/n/12 (-20) To over-come those lim-its we will lever-age Group-Aware GNNs (GAGNNs)
+ []
+
+) [23]
+\openout2 = `Sections/methodology.aux'.
+
+ (Sections/methodology.tex [24
+
+
+
+
+
+]
+chapter 3.
+[25] [26] [27] [28] [29]
+<IMG/dataset.png, id=485, 952.15726pt x 230.0595pt>
 File: IMG/dataset.png Graphic file (type png)
 <use IMG/dataset.png>
-Package pdftex.def Info: IMG/dataset.png  used on input line 125.
+Package pdftex.def Info: IMG/dataset.png  used on input line 142.
 (pdftex.def)             Requested size: 384.1122pt x 92.80849pt.
-LaTeX Font Info:    Trying to load font information for T1+fvm on input line 134.
+LaTeX Font Info:    Trying to load font information for T1+fvm on input line 151.
  (C:\Users\marti\AppData\Local\Programs\MiKTeX\tex/latex/bera\t1fvm.fd
 File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
 )
 LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 10.20007pt on input line 134.
+(Font)              scaled to size 10.20007pt on input line 151.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `fvm' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- [18 <./IMG/dataset.png>]
-<IMG/accounts_head.png, id=379, 512.51476pt x 118.64325pt>
+ [30 <./IMG/dataset.png>]
+<IMG/accounts_head.png, id=497, 512.51476pt x 118.64325pt>
 File: IMG/accounts_head.png Graphic file (type png)
 <use IMG/accounts_head.png>
-Package pdftex.def Info: IMG/accounts_head.png  used on input line 165.
+Package pdftex.def Info: IMG/accounts_head.png  used on input line 182.
 (pdftex.def)             Requested size: 384.1122pt x 88.92065pt.
-<IMG/trans_head.png, id=380, 853.38824pt x 201.75375pt>
+<IMG/trans_head.png, id=498, 853.38824pt x 201.75375pt>
 File: IMG/trans_head.png Graphic file (type png)
 <use IMG/trans_head.png>
-Package pdftex.def Info: IMG/trans_head.png  used on input line 171.
+Package pdftex.def Info: IMG/trans_head.png  used on input line 188.
 (pdftex.def)             Requested size: 384.1122pt x 90.80989pt.
-<IMG/patterns.png, id=381, 643.203pt x 1284.59924pt>
+<IMG/patterns.png, id=499, 643.203pt x 1284.59924pt>
 File: IMG/patterns.png Graphic file (type png)
 <use IMG/patterns.png>
-Package pdftex.def Info: IMG/patterns.png  used on input line 177.
+Package pdftex.def Info: IMG/patterns.png  used on input line 194.
 (pdftex.def)             Requested size: 291.92316pt x 583.02347pt.
-<IMG/patterns_distr.png, id=384, 711.4078pt x 434.37282pt>
+<IMG/patterns_distr.png, id=502, 711.4078pt x 434.37282pt>
 File: IMG/patterns_distr.png Graphic file (type png)
 <use IMG/patterns_distr.png>
-Package pdftex.def Info: IMG/patterns_distr.png  used on input line 186.
+Package pdftex.def Info: IMG/patterns_distr.png  used on input line 203.
 (pdftex.def)             Requested size: 307.29092pt x 187.63167pt.
- [19 <./IMG/accounts_head.png> <./IMG/trans_head.png>] [20 <./IMG/patterns.png>] [21 <./IMG/patterns_distr.png>]
-<IMG/amount.png, id=406, 354.123pt x 267.399pt>
+ [31 <./IMG/accounts_head.png>]
+<IMG/amount.png, id=513, 354.123pt x 267.399pt>
 File: IMG/amount.png Graphic file (type png)
 <use IMG/amount.png>
-Package pdftex.def Info: IMG/amount.png  used on input line 200.
+Package pdftex.def Info: IMG/amount.png  used on input line 217.
 (pdftex.def)             Requested size: 307.29092pt x 232.05179pt.
-<IMG/currencies.png, id=407, 354.123pt x 267.399pt>
+<IMG/currencies.png, id=514, 354.123pt x 267.399pt>
 File: IMG/currencies.png Graphic file (type png)
 <use IMG/currencies.png>
-Package pdftex.def Info: IMG/currencies.png  used on input line 206.
+Package pdftex.def Info: IMG/currencies.png  used on input line 223.
 (pdftex.def)             Requested size: 307.29092pt x 232.05179pt.
-<IMG/format.png, id=408, 354.123pt x 267.399pt>
+<IMG/format.png, id=515, 354.123pt x 267.399pt>
 File: IMG/format.png Graphic file (type png)
 <use IMG/format.png>
-Package pdftex.def Info: IMG/format.png  used on input line 212.
+Package pdftex.def Info: IMG/format.png  used on input line 229.
 (pdftex.def)             Requested size: 307.29092pt x 232.05179pt.
-<IMG/hourday.png, id=409, 715.473pt x 267.399pt>
+<IMG/hourday.png, id=516, 715.473pt x 267.399pt>
 File: IMG/hourday.png Graphic file (type png)
 <use IMG/hourday.png>
-Package pdftex.def Info: IMG/hourday.png  used on input line 218.
+Package pdftex.def Info: IMG/hourday.png  used on input line 235.
 (pdftex.def)             Requested size: 307.29092pt x 114.84468pt.
-<IMG/banks.png, id=411, 1149.093pt x 357.7365pt>
+<IMG/banks.png, id=518, 1149.093pt x 357.7365pt>
 File: IMG/banks.png Graphic file (type png)
 <use IMG/banks.png>
-Package pdftex.def Info: IMG/banks.png  used on input line 226.
+Package pdftex.def Info: IMG/banks.png  used on input line 243.
 (pdftex.def)             Requested size: 307.29092pt x 95.66763pt.
-) [22 <./IMG/amount.png>] [23 <./IMG/currencies.png> <./IMG/format.png>] [24 <./IMG/hourday.png> <./IMG/banks.png>]
-\openout2 = `Sections/methodology.aux'.
-
- (Sections/methodology.tex
-chapter 3.
-[25
-
-
-
-
-
-] [26] [27]
-<IMG/wllimits.png, id=466, 3442.8625pt x 3523.1625pt>
-File: IMG/wllimits.png Graphic file (type png)
-<use IMG/wllimits.png>
-Package pdftex.def Info: IMG/wllimits.png  used on input line 109.
-(pdftex.def)             Requested size: 307.29092pt x 314.43675pt.
- [28] [29 <./IMG/wllimits.png>]
-Overfull \hbox (13.47044pt too wide) in paragraph at lines 129--130
-[]\T1/pplj/m/n/12 (-20) To over-come those lim-its we will lever-age Group-Aware GNNs (GAGNNs)
- []
-
-[30] [31] [32] [33] [34]
-Overfull \hbox (17.58379pt too wide) in paragraph at lines 265--266
+ [32 <./IMG/trans_head.png>] [33 <./IMG/patterns.png>] [34 <./IMG/patterns_distr.png> <./IMG/amount.png>] [35 <./IMG/currencies.png> <./IMG/format.png>] [36 <./IMG/hourday.png> <./IMG/banks.png>]
+Overfull \hbox (17.58379pt too wide) in paragraph at lines 278--279
 []\T1/pplj/m/n/12 (-20) Finally, we ex-trap-o-lated the mul-ti-class la-bels from \T1/fvm/m/n/12 HI-Small_Patterns.txt
  []
 
-[35] [36] [37] [38] [39]
-Overfull \hbox (4.0957pt too wide) in paragraph at lines 395--405
+[37] [38] [39] [40] [41]
+Overfull \hbox (4.0957pt too wide) in paragraph at lines 408--418
  [][] 
  []
 
-[40]) [41] [42] [43]
+[42] [43]) [44]
 \openout2 = `Sections/results.aux'.
 
- (Sections/results.tex [44
+ (Sections/results.tex
+chapter 4.
+[45
 
 
 
 
 
 ]
-chapter 4.
-[45]
 Overfull \hbox (17.63568pt too wide) in paragraph at lines 55--56
 \T1/pplj/m/n/12 (-20) searches for the GAGNN-GAT (Bi-nary), GAGNN-GAT (Mul-ti-class), GAGNN-
  []
 
-[46] [47] [48] [49]
-<IMG/GAT_graph.png, id=655, 722.7pt x 433.62pt>
+[46] [47] [48] [49] [50] [51] [52]
+<IMG/GAT_graph.png, id=687, 722.7pt x 433.62pt>
 File: IMG/GAT_graph.png Graphic file (type png)
 <use IMG/GAT_graph.png>
-Package pdftex.def Info: IMG/GAT_graph.png  used on input line 166.
+Package pdftex.def Info: IMG/GAT_graph.png  used on input line 199.
 (pdftex.def)             Requested size: 307.29092pt x 184.37538pt.
-<IMG/GAT_cm.png, id=656, 424.2249pt x 329.5512pt>
+<IMG/GAT_cm.png, id=688, 424.2249pt x 329.5512pt>
 File: IMG/GAT_cm.png Graphic file (type png)
 <use IMG/GAT_cm.png>
-Package pdftex.def Info: IMG/GAT_cm.png  used on input line 173.
+Package pdftex.def Info: IMG/GAT_cm.png  used on input line 206.
 (pdftex.def)             Requested size: 307.29092pt x 238.71483pt.
-<IMG/GIN_graph.png, id=657, 722.7pt x 433.62pt>
+LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
+(Font)              scaled to size 8.50006pt on input line 215.
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 230--230
+[]\T1/fvm/m/n/10 ==================================================[] 
+ []
+
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 230--230
+[]\T1/fvm/m/n/10 ==================================================[] 
+ []
+
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 230--230
+[]\T1/fvm/m/n/10 --------------------------------------------------[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 230--230
+[]              \T1/fvm/m/n/10 precision    recall  f1-score   support[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 230--230
+[]       \T1/fvm/m/n/10 Legit       0.96      0.95      0.96      5443[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 230--230
+[]  \T1/fvm/m/n/10 Laundering       0.73      0.76      0.75       898[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 230--230
+[]    \T1/fvm/m/n/10 accuracy                           0.93      6341[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 230--230
+[]   \T1/fvm/m/n/10 macro avg       0.85      0.86      0.85      6341[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 230--230
+[]\T1/fvm/m/n/10 weighted avg       0.93      0.93      0.93      6341[] 
+ []
+
+<IMG/GIN_graph.png, id=689, 722.7pt x 433.62pt>
 File: IMG/GIN_graph.png Graphic file (type png)
 <use IMG/GIN_graph.png>
-Package pdftex.def Info: IMG/GIN_graph.png  used on input line 180.
+Package pdftex.def Info: IMG/GIN_graph.png  used on input line 238.
 (pdftex.def)             Requested size: 307.29092pt x 184.37538pt.
-<IMG/GIN_cm.png, id=658, 424.2249pt x 329.5512pt>
+<IMG/GIN_cm.png, id=690, 424.2249pt x 329.5512pt>
 File: IMG/GIN_cm.png Graphic file (type png)
 <use IMG/GIN_cm.png>
-Package pdftex.def Info: IMG/GIN_cm.png  used on input line 187.
+Package pdftex.def Info: IMG/GIN_cm.png  used on input line 245.
 (pdftex.def)             Requested size: 307.29092pt x 238.71483pt.
-<IMG/GAT_multiclass_graph.png, id=659, 722.7pt x 433.62pt>
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 269--269
+[]\T1/fvm/m/n/10 ==================================================[] 
+ []
+
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 269--269
+[]\T1/fvm/m/n/10 ==================================================[] 
+ []
+
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 269--269
+[]\T1/fvm/m/n/10 --------------------------------------------------[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 269--269
+[]              \T1/fvm/m/n/10 precision    recall  f1-score   support[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 269--269
+[]       \T1/fvm/m/n/10 Legit       0.97      0.88      0.93      5443[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 269--269
+[]  \T1/fvm/m/n/10 Laundering       0.54      0.86      0.67       898[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 269--269
+[]    \T1/fvm/m/n/10 accuracy                           0.88      6341[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 269--269
+[]   \T1/fvm/m/n/10 macro avg       0.76      0.87      0.80      6341[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 269--269
+[]\T1/fvm/m/n/10 weighted avg       0.91      0.88      0.89      6341[] 
+ []
+
+<IMG/GAT_baseline_graph.png, id=691, 722.7pt x 433.62pt>
+File: IMG/GAT_baseline_graph.png Graphic file (type png)
+<use IMG/GAT_baseline_graph.png>
+Package pdftex.def Info: IMG/GAT_baseline_graph.png  used on input line 277.
+(pdftex.def)             Requested size: 307.29092pt x 184.37538pt.
+<IMG/GAT_baseline_cm.png, id=692, 424.2249pt x 329.5512pt>
+File: IMG/GAT_baseline_cm.png Graphic file (type png)
+<use IMG/GAT_baseline_cm.png>
+Package pdftex.def Info: IMG/GAT_baseline_cm.png  used on input line 284.
+(pdftex.def)             Requested size: 307.29092pt x 238.71483pt.
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 308--308
+[]\T1/fvm/m/n/10 ==================================================[] 
+ []
+
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 308--308
+[]\T1/fvm/m/n/10 ==================================================[] 
+ []
+
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 308--308
+[]\T1/fvm/m/n/10 --------------------------------------------------[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 308--308
+[]              \T1/fvm/m/n/10 precision    recall  f1-score   support[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 308--308
+[]       \T1/fvm/m/n/10 Legit       0.96      0.95      0.95      5443[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 308--308
+[]  \T1/fvm/m/n/10 Laundering       0.72      0.73      0.73       898[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 308--308
+[]    \T1/fvm/m/n/10 accuracy                           0.92      6341[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 308--308
+[]   \T1/fvm/m/n/10 macro avg       0.84      0.84      0.84      6341[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 308--308
+[]\T1/fvm/m/n/10 weighted avg       0.92      0.92      0.92      6341[] 
+ []
+
+<IMG/GIN_baseline_graph.png, id=693, 722.7pt x 433.62pt>
+File: IMG/GIN_baseline_graph.png Graphic file (type png)
+<use IMG/GIN_baseline_graph.png>
+Package pdftex.def Info: IMG/GIN_baseline_graph.png  used on input line 316.
+(pdftex.def)             Requested size: 307.29092pt x 184.37538pt.
+<IMG/GIN_baseline_cm.png, id=694, 424.2249pt x 329.5512pt>
+File: IMG/GIN_baseline_cm.png Graphic file (type png)
+<use IMG/GIN_baseline_cm.png>
+Package pdftex.def Info: IMG/GIN_baseline_cm.png  used on input line 323.
+(pdftex.def)             Requested size: 307.29092pt x 238.71483pt.
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 347--347
+[]\T1/fvm/m/n/10 ==================================================[] 
+ []
+
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 347--347
+[]\T1/fvm/m/n/10 ==================================================[] 
+ []
+
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 347--347
+[]\T1/fvm/m/n/10 --------------------------------------------------[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 347--347
+[]              \T1/fvm/m/n/10 precision    recall  f1-score   support[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 347--347
+[]       \T1/fvm/m/n/10 Legit       0.95      0.96      0.96      5443[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 347--347
+[]  \T1/fvm/m/n/10 Laundering       0.75      0.71      0.73       898[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 347--347
+[]    \T1/fvm/m/n/10 accuracy                           0.93      6341[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 347--347
+[]   \T1/fvm/m/n/10 macro avg       0.85      0.84      0.84      6341[] 
+ []
+
+
+Overfull \hbox (21.53227pt too wide) in paragraph at lines 347--347
+[]\T1/fvm/m/n/10 weighted avg       0.92      0.93      0.93      6341[] 
+ []
+
+[53 <./IMG/GAT_graph.png>] [54 <./IMG/GAT_cm.png>] [55 <./IMG/GIN_graph.png> <./IMG/GIN_cm.png>] [56 <./IMG/GAT_baseline_graph.png>] [57 <./IMG/GAT_baseline_cm.png>] [58 <./IMG/GIN_baseline_graph.png> <./IMG/GIN_baseline_cm.png>]
+<IMG/GAT_multiclass_graph.png, id=728, 722.7pt x 433.62pt>
 File: IMG/GAT_multiclass_graph.png Graphic file (type png)
 <use IMG/GAT_multiclass_graph.png>
-Package pdftex.def Info: IMG/GAT_multiclass_graph.png  used on input line 194.
+Package pdftex.def Info: IMG/GAT_multiclass_graph.png  used on input line 369.
 (pdftex.def)             Requested size: 307.29092pt x 184.37538pt.
-<IMG/GAT_multiclass_cm.png, id=660, 474.0912pt x 426.393pt>
+<IMG/GAT_multiclass_cm.png, id=729, 474.0912pt x 426.393pt>
 File: IMG/GAT_multiclass_cm.png Graphic file (type png)
 <use IMG/GAT_multiclass_cm.png>
-Package pdftex.def Info: IMG/GAT_multiclass_cm.png  used on input line 201.
+Package pdftex.def Info: IMG/GAT_multiclass_cm.png  used on input line 376.
 (pdftex.def)             Requested size: 307.29092pt x 276.38443pt.
-<IMG/GIN_multiclass_graph.png, id=661, 722.7pt x 433.62pt>
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 407--407
+[]\T1/fvm/m/n/10 ==================================================[] 
+ []
+
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 407--407
+[]\T1/fvm/m/n/10 ==================================================[] 
+ []
+
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 407--407
+[]\T1/fvm/m/n/10 --------------------------------------------------[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 407--407
+[]                \T1/fvm/m/n/10 precision    recall  f1-score   support[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 407--407
+[]         \T1/fvm/m/n/10 LEGIT       0.84      0.29      0.43      1160[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 407--407
+[]       \T1/fvm/m/n/10 FAN-OUT       0.06      0.34      0.10        62[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 407--407
+[]        \T1/fvm/m/n/10 FAN-IN       0.29      0.89      0.44        56[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 407--407
+[]         \T1/fvm/m/n/10 CYCLE       0.02      0.02      0.02        52[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 407--407
+[]\T1/fvm/m/n/10 GATHER-SCATTER       0.42      0.39      0.41       122[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 407--407
+[]\T1/fvm/m/n/10 SCATTER-GATHER       0.00      0.00      0.00       105[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 407--407
+[]     \T1/fvm/m/n/10 BIPARTITE       0.02      0.23      0.04        40[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 407--407
+[]         \T1/fvm/m/n/10 STACK       0.09      0.17      0.12        81[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 407--407
+[]        \T1/fvm/m/n/10 RANDOM       0.05      0.02      0.03        41[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 407--407
+[]      \T1/fvm/m/n/10 accuracy                           0.28      1719[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 407--407
+[]     \T1/fvm/m/n/10 macro avg       0.20      0.26      0.18      1719[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 407--407
+[]  \T1/fvm/m/n/10 weighted avg       0.62      0.28      0.35      1719[] 
+ []
+
+<IMG/GIN_multiclass_graph.png, id=730, 722.7pt x 433.62pt>
 File: IMG/GIN_multiclass_graph.png Graphic file (type png)
 <use IMG/GIN_multiclass_graph.png>
-Package pdftex.def Info: IMG/GIN_multiclass_graph.png  used on input line 208.
+Package pdftex.def Info: IMG/GIN_multiclass_graph.png  used on input line 415.
 (pdftex.def)             Requested size: 307.29092pt x 184.37538pt.
-<IMG/GIN_multiclass_cm.png, id=662, 474.0912pt x 426.393pt>
+<IMG/GIN_multiclass_cm.png, id=731, 474.0912pt x 426.393pt>
 File: IMG/GIN_multiclass_cm.png Graphic file (type png)
 <use IMG/GIN_multiclass_cm.png>
-Package pdftex.def Info: IMG/GIN_multiclass_cm.png  used on input line 215.
+Package pdftex.def Info: IMG/GIN_multiclass_cm.png  used on input line 422.
 (pdftex.def)             Requested size: 307.29092pt x 276.38443pt.
-<IMG/GAT_baseline_graph.png, id=663, 722.7pt x 433.62pt>
-File: IMG/GAT_baseline_graph.png Graphic file (type png)
-<use IMG/GAT_baseline_graph.png>
-Package pdftex.def Info: IMG/GAT_baseline_graph.png  used on input line 223.
-(pdftex.def)             Requested size: 307.29092pt x 184.37538pt.
-<IMG/GAT_baseline_cm.png, id=664, 424.2249pt x 329.5512pt>
-File: IMG/GAT_baseline_cm.png Graphic file (type png)
-<use IMG/GAT_baseline_cm.png>
-Package pdftex.def Info: IMG/GAT_baseline_cm.png  used on input line 230.
-(pdftex.def)             Requested size: 307.29092pt x 238.71483pt.
-File: IMG/GAT_baseline_graph.png Graphic file (type png)
-<use IMG/GAT_baseline_graph.png>
-Package pdftex.def Info: IMG/GAT_baseline_graph.png  used on input line 237.
-(pdftex.def)             Requested size: 307.29092pt x 184.37538pt.
-File: IMG/GAT_baseline_cm.png Graphic file (type png)
-<use IMG/GAT_baseline_cm.png>
-Package pdftex.def Info: IMG/GAT_baseline_cm.png  used on input line 244.
-(pdftex.def)             Requested size: 307.29092pt x 238.71483pt.
-<IMG/GAT_baseline_multiclass_graph.png, id=665, 722.7pt x 433.62pt>
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 453--453
+[]\T1/fvm/m/n/10 ==================================================[] 
+ []
+
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 453--453
+[]\T1/fvm/m/n/10 ==================================================[] 
+ []
+
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 453--453
+[]\T1/fvm/m/n/10 --------------------------------------------------[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 453--453
+[]                \T1/fvm/m/n/10 precision    recall  f1-score   support[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 453--453
+[]         \T1/fvm/m/n/10 LEGIT       0.87      0.11      0.19      1160[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 453--453
+[]       \T1/fvm/m/n/10 FAN-OUT       0.04      0.44      0.07        62[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 453--453
+[]        \T1/fvm/m/n/10 FAN-IN       0.06      0.75      0.10        56[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 453--453
+[]         \T1/fvm/m/n/10 CYCLE       0.00      0.00      0.00        52[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 453--453
+[]\T1/fvm/m/n/10 GATHER-SCATTER       0.24      0.03      0.06       122[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 453--453
+[]\T1/fvm/m/n/10 SCATTER-GATHER       0.00      0.00      0.00       105[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 453--453
+[]     \T1/fvm/m/n/10 BIPARTITE       0.04      0.10      0.06        40[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 453--453
+[]         \T1/fvm/m/n/10 STACK       0.00      0.00      0.00        81[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 453--453
+[]        \T1/fvm/m/n/10 RANDOM       0.00      0.00      0.00        41[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 453--453
+[]      \T1/fvm/m/n/10 accuracy                           0.12      1719[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 453--453
+[]     \T1/fvm/m/n/10 macro avg       0.14      0.16      0.05      1719[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 453--453
+[]  \T1/fvm/m/n/10 weighted avg       0.61      0.12      0.14      1719[] 
+ []
+
+<IMG/GAT_baseline_multiclass_graph.png, id=732, 722.7pt x 433.62pt>
 File: IMG/GAT_baseline_multiclass_graph.png Graphic file (type png)
 <use IMG/GAT_baseline_multiclass_graph.png>
-Package pdftex.def Info: IMG/GAT_baseline_multiclass_graph.png  used on input line 251.
+Package pdftex.def Info: IMG/GAT_baseline_multiclass_graph.png  used on input line 461.
 (pdftex.def)             Requested size: 307.29092pt x 184.37538pt.
-<IMG/GAT_baseline_multiclass_cm.png, id=666, 474.0912pt x 426.393pt>
+<IMG/GAT_baseline_multiclass_cm.png, id=733, 474.0912pt x 426.393pt>
 File: IMG/GAT_baseline_multiclass_cm.png Graphic file (type png)
 <use IMG/GAT_baseline_multiclass_cm.png>
-Package pdftex.def Info: IMG/GAT_baseline_multiclass_cm.png  used on input line 258.
+Package pdftex.def Info: IMG/GAT_baseline_multiclass_cm.png  used on input line 468.
 (pdftex.def)             Requested size: 307.29092pt x 276.38443pt.
-<IMG/GIN_baseline_multiclass_graph.png, id=667, 722.7pt x 433.62pt>
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 499--499
+[]\T1/fvm/m/n/10 ==================================================[] 
+ []
+
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 499--499
+[]\T1/fvm/m/n/10 ==================================================[] 
+ []
+
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 499--499
+[]\T1/fvm/m/n/10 --------------------------------------------------[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 499--499
+[]                \T1/fvm/m/n/10 precision    recall  f1-score   support[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 499--499
+[]         \T1/fvm/m/n/10 LEGIT       0.99      0.38      0.55      1160[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 499--499
+[]       \T1/fvm/m/n/10 FAN-OUT       0.11      0.16      0.13        62[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 499--499
+[]        \T1/fvm/m/n/10 FAN-IN       0.42      0.79      0.55        56[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 499--499
+[]         \T1/fvm/m/n/10 CYCLE       0.06      0.17      0.09        52[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 499--499
+[]\T1/fvm/m/n/10 GATHER-SCATTER       0.35      0.46      0.40       122[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 499--499
+[]\T1/fvm/m/n/10 SCATTER-GATHER       0.33      0.15      0.21       105[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 499--499
+[]     \T1/fvm/m/n/10 BIPARTITE       0.04      0.42      0.07        40[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 499--499
+[]         \T1/fvm/m/n/10 STACK       0.09      0.25      0.14        81[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 499--499
+[]        \T1/fvm/m/n/10 RANDOM       0.05      0.07      0.06        41[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 499--499
+[]      \T1/fvm/m/n/10 accuracy                           0.36      1719[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 499--499
+[]     \T1/fvm/m/n/10 macro avg       0.27      0.32      0.24      1719[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 499--499
+[]  \T1/fvm/m/n/10 weighted avg       0.74      0.36      0.45      1719[] 
+ []
+
+<IMG/GIN_baseline_multiclass_graph.png, id=734, 722.7pt x 433.62pt>
 File: IMG/GIN_baseline_multiclass_graph.png Graphic file (type png)
 <use IMG/GIN_baseline_multiclass_graph.png>
-Package pdftex.def Info: IMG/GIN_baseline_multiclass_graph.png  used on input line 265.
+Package pdftex.def Info: IMG/GIN_baseline_multiclass_graph.png  used on input line 507.
 (pdftex.def)             Requested size: 307.29092pt x 184.37538pt.
-<IMG/GIN_baseline_multiclass_cm.png, id=668, 474.0912pt x 426.393pt>
+<IMG/GIN_baseline_multiclass_cm.png, id=735, 474.0912pt x 426.393pt>
 File: IMG/GIN_baseline_multiclass_cm.png Graphic file (type png)
 <use IMG/GIN_baseline_multiclass_cm.png>
-Package pdftex.def Info: IMG/GIN_baseline_multiclass_cm.png  used on input line 272.
+Package pdftex.def Info: IMG/GIN_baseline_multiclass_cm.png  used on input line 514.
 (pdftex.def)             Requested size: 307.29092pt x 276.38443pt.
-) [50 <./IMG/GAT_graph.png>] [51 <./IMG/GAT_cm.png> <./IMG/GIN_graph.png>] [52 <./IMG/GIN_cm.png> <./IMG/GAT_multiclass_graph.png>] [53 <./IMG/GAT_multiclass_cm.png> <./IMG/GIN_multiclass_graph.png>] [54 <./IMG/GIN_multiclass_cm.png> <./IMG/GAT_baseline_graph.png>] [55 <./IMG/GAT_baseline_cm.png>] [56 <./IMG/GAT_baseline_multiclass_graph.png>] [57 <./IMG/GAT_baseline_multiclass_cm.png> <./IMG/GIN_baseline_multiclass_graph.png>] [58 <./IMG/GIN_baseline_multiclass_cm.png>]
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 545--545
+[]\T1/fvm/m/n/10 ==================================================[] 
+ []
+
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 545--545
+[]\T1/fvm/m/n/10 ==================================================[] 
+ []
+
+
+Overfull \hbox (6.18117pt too wide) in paragraph at lines 545--545
+[]\T1/fvm/m/n/10 --------------------------------------------------[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 545--545
+[]                \T1/fvm/m/n/10 precision    recall  f1-score   support[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 545--545
+[]         \T1/fvm/m/n/10 LEGIT       0.87      0.49      0.63      1160[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 545--545
+[]       \T1/fvm/m/n/10 FAN-OUT       0.47      0.44      0.45        62[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 545--545
+[]        \T1/fvm/m/n/10 FAN-IN       0.53      0.71      0.61        56[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 545--545
+[]         \T1/fvm/m/n/10 CYCLE       0.09      0.15      0.11        52[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 545--545
+[]\T1/fvm/m/n/10 GATHER-SCATTER       0.34      0.33      0.34       122[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 545--545
+[]\T1/fvm/m/n/10 SCATTER-GATHER       0.26      0.38      0.31       105[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 545--545
+[]     \T1/fvm/m/n/10 BIPARTITE       0.09      0.47      0.15        40[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 545--545
+[]         \T1/fvm/m/n/10 STACK       0.12      0.38      0.18        81[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 545--545
+[]        \T1/fvm/m/n/10 RANDOM       0.02      0.05      0.03        41[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 545--545
+[]      \T1/fvm/m/n/10 accuracy                           0.45      1719[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 545--545
+[]     \T1/fvm/m/n/10 macro avg       0.31      0.38      0.31      1719[] 
+ []
+
+
+Overfull \hbox (31.76634pt too wide) in paragraph at lines 545--545
+[]  \T1/fvm/m/n/10 weighted avg       0.67      0.45      0.52      1719[] 
+ []
+
+[59] [60 <./IMG/GAT_multiclass_graph.png> <./IMG/GAT_multiclass_cm.png>] [61 <./IMG/GIN_multiclass_graph.png>] [62 <./IMG/GIN_multiclass_cm.png>] [63 <./IMG/GAT_baseline_multiclass_graph.png> <./IMG/GAT_baseline_multiclass_cm.png>] [64 <./IMG/GIN_baseline_multiclass_graph.png>] [65 <./IMG/GIN_baseline_multiclass_cm.png>])
+Overfull \hbox (8.60744pt too wide) in paragraph at lines 561--118
+\T1/pplj/m/n/12 (-20) mod-els to 15, 10 and 10 for the first three lay-ers re-spec-tively (\T1/fvm/m/n/12 num_neighbors
+ []
+
+[66]
 \openout2 = `Sections/conclusion.aux'.
 
  (Sections/conclusion.tex
 chapter 5.
-) [59
+) [67
 
 
 
 
 
-]
-\openout2 = `Sections/software.aux'.
-
- (Sections/software.tex [60
-
-
-
-
-
-]
-chapter A.
-) [61] (thesis.bbl (thesis.brf)
+] (thesis.bbl (thesis.brf)
 \tf@brf=\write6
 \openout6 = `thesis.brf'.
 
- [62
+ [68
 
 
 
 
-] [63] [64]) [65] (thesis.aux (Sections/titlePage.aux) (Sections/abstract.aux) (Sections/introduction.aux) (Sections/background.aux) (Sections/methodology.aux) (Sections/results.aux) (Sections/conclusion.aux) (Sections/software.aux))
+] [69] [70]) [71] (thesis.aux (Sections/titlePage.aux) (Sections/abstract.aux) (Sections/introduction.aux) (Sections/background.aux) (Sections/methodology.aux) (Sections/results.aux) (Sections/conclusion.aux))
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2020/03/25>
  ***********
 Package rerunfilecheck Info: File `thesis.brf' has not changed.
-(rerunfilecheck)             Checksum: CB91AFCAD5298E9FD249E45605C96C80;2369.
+(rerunfilecheck)             Checksum: BCED979F3A54689B8BA9B2DEF50E64CA;2628.
  ) 
 Here is how much of TeX's memory you used:
- 30566 strings out of 467871
- 621059 string characters out of 5418376
- 1358880 words of memory out of 5000000
- 58133 multiletter control sequences out of 15000+600000
- 726844 words of font info for 542 fonts, out of 8000000 for 9000
+ 30632 strings out of 467871
+ 621993 string characters out of 5418376
+ 1383880 words of memory out of 5000000
+ 58168 multiletter control sequences out of 15000+600000
+ 728326 words of font info for 561 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,23n,148p,11275b,1342s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 108i,23n,148p,11275b,1401s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/euex10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eufm10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eurb10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eurm10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eurm7.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eusm10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/fpl/fplbj8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/mathpazo/fplmbb.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/fpl/fplrc8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/fpl/fplrij8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/bera/fvmr8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplb8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplbi8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplr8a.pfb><C:/Users/marti/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on thesis.pdf (68 pages, 3339349 bytes).
+Output written on thesis.pdf (74 pages, 3583388 bytes).
 PDF statistics:
- 1077 PDF objects out of 1200 (max. 8388607)
- 232 named destinations out of 1000 (max. 500000)
- 114725 words of extra memory for PDF output out of 128383 (max. 10000000)
+ 1113 PDF objects out of 1200 (max. 8388607)
+ 247 named destinations out of 1000 (max. 500000)
+ 115199 words of extra memory for PDF output out of 128383 (max. 10000000)
 

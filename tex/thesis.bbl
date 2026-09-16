@@ -59,10 +59,21 @@ Matthias Fey and Jan~E. Lenssen.
 \newblock In {\em ICLR Workshop on Representation Learning on Graphs and
   Manifolds}, 2019.
 
+\bibitem{hamilton2020graph}
+William~L. Hamilton.
+\newblock {\em Graph Representation Learning}.
+\newblock Synthesis Lectures on Artificial Intelligence and Machine Learning.
+  Morgan \& Claypool, 2020.
+
 \bibitem{adam}
 Diederik~P. Kingma and Jimmy Ba.
 \newblock Adam: A method for stochastic optimization.
 \newblock {\em arXiv preprint arXiv:1412.6980}, 2014.
+
+\bibitem{kriege2020survey}
+Nils~M. Kriege, Fredrik~D. Johansson, and Christopher Morris.
+\newblock A survey on graph kernels.
+\newblock {\em Applied Network Science}, 5(1):6, 2020.
 
 \bibitem{kuiper2021exploring}
 Ouren Kuiper, Martin van~den Berg, Joost van~der Burgt, and Stefan Leijnen.
@@ -106,6 +117,13 @@ Petar Veli\v{c}kovi\'{c}, Guillem Cucurull, Arantxa Casanova, Adriana Romero,
   Pietro Li\`{o}, and Yoshua Bengio.
 \newblock Graph attention networks.
 \newblock In {\em International Conference on Learning Representations}, 2018.
+
+\bibitem{wu2020comprehensive}
+Zonghan Wu, Shirui Pan, Fengwen Chen, Guodong Long, Chengqi Zhang, and S.~Yu
+  Philip.
+\newblock A comprehensive study of graph neural networks.
+\newblock {\em IEEE Transactions on Neural Networks and Learning Systems},
+  32(1):4--24, 2021.
 
 \bibitem{xu2019gin}
 Keyulu Xu, Weihua Hu, Jure Leskovec, and Stefanie Jegelka.

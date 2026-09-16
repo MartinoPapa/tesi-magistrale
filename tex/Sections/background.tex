@@ -2,12 +2,13 @@
 % moneyLaundering.tex (use thesis.tex as main file)
 %--------------------------------------------------------------
 \chapter{Background}
-\section{Financial Crime and Money Laundering}
+\section{Anti Money Laundering theory}
+\subsection{Financial Crime and Money Laundering}
 \label{moneyLaundering}
 %--------------------------------------------------------------
 Understanding how money laundering works is fundamental to garantee both an effective and explainable detection of suspicious transaction. 
 This section offers a theoretical introduction to money laundering providing a mathematical formulation of the problem together with a summary of common strategies employed by criminals to avoid detection.
-\subsection{The Limitations of the Lonely Scammer}
+\subsubsection{The Limitations of the Lonely Scammer}
 Individual scammers typically rely on simple and intuitive techniques to introduce illicit funds into the legitimate economy. One of the most prevalent methods is known as ``smurfing''. In simple terms, smurfing involves breaking down a large sum of illicit money into many smaller, inconspicuous chunks to deposit them without raising suspicion. 
 
 More formally, individual scammers rely on smurfing to avoid Anti-Money Laundering (AML) detection mechanisms, which usually flag transactions above a specific threshold $\tilde{x}$. By splitting their initial illicit funds $x$ into smaller transactions $x_n$, such that each transaction satisfies $x_n \leq \tilde{x}$, they minimize the risk of detection \cite{contreras2026strategic}. The mathematical expectation of profit $\pi_s$ for a scammer engaging in smurfing can be defined as:
@@ -18,7 +19,7 @@ where $x$ represents the total initial illicit funds, and $\nu \in (0,1)$ is the
 
 While smurfing is effective for small amounts, its scalability is severely limited. When attempting to launder much larger volumes of funds, an individual scammer operating from a single account faces a significantly higher probability of detection $(1-p)$, where $p$ is the probability of successfully avoiding detection. If caught, the scammer is subjected to a severe monetary penalty $T$, which includes both the total confiscation of the funds and associated judicial fines \cite{contreras2026strategic}. Therefore, operating as a ``lonely scammer'' becomes mathematically and practically unviable for large-scale operations due to the massive expected cost of $(1-p)T$.
 
-\subsection{Fraud Rings}
+\subsubsection{Fraud Rings}
 In regard to overcome those issues, criminals have improved their techniques by employing highly sophisticated obfuscation tactics. Instead of acting alone, they form complex ``fraud rings'' to distribute illicit funds across vast networks of temporary accounts. To further break the traceable link between sender and receiver, illicit actors frequently use cyclic transfers and cryptocurrency \textbf{mixers} services that pool together funds from multiple users, mix them, and redistribute them at random intervals and amounts. These advanced tactics create dense, highly camouflaged transaction topologies that easily evade threshold-based rules and simple heuristic detection methods.
 
 To achive their goal they utilize a strategy of transaction layering, often characterized by a topological depth $L$, and network diversification to obscure the money trail \cite{contreras2026strategic, li2025scamsweeper}.
@@ -28,8 +29,8 @@ By spreading the funds through a complex topology, the fraud ring successfully i
 \end{equation}
 where $E[\pi_L]$ is the expected profit, $p_L$ is the enhanced probability of evading detection when $L$ layers are used, $x$ is the total illicit funds, $T$ is the total penalty if caught, and $c(L)$ represents the monotonic cost function associated with establishing and maintaining the $L$ transaction layers. Because the fraud ring dramatically increases the probability of evading detection ($p_L \to 1$ as $L$ increases), the expected payoff remains highly profitable even when factoring in the complex layering costs $c(L)$ \cite{contreras2026strategic}. 
 
-\subsection{Money Laundering patterns}\label{mlpatterns}
-Understanding the structural patterns that criminality assumes is fundamental to develop effective detection models and to employ strategies to enhance the explainability of them. According to the literature, there are 8 different patterns that are often used in ML \cite{AMLSim, AMLWorld}. 
+\subsubsection{Money Laundering patterns}\label{mlpatterns}
+Understanding the structural patterns that criminality assumes is fundamental to develop effective detection models and to employ strategies to enhance the explainability of them. According to the literature, there are 8 different patterns that are often used in money laundering \cite{AMLSim, AMLWorld}. 
 \begin{figure}
     \centering
     \includegraphics[width=1\textwidth]{IMG/laundering_patterns.jpg}
@@ -51,13 +52,13 @@ It's important to mention that in some cases some patterns can be found in both 
 That being said, the detection of such patterns remains a foundamental component of any money laundering detection models, albeit insufficient on its own.
 Furthermore, a model that correctly classifies those patterns provides a much more interpretable result than one that simply performs a binary classification between licit and illicit transactions. In Section \ref{ethics_privacy_regulations} we will see why explainability is of fundamental importance in the financial field. 
 
-\section{Ethics, Privacy and Regulations}
+\subsection{Ethics, Privacy and Regulations}
 \label{ethics_privacy_regulations}
 In this section we will begin by introducing a brief overview of the regulations that currently govern the field of AML.
-Subsequently a discussion on the main issues that the use of ML models may introduce will be provided, toghether with suggested solutions to address them. A special focus will be reserved to the issues of explainability and privacy.
+Subsequently a discussion on the main issues that the use of machine learning models may introduce will be provided, toghether with suggested solutions to address them. A special focus will be reserved to the issues of explainability and privacy.
 To conclude we will consider the use of Synthetic Datasets as a possible solution to these issues, analyzing their limits and advantages in the context of AML.
-\subsection{AML Global Regulations}
-Effective ML detection requires a combination of domestic laws, regulatory oversight, and international cooperation. Since the end of the 20th century the United States and the Eureopean Union as key jurisdictions, toghether with the FAFT \footnote{The Financial Action Task Force (FATF) is an intergovernmental policymaking body established in 1989 by the G7} as the global leading standard-setter have been developing and elaborate framework for AML \cite{regulations}.
+\subsubsection{AML Global Regulations}
+Effective money laundering detection requires a combination of domestic laws, regulatory oversight, and international cooperation. Since the end of the 20th century the United States and the Eureopean Union as key jurisdictions, toghether with the FAFT \footnote{The Financial Action Task Force (FATF) is an intergovernmental policymaking body established in 1989 by the G7} as the global leading standard-setter have been developing and elaborate framework for AML \cite{regulations}.
 
 In 1989 the G-7 nations enstabished an inter-governmental task force to develop and promote international guidelines in regard to fight money laundering, the FATF. Nowadays FAFT still holds a central role in the AML field. It has issued 40 recomendations for national laws and international cooperation \cite{regulations}.
 These principles have been adopted by over than 200 jurisdictions and they fall into 5 main areas \cite{ruleBased}:
@@ -75,14 +76,14 @@ These principles have been adopted by over than 200 jurisdictions and they fall 
 \end{itemize}
 In regard to those guidelines FAFT keeps a \textit{black-list} and a \textit{grey-list} of jurisdictions that are not compliant with its standards \cite{regulations}.
 
-\subsection{Ethical and practical issues} \label{patterns}
-When considering real-world datasets, models that detect financial crime are trained on sensitive data that needs to be protected. To avoid the leakage of sensitive information, before feeding ML models, it is necessary to apply privacy-preserving techniques. The most common practice is to apply differential privacy, which adds noise to the dataset to protect individual data points. That noise can be quantified using the privacy budget $\epsilon$, which determines the trade-off between privacy and utility. All this comes at the cost of reducing the accuracy of the model.
+\subsubsection{Ethical and practical issues} \label{patterns}
+When considering real-world datasets, models that detect financial crime are trained on sensitive data that needs to be protected. To avoid the leakage of sensitive information, before feeding the data to machine learning models, it is necessary to apply privacy-preserving techniques. The most common practice is to apply differential privacy, which adds noise to the dataset to protect individual data points. That noise can be quantified using the privacy budget $\epsilon$, which determines the trade-off between privacy and utility. All this comes at the cost of reducing the accuracy of the model.
 
-Another significant issue to consider is explainability. Regulators require banks to explain their decisions, and this requirement extends to the ML models they use. Deep Learning models, albeit generally more precise and powerful than traditional ML models, are often \textit{black-boxes}, meaning their decision process is very difficoult to understand for a human being.  
+Another significant issue to consider is explainability. Regulators require banks to explain their decisions, and this requirement extends to the machine learning models they use. Deep Learning models, albeit generally more precise and powerful than traditional machine learning models, are often \textit{black-boxes}, meaning their decision process is very difficoult to understand for a human being.  
 
 Real datasets are also often limited by the fact that the informations are not shared accross jurisdictions, making it difficult to detect frauds that cross borders.
 
-To tackle all those problematics researchers at IBM developed a simulator for generating realistic financial transactions, called AMLWorld (2023) \cite{AMLWorld}. This simulator solves the privacy problem, simulates multi-jurisdictional transactions and it even tries to takle the explainability issue by providing as lable not only a boolean value for the presence of a fraud, but also the ML pattern that caracterized it. This wouldn't be possible in real life, but models trained on this synthetic dataset could be able to generalize the detection of patterns even in real world scenarios, highly enhancing interpretability.
+To tackle all those problematics researchers at IBM developed a simulator for generating realistic financial transactions, called AMLWorld (2023) \cite{AMLWorld}. This simulator solves the privacy problem, simulates multi-jurisdictional transactions and it even tries to takle the explainability issue by providing as lable not only a boolean value for the presence of a fraud, but also the pattern that caracterized it. This wouldn't be possible in real life, but models trained on this synthetic dataset could be able to generalize the detection of patterns even in real world scenarios, highly enhancing interpretability.
 Figure \ref{fig:amlsim_architecture} provides an overview on how AMLWorld generates realistic financial transactions and patterns of financial crime. 
 
 The possible laundering patterns are the one described in Section \ref{mlpatterns}; the model assumes the existence of 9 different surces of criminal activities: extortion, loan sharking, gambling, prostitution, kidnapping, robbery, embezzlement, drugs, and smuggling. The amount of money and the frequency of these criminal enterprises vary by both activity category and acting entity \cite{AMLWorld}. The funds are then inserted in the financial system alongside the legit ones.
@@ -93,9 +94,32 @@ The possible laundering patterns are the one described in Section \ref{mlpattern
     \label{fig:amlsim_architecture}
 \end{figure}
 
-\section{Task}
+\subsection{Traditional AML methods}
+Anti Money Laundering is a critical component of the global financial system. Financial institutions ought to implement robust mechanisms to comply with regulatory standards and protect the integrity of the financial system \cite{ruleBased}.
+
+Rule-based models have long been employed to detect suspicious transactions. These models consist of a set of predefined rules that are used to flag transactions that deviate from typical financial behavior.
+The criteria are typically based on regulatory requirements, historical data, and known patterns of illicit behavior. For example we could decide to flag transactions that exceed a certain amount, that rapidly transfer funds between accounts or that involve a high-risk jurisdiction.
+
+The main advantage of this approach is its transparency and interpretability. Furthermore they are computationally inexpensive, easy to implement and they can operate in real-time \cite{ruleBased}. 
+Unfortunately there are also several limitations. They tend to produce a high amount of false positives, which leads to more work from human operators that will have to deal with the flagged transactions. They could be easily exploited by criminals who are aware of the rules and can tailor their illicit activities to avoid detection. This will be further discussed in Section \ref{moneyLaundering}.
+
+Due to its tendency of producing a huge amount of false positives and the huge amount of data that nowadays is produced by financial institutions, the rule-based approach is becoming less and less effective.
+
+At the same time big datasets allow the usage of data-driven solutions that can learn directly from historical data.
+First attempts in this direction involved standard machine learning approaches such as logistic regression and support vector machines \cite{standardlearning}. Those models improved the state of the art but they still struggled to detect human brain-armed patterns due to their very limited parameter capacity \cite{mainpaper}.
+
+For this reason the research field shifted toward deep learning solutions which offer a much wider and complex hypothesis space, allowing to capture high order relationships between data, at the cost of a much worse interpretability. Nowadays the challenge is to combine high performance together with explainability to allow the usage of effective models in the highly regulated financial field, a necessity increasingly emphasized by both financial institutions and supervisory authorities~\cite{kuiper2021exploring}. We will discuss this further in Section \ref{ethics_privacy_regulations}
+
+\subsection{The Growing Challenge}
+Detecting fraud is becoming increasingly difficult. The sheer volume and velocity of digital transactions make manual oversight impossible and heavily strain classical machine learning architectures. Furthermore, the rise of decentralized finance (DeFi), Web3, and cryptocurrencies has introduced a paradigm of pseudo-anonymity that complicates traditional tracing.
+
+On top of that, criminals are constantly developing more and more sophisticated methods to avoid being caught. 
+As Cuèllar (2003) noted, \textit{"raising the marginal cost of perpetrating criminal activity can itself conceivably have counterintuitive effects. To the extent that criminals engaged in crimes for profit are acting rationally, then raising the cost of crime can discourage smaller operations and clear the market allowing more sophisticated criminal organizations to innovate and take more control from less organized criminals"}~\cite{cuellar2003tenuous}. 
+Hence, to prevent inadvertently incentivizing sophisticated criminal networks, detection mechanisms must be updated continuously. The framework proposed in this study leverages deep learning models that support online updates. This ensures that the detection algorithm remains aligned with the most recent transaction patterns.
+
+\subsection{Task description}
 \label{task}
-In this dissertation we consider the problem of Edge-Level ML detection. This means, considering the Graph $G = (V, E)$ as in Definition \ref{financialGraph}, trying to learn a function \(f\) that, for each transaction $e \in E$, predicts its class. In particular we will consider two different settings. A binary classification where each edge is labeled as fraudulent or lecit and a multi-class classification where, in case of illicit transaction, we also predict the type of pattern, amongst the one described in Section \ref{mlpatterns}, it's involved in.
+In this dissertation we consider the problem of Edge-Level money laundering detection. This means, considering the Graph $G = (V, E)$ as in Definition \ref{financialGraph}, trying to learn a function \(f\) that, for each transaction $e \in E$, predicts its class. In particular we will consider two different settings. A binary classification where each edge is labeled as fraudulent or lecit and a multi-class classification where, in case of illicit transaction, we also predict the type of pattern, amongst the one described in Section \ref{mlpatterns}, it's involved in.
 
 Formally we seek a function \(f\) that minimizes the error \(L(f)\) over a distribution \(\mathcal{D}\) of Graphs.
 \begin{equation}
@@ -109,121 +133,147 @@ This is just the theoretical overview of the problem. In Chapter \ref{approaches
 
 As mentioned in Section \ref{ethics_privacy_regulations}, the strict privacy regulations that governs the financial world, makes it hard to find real-world datasets. In this dissertation, for the reasons explained in Section \ref{patterns}, we will use the synthetic dataset \textit{IBM AMLSim}. This is perfect for our scope, since it provides edge lables for both binary and multiclass classification.
 
-\subsection{Dataset description}\label{sec:datdesc}
-The IBM AMLSim dataset comes in 6 different versions.
-\begin{itemize}
-    \item HI-Small
-    \item HI-Medium
-    \item HI-Large  
-    \item LO-Small
-    \item LO-Medium
-    \item LO-Large
-\end{itemize}
-Where HI (High) and LO (Low) indicate the frequency of illicit transactions and the suffixes Small, Medium and Large indicate the size of the dataset. Figure \ref{fig:datasetstats} shows the differences between the 6 datasets.
+% ------
+\section{Graph Neural Networks for AML}\label{sec:GNNintro}
+The pervasive digitisation of financial services has generated transaction ecosystems of unprecedented scale and complexity. Classical machine learning approaches, whether logistic regression, support vector machines, or shallow neural networks, operate on tabular feature vectors and treat each data point as an independent, identically distributed observation. This assumption is fundamentally at odds with the relational nature of financial data, where the behaviour of an account cannot be understood in isolation but only in the context of the network of counterparties it interacts with. Graph Machine Learning (GML) addresses this gap by enabling models to operate directly on graph-structured data, learning representations that jointly encode both the attributes of individual entities and the topology of their interactions~\cite{hamilton2020graph}.
+
+The field of GML encompasses a broad spectrum of methodologies. Early approaches relied on hand-crafted structural descriptors, such as degree centrality, clustering coefficients, and motif counts, that were pre-computed and then fed into standard classifiers. A more principled family of methods, known as graph kernels, extended the idea of kernel machines to structured data by defining similarity functions over pairs of graphs or node neighbourhoods~\cite{kriege2020survey}. While both families have proven useful, they suffer from a common limitation: the feature extraction process is decoupled from the learning objective, preventing the model from adapting its graph representations to the task at hand.
+
+Modern GML overcomes this limitation through end-to-end learned representations. These methods are typically organised around three levels of prediction granularity. \textit{Node-level} tasks assign a label or a continuous value to each vertex; canonical examples include community detection and entity classification. \textit{Graph-level} tasks predict a property of an entire graph, as in molecular property prediction or graph classification. \textit{Edge-level} tasks, finally, operate on pairs of nodes connected by an edge and include both link prediction, that is inferring which connections are likely to form, and edge classification, which is precisely the setting adopted in this dissertation for the detection of fraudulent transactions.
+
+Across all these tasks, Graph Neural Networks (GNNs) have emerged as the dominant paradigm. Their success stems from a principled inductive bias: rather than learning a fixed function of global graph statistics, GNNs propagate and transform information along the edges of the graph through an iterative message-passing mechanism. This endows them with the ability to produce node representations that are sensitive to local neighbourhood structure while remaining equivariant to node permutations, a property that no tabular model can achieve. Furthermore, parameters are shared across all nodes and edges, making GNNs naturally scalable to graphs with millions of vertices. When node and edge attributes are available, as is the case in the financial graphs considered here, GNNs can seamlessly fuse topological signals with rich feature information, yielding representations that are far more expressive than either source alone~\cite{wu2020comprehensive}.
+
+In the following subsections we formalise the message-passing framework underpinning GNNs and discuss two specific architectures employed in this work, together with their theoretical limitations in the context of AML detection.
+
+\subsection{Graph Neural Networks definition}
+The necessity of capturing complex interactions between accounts and transactions led to the idea of modeling the financial feed as a graph, where accounts are nodes and transactions are edges \cite{singh2019anti}.
+
+\begin{definition}[Financial Graph]\label{financialGraph}
+A financial graph is a directed graph $G = (V, E)$, where $V$ represents a set of financial entities (e.g. bank accounts or individuals), and $E$ represents a set of transactions between these entities. Each edge $e \in E$ is directed from the sender to the receiver and may be associated with features.
+\end{definition}
+
+GNNs rely on message passing to aggregate information from neighbors and learn representations of the nodes that will be given as input to a classifier or regressor to predict the probability that an account (Node-Level detection), a transaction (Edge-Level detection) or a subgraph (Graph-Level detection) is fraudulent. These methods allow to capture complex relationships, learn features automatically, handle dynamic graphs, and integrate multimodal data.
+
+Formally the message passing process at the $k$-th layer in a GNN is defined as follows:
+\begin{equation}
+\begin{aligned}
+m_i^{(k)} &= \operatorname{AGGREGATE} \left\{ \operatorname{MSG}\left( h_j^{(k-1)},e_{ji}\right) : j \in \mathcal{N}(i) \right\} \\
+h_i^{(k)} &= \operatorname{UPDATE} \left( h_i^{(k-1)}, m_i^{(k)}, x_i \right)
+\end{aligned}
+\end{equation}
+where $\mathcal{N}(i)$ denotes the set of neighboring nodes of node $i$, $e_{ji}$ is the feature vector of the edge from node $j$ to node $i$, \(\operatorname{MSG}\) (e.g. \(\operatorname{MLP}\)) is the function that merges informations from the neighbor and the connecting edge and $x_i$ is the feature vector of node $i$.
+Sometimes edge features are not used during the message passing process, in such cases \(m_i^{(k)}\) is defined as: 
+\begin{equation}
+    m_i^{(k)} = \operatorname{AGGREGATE} \left\{ h_j^{(k-1)} : j \in \mathcal{N}(i) \right\}
+\end{equation}
+After $K$ iterations of message passing, the resultant node embeddings $H^{(K)}$ are then used to execute the designated task, in our case the detection of fraudulent accounts \cite{Cheng_2025}. 
+
+There are different types of GNNs; defined by how the \( \operatorname{UPDATE}\) and \( \operatorname{AGGREGATE}\) functions are implemented.
+
+%--------------------------------------------------------------
+\subsection{Graph Attention Networks}
+\label{sec:gat}
+%--------------------------------------------------------------
+
+As mentioned in Section \ref{sec:GNNintro} different types of GNNs are defined by different AGGREGATE and UPDATE functions.
+
+Graph Attention Networks introduce learned attention coefficients to improve the fixed weight aggregation of classical graph convolutions, allowing the model to understand which neigbours are more relevant torwards the classification task \cite{velickovic2018gat}.
+The AGGREGATE function is defined as:
+\begin{equation}
+  m_i^{(k)} = \Vert_{t=1}^{H} \sum_{j \in \mathcal{N}(i)} \alpha_{ij}^{(k,t)} W^{(k,t)} h_j^{(k-1)}
+\end{equation}
+where \(H\) is the number of attention heads, \(\mathcal{N}(i)\) is the set of neighbors of node \(i\), \(W^{(k,t)}\) is the weight matrix for the attention head \(t\) at layer \(k\) and \(\alpha_{ij}^{(k,t)}\) is the attention coefficient between node \(i\) and its neighbor \(j\) at layer \(k\) and head \(t\) defined as
+\begin{equation}
+  \alpha_{ij}^{(k,t)} = \frac{\exp\left( e_{ij}^{(k,t)} \right)}{\sum_{l \in \mathcal{N}(i)} \exp\left( e_{il}^{(k,t)} \right)}
+\end{equation}
+where, in our case, the unnormalized attention scores \(e_{ij}^{(k,t)}\) also rely on the edge features \(\ell_{ij}\) of the edge \((i,j)\).
+\begin{equation}
+  e_{ij}^{(k,t)} = \operatorname{LeakyReLU}\left( \mathbf{a}^{(k,t)^\top} \left[ W^{(k,t)} h_i^{(k-1)} \;\; W^{(k,t)} h_j^{(k-1)} \;\; W_e^{(k,t)} \ell_{ij} \right] \right)
+\end{equation}
+where \(\mathbf{a}^{(k,t)}\), \(W^{(k,t)}\) and \(W_e^{(k,t)}\) are learnable parameters.
+
+The UPDATE function is then defined as:
+\begin{equation}
+  h_i^{(k)} = \begin{cases}
+    \operatorname{ReLu}\!\left( m_i^{(k)} \right)
+      & k < L \\
+    \operatorname{Id}\!\left(
+      \dfrac{1}{H} \displaystyle\sum_{t=1}^{H}
+      \sum_{j \in \mathcal{N}(i)} \alpha_{ij}^{(k,t)}\,
+      \mathbf{W}^{(k,t)} h_j^{(k-1)}
+    \right) & k = L
+  \end{cases}
+\end{equation}
+Notice how the UPDATE function is different for the last layer. This is due to the fact that it averages the single heads outputs to produce an embedding of dimension $d_{\text{out}}$ instead of concatenating them; which is the case for intermediate layers.
+
+The embeddings are then leveraged for edge classification. Let \((i,j)\) be an edge, his final representation will be the concatenation of the embedding of the source node \(h_i^{(L)}\), the embedding of the destination node \(h_j^{(L)}\) and the feature vector \(\ell_{ij}\). \([h_i^{(L)}, h_j^{(L)},\ell_{ij}]\) is then passed through a Multi-Layer Perceptron that computes the prediction.
+
+%--------------------------------------------------------------
+\subsection{Graph Isomorphism Networks}
+\label{sec:gin}
+%--------------------------------------------------------------
+Graph Isomorphism Networks achive the theoretical upper bound of expressive power for message passing GNNs \cite{xu2019gin}. By using a MLP in the update function instead of a simple linear transformation, they are able to match the expressive power of the 1-Weisfeiler-Lehman test (Definition \ref{def:wl}).
+The AGGREGATE function is simply defined as:
+\begin{equation}
+  m_i^{(k)} = \sum_{j \in \mathcal{N}(i)} h_j^{(k-1)}
+\end{equation}
+
+The UPDATE function, which is what actually differentiate GIN from other GNNs, is defined as:
+\begin{equation}
+  h_i^{(k)} = \operatorname{MLP}^{(k)}\!\left( \left(1 + \varepsilon^{(k)}\right) h_i^{(k-1)} + m_i^{(k)} \right)
+\end{equation}
+where \(\varepsilon^{(k)}\) is a learnable parameter. In our implementation, we used a two-layer MLP with a ReLU activation:
+\begin{equation}
+  \operatorname{MLP}(z) = W_2\,\operatorname{ReLU}\!\left(W_1 z + b_1\right) + b_2
+\end{equation}
+where \(W_1\), \(W_2\), \(b_1\) and \(b_2\) are learnable parameters.
+The embeddings are then leveraged for edge classification in the same way as for GAT.
+
+%--------------------------------------------------------------
+\subsection{Limitations of Local Message Passing}
+\label{sec:mp_limits}
+%--------------------------------------------------------------
+GATs and GINs, both belonging to the family of local message passing GNNs, share common limitations.
+\subsubsection{Weisfeiler-Leman test upperbound}
+Theoretically it has been proved that the expressive power of local message passing GNNs is upper bounded by the 1-Weisfeiler-Leman test ~\cite{xu2019gin};
+\begin{definition}[Isomorphic Graphs]
+  Two graphs \(G=(V,E)\) and \(G'=(V',E')\) are isomorphic if there exists a bijection \(f: V \to V'\) such that for all \(u,v \in V\), \((u,v) \in E \Longleftrightarrow (f(u),f(v)) \in E'\).
+\end{definition}
+\begin{definition}[1-Weisfeiler--Leman test]
+\label{def:wl}
+The 1-Weisfeiler-Leman (1-WL) test is an algorithm to determine whether two graphs \(G=(V,E)\) and \(G'=(V',E')\) are isomorphic or not. It works by iteratively assigning colours to nodes according to the local structure of the graph. The process is defined as follows:
+\begin{enumerate}
+    \item \textbf{Initialization}: Every node it's initialised with the same color \(c_i^{(0)}=c^{(0)} \; \forall i\in V,V'\);
+    \item \textbf{Iteration}: At each step \(k\), each node updates its colour by collecting the colours of all its immediate neighbours and combining them with its current colour to create a new one:
+    \begin{equation}
+      c_i^{(k)} = \operatorname{HASH}\!\left(c_i^{(k-1)},\, \left\{\!\left\{ c_j^{(k-1)} : j \in \mathcal{N}(i) \right\}\!\right\}\right)
+    \end{equation}
+    the \(\operatorname{HASH}\) function guarantees that different combinations of colours will always produce a new distinct colour.
+    \item \textbf{Comparison}: After each step, the algorithm compares the number of nodes for each colour in both graphs. If they are different, we are certain that the graphs are not isomorphic. Unfortunately, if the colours stop updating and the sets are still identical, the test is inconclusive; there is no guarantee that the two graphs are actually isomorphic.
+    In Figure \ref{fig:wl} we can see an example of non-isomorphic graphs that are not discriminated by the 1-WL test.
+\end{enumerate}
 \begin{figure}
-    \centering
-    \includegraphics[width=1.0\textwidth]{IMG/dataset.png}
-    \caption{IBM AMLSim datasets statistics \cite{AMLWorld}}
-    \label{fig:datasetstats}
+  \centering
+  \includegraphics[width=0.8\textwidth]{IMG/wllimits.png}
+  \caption{Non-isomorphic graphs that are not discriminated by the 1-WL test}
+  \label{fig:wl}
 \end{figure}
+\end{definition}
+This means that message passing GNNs are unable to discriminate certain non-isomorphic graph structures, limiting their ability to detect global topological patterns.
 
-In this work we will use the HI-Small version. Bigger datasets would of course garantee a better generalization and accuracy but, for hardware and time constraint, it would be impossible to train the models on such graphs. That begin said, we belive that the obtained results are good enough to understand how the models would perform in a real world scenario.
+\subsubsection{Oversmoothing}
+Growing the number of layers \(L\) in a GNN generally allows to capture higher order and more complex dependencies. However, as \(L\) grows, node embeddings tend to converge to a stationary point that is virtually identical for all nodes~\cite{Cheng_2025}.
+When this happens, the node embeddings lose their ability to represent different nodes and the model loses its discriminative power.
 
-The HI-Small dataset is composed of 3 different files:
-\begin{itemize}
-    \item \texttt{HI-Small\_account.csv}, contains 518,581 accounts toghether with their features:
-    \begin{itemize}
-        \item \textit{Entity ID}: The ID of the account;
-        \item \textit{Entity Name}: The name of the account;
-        \item \textit{Bank Name}: The name of the bank holding the account; 
-        \item \textit{Bank ID}: The ID of the bank holding the account;
-        \item \textit{Account Number}: The number of the account;    
-    \end{itemize}
-    Figure \ref{fig:accountshead} shows some examples of account records.
-    \item \texttt{HI-Small\_Trans.csv}, contains transactions features and binary labels:
-    \begin{itemize}
-        \item \textit{Timestamp}: The timestamp of the transaction;
-        \item \textit{From Bank}: The ID of the sending bank;
-        \item \textit{From Account}: The ID of the sending account;
-        \item \textit{To Bank}: The ID of the receiving bank;
-        \item \textit{To Account}: The ID of the receiving account;
-        \item \textit{Amount Received}: The amount of money received by the recipient;
-        \item \textit{Receiving Currency}: The currency of the received amount (USD, EUR, etc.);
-        \item \textit{Amount Paid}: The amount of money paid by the sender;
-        \item \textit{Payment Currency}: The currency of the paid amount;
-        \item \textit{Payment Format}: The format/method of the payment;
-        \item \textit{Is Laundering}: Binary label indicating whether the transaction is illicit;
-        \item \textit{src}: Source node identifier;
-        \item \textit{dst}: Destination node identifier;
-    \end{itemize}
-    Figure \ref{fig:transhead} shows some examples of transaction records.
-    \item \texttt{HI-Small\_Patterns.txt}, lists the edges that are involved in ML activities toghether with the type of pattern they are involved in (multiclass labels).
-    Examples of the 8 differt types of ML patterns in IBM AMLSim are shown in Figure \ref{fig:patternsIBM}.
-\end{itemize}
-\begin{figure}
-    \centering
-    \includegraphics[width=1.0\textwidth]{IMG/accounts_head.png}
-    \caption{IBM AMLSim account records}
-    \label{fig:accountshead}
-\end{figure}
-\begin{figure}
-    \centering
-    \includegraphics[width=1.0\textwidth]{IMG/trans_head.png}
-    \caption{IBM AMLSim transaction records}
-    \label{fig:transhead}
-\end{figure}
-\begin{figure}
-    \centering
-    \includegraphics[width=0.76\textwidth]{IMG/patterns.png}
-    \caption{IBM AMLSim patterns examples}
-    \label{fig:patternsIBM}
-\end{figure}
-\subsection{Features analysis}
-In this section we provide a detailed analysis of the edges and nodes features distributions. Before diving into that we first take a look at the distribution of the labels in the dataset. There are \(5,177\) illicit transactions over a total of \(5,078,345\) Edges.
-Figure \ref{fig:patterns_distr}, provides the distribution of the multiclass label (type of pattern) over the fraudulent edges. It's important to notice that this information is provided only for \(3,149\) out of the \(5,177\) illicit transactions. This issue will be addressed in Section \ref{dataprep}.
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{IMG/patterns_distr.png}
-    \caption{IBM AMLSim patterns distribution over fraudulent edges}
-    \label{fig:patterns_distr}
-\end{figure}
+\subsubsection{Oversquashing}
+To capture interactions between nodes separated by a distance $r$, GNNs require at least $r$ layers of message passing. 
 
-We now procede by analyzing the edge features. First, we notice that \textit{Amount Received} and \textit{Amount Paid} are almost identical. From Figure \ref{fig:amounttrans} we can see that fraudulent trasnactions have the tendency to be bigger than lecit ones.
+While the receptive field $\vert{}\mathcal{N}_r(v)\vert{}$ grows exponentially with $r$, the representation $h_v \in \mathbb{R}^d$ maintains its fixed capacity $d$. Consequently, propagating signals across multiple hops forces an exponentially increasing volume of neighborhood information into a fixed-size vector, creating an informational bottleneck.
 
-Continuing our analysis on edge features, we notice that the most common currency is USD for both fraudulent and licit transactions; most of the currencies have a similar proportion distribution from both fraudulent and licit transactions. From Figure \ref{fig:currencytrans} we can see that there are two exceptions: Shekel, which is more prevalent in licit transactions, and Saudi Riyal, which is significantly more prevalent in fraudulent transactions. It's important to notice that the graph shows the proportion of each currency with respect to the total number of transactions in each class; Since there are way more licit than fraudulent transactions, having similar distributions means that, for every type of currency, licit transactions still represent the vast majority.
+This gets worse across graph bottlenecks, where signals from distant nodes $u$ are heavily diluted and fail to influence the final embedding of $v$.
+~\cite{Cheng_2025}.
+\bigskip
 
-Considering now the payment formats, by looking at Figure \ref{fig:paymentformats} we notice that ACH transactions are more frequently used for fraudulent transactions compared to other methods.
+To overcome those limits we will leverage Group-Aware GNNs (GAGNNs) \cite{mainpaper} (Section~\ref{sec:gagnn}), introducing a clustering mechanism to merge nodes that are suspected to be doing money laundering together and predicting their labels as a groups.
 
-The last edge feature is \textit{Timestamp}. Since working with timestamps can be tricky, we decided to extract to categorical features representing the hour of the day and the day of the week (Figures \ref{fig:hourday}). Normally we would have also considered the week of the year and the year itself but, since IBM AMLSim Small only covers the span of a week, it would be irrelevant. That being said, it's important to mention that directly working with timestamps, albeit tricky, could lead to a more precise detection [Chapter \ref{futureDirections}]. 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{IMG/amount.png}
-    \caption{IBM AMLSim amounts distribution}
-    \label{fig:amounttrans}
-\end{figure} 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{IMG/currencies.png}
-    \caption{IBM AMLSim currencies distribution}
-    \label{fig:currencytrans}
-\end{figure} 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{IMG/format.png}
-    \caption{IBM AMLSim payment formats distribution}
-    \label{fig:paymentformats}
-\end{figure} 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{IMG/hourday.png}
-    \caption{IBM AMLSim hour and day of the week distributions}
-    \label{fig:hourday}
-\end{figure} 
 
-Finally we take a look at the Node features. The only intresting one is \textit{Bank Name}, Figure \ref{fig:bank} shows the distribution of licit and illicit nodes over the 10 biggest banks.
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{IMG/banks.png}
-    \caption{IBM AMLSim banks distribution}
-    \label{fig:bank}
-\end{figure} 

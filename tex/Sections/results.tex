@@ -7,8 +7,10 @@
 
 In this chapter we present and discuss the results obtained by the previously described models on the dataset IBM AMLSim small \cite{AMLWorld}. We will first present the results of model selection (Sections \ref{modelselres}, \ref{archres}), to then procede by analysing the results of the GAGNN models (Section \ref{res}) and comparing them to the baseline models to evaluate the effectiveness of our proposed method.
 
+The code used for the training and evaluation of the models is available at \url{https://github.com/MartinoPapa/tesi-magistrale}.
+
 \section{Hyperparameter Selection Results}\label{modelselres}
-As described in Section~\ref{sec:loss_hp} and Section~\ref{sec:gagnn_hp}, the model selection process is splitted into two phases to mitigate the computational cost of the grid search. As we will see, this will come at the cost of a sub-optimal model but due to the limitiations of our hardware this is still the best option.
+As described in Section~\ref{sec:loss_hp}, the model selection process is splitted into two phases to mitigate the computational cost of the grid search. As we will see, this will come at the cost of a sub-optimal model but due to the limitiations of our hardware this is still the best option.
 
 \subsection{Loss Function Hyperparameters}
 We began by performing the grid search on the loss function parameters for both binary and multiclass tasks using the GAGNN with GAT backbone. Table~\ref{tab:res_phase1_binary} and Table~\ref{tab:res_phase1_multi} show the optimal hyperparameters found by this process by optimizing the macro F1-score on the validation set.

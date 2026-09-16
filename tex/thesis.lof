@@ -2,44 +2,44 @@
 \deactivateaddvspace 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1}{\ignorespaces Money Laundering patterns}}{11}{figure.caption.4}%
-\contentsline {figure}{\numberline {2}{\ignorespaces Overview of AMLworld simulation \cite {AMLWorld}}}{14}{figure.caption.5}%
-\contentsline {figure}{\numberline {3}{\ignorespaces Non-isomorphic graphs that are not discriminated by the 1-WL test}}{22}{figure.caption.6}%
+\contentsline {figure}{\numberline {1}{\ignorespaces Money Laundering patterns}}{13}{figure.caption.4}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Overview of AMLworld simulation \cite {AMLWorld}}}{16}{figure.caption.5}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Non-isomorphic graphs that are not discriminated by the 1-WL test}}{24}{figure.caption.6}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4}{\ignorespaces IBM AMLSim datasets statistics \cite {AMLWorld}}}{30}{figure.caption.7}%
-\contentsline {figure}{\numberline {5}{\ignorespaces IBM AMLSim account records}}{31}{figure.caption.8}%
-\contentsline {figure}{\numberline {6}{\ignorespaces IBM AMLSim transaction records}}{32}{figure.caption.9}%
-\contentsline {figure}{\numberline {7}{\ignorespaces IBM AMLSim patterns examples}}{33}{figure.caption.10}%
-\contentsline {figure}{\numberline {8}{\ignorespaces IBM AMLSim patterns distribution over fraudulent edges}}{34}{figure.caption.11}%
-\contentsline {figure}{\numberline {9}{\ignorespaces IBM AMLSim amounts distribution}}{34}{figure.caption.12}%
-\contentsline {figure}{\numberline {10}{\ignorespaces IBM AMLSim currencies distribution}}{35}{figure.caption.13}%
-\contentsline {figure}{\numberline {11}{\ignorespaces IBM AMLSim payment formats distribution}}{35}{figure.caption.14}%
-\contentsline {figure}{\numberline {12}{\ignorespaces IBM AMLSim hour and day of the week distributions}}{36}{figure.caption.15}%
-\contentsline {figure}{\numberline {13}{\ignorespaces IBM AMLSim banks distribution}}{36}{figure.caption.16}%
+\contentsline {figure}{\numberline {4}{\ignorespaces IBM AMLSim datasets statistics \cite {AMLWorld}}}{32}{figure.caption.7}%
+\contentsline {figure}{\numberline {5}{\ignorespaces IBM AMLSim account records}}{33}{figure.caption.8}%
+\contentsline {figure}{\numberline {6}{\ignorespaces IBM AMLSim transaction records}}{34}{figure.caption.9}%
+\contentsline {figure}{\numberline {7}{\ignorespaces IBM AMLSim patterns examples}}{35}{figure.caption.10}%
+\contentsline {figure}{\numberline {8}{\ignorespaces IBM AMLSim patterns distribution over fraudulent edges}}{36}{figure.caption.11}%
+\contentsline {figure}{\numberline {9}{\ignorespaces IBM AMLSim amounts distribution}}{36}{figure.caption.12}%
+\contentsline {figure}{\numberline {10}{\ignorespaces IBM AMLSim currencies distribution}}{37}{figure.caption.13}%
+\contentsline {figure}{\numberline {11}{\ignorespaces IBM AMLSim payment formats distribution}}{37}{figure.caption.14}%
+\contentsline {figure}{\numberline {12}{\ignorespaces IBM AMLSim hour and day of the week distributions}}{38}{figure.caption.15}%
+\contentsline {figure}{\numberline {13}{\ignorespaces IBM AMLSim banks distribution}}{38}{figure.caption.16}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {14}{\ignorespaces Training and patience loss for GAGNN-GAT (Binary task)}}{53}{figure.caption.29}%
-\contentsline {figure}{\numberline {15}{\ignorespaces Confusion matrix for GAGNN-GAT (Binary task)}}{54}{figure.caption.30}%
-\contentsline {figure}{\numberline {16}{\ignorespaces Evaluation report for GAGNN-GAT (Binary task)}}{54}{figure.caption.31}%
-\contentsline {figure}{\numberline {17}{\ignorespaces Training and patience loss for GAGNN-GIN (Binary task)}}{55}{figure.caption.32}%
-\contentsline {figure}{\numberline {18}{\ignorespaces Confusion matrix for GAGNN-GIN (Binary task)}}{55}{figure.caption.33}%
-\contentsline {figure}{\numberline {19}{\ignorespaces Evaluation report for GAGNN-GIN (Binary task)}}{56}{figure.caption.34}%
-\contentsline {figure}{\numberline {20}{\ignorespaces Training and patience loss for GAT baseline (Binary task)}}{56}{figure.caption.35}%
-\contentsline {figure}{\numberline {21}{\ignorespaces Confusion matrix for GAT baseline (Binary task)}}{57}{figure.caption.36}%
-\contentsline {figure}{\numberline {22}{\ignorespaces Evaluation report for GAT baseline (Binary task)}}{57}{figure.caption.37}%
-\contentsline {figure}{\numberline {23}{\ignorespaces Training and patience loss for GIN baseline (Binary task)}}{58}{figure.caption.38}%
-\contentsline {figure}{\numberline {24}{\ignorespaces Confusion matrix for GIN baseline (Binary task)}}{58}{figure.caption.39}%
-\contentsline {figure}{\numberline {25}{\ignorespaces Evaluation report for GIN baseline (Binary task)}}{59}{figure.caption.40}%
-\contentsline {figure}{\numberline {26}{\ignorespaces Training and patience loss for GAGNN-GAT (Multiclass task)}}{60}{figure.caption.41}%
-\contentsline {figure}{\numberline {27}{\ignorespaces Confusion matrix for GAGNN-GAT (Multiclass task)}}{60}{figure.caption.42}%
-\contentsline {figure}{\numberline {28}{\ignorespaces Evaluation report for GAGNN-GAT (Multiclass task)}}{61}{figure.caption.43}%
-\contentsline {figure}{\numberline {29}{\ignorespaces Training and patience loss for GAGNN-GIN (Multiclass task)}}{61}{figure.caption.44}%
-\contentsline {figure}{\numberline {30}{\ignorespaces Confusion matrix for GAGNN-GIN (Multiclass task)}}{62}{figure.caption.45}%
-\contentsline {figure}{\numberline {31}{\ignorespaces Evaluation report for GAGNN-GIN (Multiclass task)}}{62}{figure.caption.46}%
-\contentsline {figure}{\numberline {32}{\ignorespaces Training and patience loss for GAT baseline (Multiclass task)}}{63}{figure.caption.47}%
-\contentsline {figure}{\numberline {33}{\ignorespaces Confusion matrix for GAT baseline (Multiclass task)}}{63}{figure.caption.48}%
-\contentsline {figure}{\numberline {34}{\ignorespaces Evaluation report for GAT baseline (Multiclass task)}}{64}{figure.caption.49}%
-\contentsline {figure}{\numberline {35}{\ignorespaces Training and patience loss for GIN baseline (Multiclass task)}}{64}{figure.caption.50}%
-\contentsline {figure}{\numberline {36}{\ignorespaces Confusion matrix for GIN baseline (Multiclass task)}}{65}{figure.caption.51}%
-\contentsline {figure}{\numberline {37}{\ignorespaces Evaluation report for GIN baseline (Multiclass task)}}{65}{figure.caption.52}%
+\contentsline {figure}{\numberline {14}{\ignorespaces Training and patience loss for GAGNN-GAT (Binary task)}}{55}{figure.caption.29}%
+\contentsline {figure}{\numberline {15}{\ignorespaces Confusion matrix for GAGNN-GAT (Binary task)}}{56}{figure.caption.30}%
+\contentsline {figure}{\numberline {16}{\ignorespaces Evaluation report for GAGNN-GAT (Binary task)}}{56}{figure.caption.31}%
+\contentsline {figure}{\numberline {17}{\ignorespaces Training and patience loss for GAGNN-GIN (Binary task)}}{57}{figure.caption.32}%
+\contentsline {figure}{\numberline {18}{\ignorespaces Confusion matrix for GAGNN-GIN (Binary task)}}{57}{figure.caption.33}%
+\contentsline {figure}{\numberline {19}{\ignorespaces Evaluation report for GAGNN-GIN (Binary task)}}{58}{figure.caption.34}%
+\contentsline {figure}{\numberline {20}{\ignorespaces Training and patience loss for GAT baseline (Binary task)}}{58}{figure.caption.35}%
+\contentsline {figure}{\numberline {21}{\ignorespaces Confusion matrix for GAT baseline (Binary task)}}{59}{figure.caption.36}%
+\contentsline {figure}{\numberline {22}{\ignorespaces Evaluation report for GAT baseline (Binary task)}}{59}{figure.caption.37}%
+\contentsline {figure}{\numberline {23}{\ignorespaces Training and patience loss for GIN baseline (Binary task)}}{60}{figure.caption.38}%
+\contentsline {figure}{\numberline {24}{\ignorespaces Confusion matrix for GIN baseline (Binary task)}}{60}{figure.caption.39}%
+\contentsline {figure}{\numberline {25}{\ignorespaces Evaluation report for GIN baseline (Binary task)}}{61}{figure.caption.40}%
+\contentsline {figure}{\numberline {26}{\ignorespaces Training and patience loss for GAGNN-GAT (Multiclass task)}}{62}{figure.caption.41}%
+\contentsline {figure}{\numberline {27}{\ignorespaces Confusion matrix for GAGNN-GAT (Multiclass task)}}{62}{figure.caption.42}%
+\contentsline {figure}{\numberline {28}{\ignorespaces Evaluation report for GAGNN-GAT (Multiclass task)}}{63}{figure.caption.43}%
+\contentsline {figure}{\numberline {29}{\ignorespaces Training and patience loss for GAGNN-GIN (Multiclass task)}}{63}{figure.caption.44}%
+\contentsline {figure}{\numberline {30}{\ignorespaces Confusion matrix for GAGNN-GIN (Multiclass task)}}{64}{figure.caption.45}%
+\contentsline {figure}{\numberline {31}{\ignorespaces Evaluation report for GAGNN-GIN (Multiclass task)}}{64}{figure.caption.46}%
+\contentsline {figure}{\numberline {32}{\ignorespaces Training and patience loss for GAT baseline (Multiclass task)}}{65}{figure.caption.47}%
+\contentsline {figure}{\numberline {33}{\ignorespaces Confusion matrix for GAT baseline (Multiclass task)}}{65}{figure.caption.48}%
+\contentsline {figure}{\numberline {34}{\ignorespaces Evaluation report for GAT baseline (Multiclass task)}}{66}{figure.caption.49}%
+\contentsline {figure}{\numberline {35}{\ignorespaces Training and patience loss for GIN baseline (Multiclass task)}}{66}{figure.caption.50}%
+\contentsline {figure}{\numberline {36}{\ignorespaces Confusion matrix for GIN baseline (Multiclass task)}}{67}{figure.caption.51}%
+\contentsline {figure}{\numberline {37}{\ignorespaces Evaluation report for GIN baseline (Multiclass task)}}{67}{figure.caption.52}%
 \addvspace {10\p@ }
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

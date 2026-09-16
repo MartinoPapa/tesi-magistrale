@@ -1,4 +1,4 @@
-\chapter{Introduction}
+\chapter{Introduction}\label{intro}
 Money laundering is the criminal process of disguising or concealing the origin, identity, and ownership of illegally acquired funds.
 Its detection has become a foundational pillar of modern economic security.
 The rapid digitization of financial services has opened new possibilities for fraudulent activities.
@@ -18,3 +18,17 @@ We will investigate the following inquiries;
 \end{itemize}
 
 \section{Structure of the Dissertation}
+The dissertation is organized as follows.
+
+\textbf{Chapter~\ref{background} --- Background.}
+This chapter lays the theoretical foundations of the work. It begins by introducing the mechanics of money laundering, covering smurfing, fraud rings, and the eight structural laundering patterns, together with an overview of the applicable regulatory framework and the ethical issues that arise when deploying machine learning models in the financial domain. The chapter then motivates the graph-based formulation of the problem, introduces the field of Graph Machine Learning, and formalizes the message-passing framework underpinning GNNs. Two specific architectures are described in detail: Graph Attention Networks (GAT, Section~\ref{sec:gat}) and Graph Isomorphism Networks (GIN, Section~\ref{sec:gin}), followed by a discussion of their theoretical limitations (Section \ref{sec:mp_limits}).
+
+\textbf{Chapter~\ref{approaches} --- Methodology.}
+This chapter presents the proposed approach. It describes the Group-Aware Graph Neural Network (GAGNN) architecture, detailing each component of its pipeline: the community-centric encoder, the eMRF layer, the node-level classifier, the group representation layer, and the multi-task loss.
+Then it proceeds by providing the description of the \textit{IBM AMLSim Small} dataset used in this work, toghether with his features distributions.
+Finally, it covers the experimental setup, including data preparation, the train/validation/test split strategy, subgraph sampling, and the two-phase model selection procedure used to tune both the loss function hyperparameters and the architectural ones.
+\textbf{Chapter~\ref{results} --- Results.}
+This chapter presents and discusses the experimental results. After reporting the outcomes of the model selection phase, the binary and multiclass classification results of the four models (GAGNN-GAT, GAGNN-GIN, baseline GAT, and baseline GIN) are compared using accuracy, precision, recall, F1-Score, and ROC-AUC as metrics. The chapter concludes with a discussion of the limitations encountered during the study.
+
+\textbf{Chapter~\ref{sec:concl} --- Conclusions.}
+The final chapter revisits the three research inquiries formulated above, interprets the results in light of the theoretical properties of the models, and outlines the most promising directions for future work.

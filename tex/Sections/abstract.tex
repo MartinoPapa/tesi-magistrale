@@ -3,3 +3,12 @@
 %--------------------------------------------------------------
 \chapter*{Abstract}
 %--------------------------------------------------------------
+
+Money laundering is estimated to account for between 2\% and 5\% of global GDP annually, yet less than 1\% of illicit financial flows are successfully detected. As criminal organizations increasingly rely on complex, multi-layered transaction networks to obfuscate the origin of illicit funds, traditional rule-based and tabular machine learning approaches prove insufficient: they treat each transaction in isolation, ignoring the rich relational structure that characterizes fraudulent behavior.
+
+This dissertation investigates the use of Graph Neural Networks (GNNs) for the automated detection of money laundering in financial transaction graphs. The problem is formulated as an edge-level classification task on the IBM AMLSim HI-Small synthetic dataset \cite{AMLWorld}, and is addressed under two different settings: a binary task distinguishing licit from illicit transactions, and a multiclass task that additionally identifies the specific laundering pattern involved, enhancing the interpretability of the model's predictions.
+
+We propose a model based on the Group-Aware Graph Neural Network (GAGNN) architecture \cite{mainpaper}, which augments standard GNN backbones with an eMRF smoothing layer and a group representation layer that explicitly clusters accounts suspected of committing money laundering toghether. A multi-task loss combining node-level, edge-level, and group-level objectives is used to jointly optimize detection at all three levels. Two backbone variants are evaluated: one based on Graph Attention Networks (GAGNN-GAT) and one based on Graph Isomorphism Networks (GAGNN-GIN). Both are compared against the corresponding standard GNN baselines without the group-aware components.
+
+The goal of the dissertation is to evaluate GIN as backbone for the GAGNN architecture and to understand whether the GAGNN architecture brings improvements in terms of precision, recall, F1-Score and ROC-AUC compared to baseline GNN models, either on the binary and on the multiclass task.
+

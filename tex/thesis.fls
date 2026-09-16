@@ -432,9 +432,14 @@ OUTPUT Sections\introduction.aux
 INPUT .\Sections\introduction.tex
 INPUT .\Sections\introduction.tex
 INPUT Sections\introduction.tex
+INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplb9d.tfm
 INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplrc9d.tfm
 INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\palatino\pplrc9d.vf
 INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplr8r.tfm
+INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\palatino\pplb9d.vf
+INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplb8r.tfm
+INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\tfm\public\mathpazo\fplmb.tfm
+INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplbj8r.tfm
 INPUT .\Sections\background.tex
 INPUT .\Sections\background.tex
 OUTPUT Sections\background.aux
@@ -471,7 +476,6 @@ INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\vf\public\eulervm\zeusm
 INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\euler\eufm10.tfm
 INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
 INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\euler\eusm10.tfm
-INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplb9d.tfm
 INPUT .\IMG\laundering_patterns.jpg
 INPUT .\IMG\laundering_patterns.jpg
 INPUT .\IMG\laundering_patterns.jpg
@@ -479,10 +483,6 @@ INPUT .\IMG\laundering_patterns.jpg
 INPUT .\IMG\laundering_patterns.jpg
 INPUT .\IMG\laundering_patterns.jpg
 INPUT .\IMG\laundering_patterns.jpg
-INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\palatino\pplb9d.vf
-INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplb8r.tfm
-INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\tfm\public\mathpazo\fplmb.tfm
-INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplbj8r.tfm
 INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplr9d.tfm
 INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\vf\adobe\palatino\pplr9d.vf
 INPUT C:\Users\marti\AppData\Local\Programs\MiKTeX\fonts\tfm\adobe\palatino\pplr8r.tfm

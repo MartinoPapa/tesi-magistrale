@@ -2,63 +2,63 @@
 \vspace {-\cftbeforepartskip }
 \contentsline {chapter}{\numberline {1}Introduction}{7}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Structure of the Dissertation}{8}{section.1.1}%
-\contentsline {chapter}{\numberline {2}Background}{9}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Anti Money Laundering theory}{9}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}Financial Crime and Money Laundering}{9}{subsection.2.1.1}%
-\contentsline {subsubsection}{The Limitations of the Lonely Scammer}{9}{subsection.2.1.1}%
-\contentsline {subsubsection}{Fraud Rings}{10}{equation.2.1}%
-\contentsline {subsubsection}{Money Laundering patterns}{11}{equation.2.2}%
-\contentsline {subsection}{\numberline {2.1.2}Ethics, Privacy and Regulations}{12}{subsection.2.1.2}%
-\contentsline {subsubsection}{AML Global Regulations}{12}{subsection.2.1.2}%
-\contentsline {subsubsection}{Ethical and practical issues}{13}{subsection.2.1.2}%
-\contentsline {subsection}{\numberline {2.1.3}Traditional AML methods}{15}{subsection.2.1.3}%
-\contentsline {subsection}{\numberline {2.1.4}The Growing Challenge}{16}{subsection.2.1.4}%
-\contentsline {subsection}{\numberline {2.1.5}Task description}{16}{subsection.2.1.5}%
-\contentsline {section}{\numberline {2.2}Graph Neural Networks for AML}{17}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Graph Neural Networks definition}{18}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Graph Attention Networks}{19}{subsection.2.2.2}%
-\contentsline {subsection}{\numberline {2.2.3}Graph Isomorphism Networks}{20}{subsection.2.2.3}%
-\contentsline {subsection}{\numberline {2.2.4}Limitations of Local Message Passing}{21}{subsection.2.2.4}%
-\contentsline {subsubsection}{Weisfeiler-Leman test upperbound}{21}{subsection.2.2.4}%
-\contentsline {subsubsection}{Oversmoothing}{22}{figure.caption.6}%
-\contentsline {subsubsection}{Oversquashing}{23}{figure.caption.6}%
-\contentsline {chapter}{\numberline {3}Methodology}{25}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Group-Aware Graph Neural Networks}{25}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Community-Centric Encoder}{26}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Extended Markov Random Field Layer}{26}{subsection.3.1.2}%
-\contentsline {subsection}{\numberline {3.1.3}Node-Level Classification}{27}{subsection.3.1.3}%
-\contentsline {subsection}{\numberline {3.1.4}Group Representation Layer}{28}{subsection.3.1.4}%
-\contentsline {subsection}{\numberline {3.1.5}Group-Level Encoding and Prediction}{28}{subsection.3.1.5}%
-\contentsline {subsection}{\numberline {3.1.6}Multi-Task Loss}{29}{subsection.3.1.6}%
-\contentsline {section}{\numberline {3.2}Dataset description}{29}{section.3.2}%
-\contentsline {subsection}{\numberline {3.2.1}Features analysis}{31}{subsection.3.2.1}%
-\contentsline {subsection}{\numberline {3.2.2}Building the Financial Graph}{36}{subsection.3.2.2}%
-\contentsline {section}{\numberline {3.3}Experimental Settings}{37}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Data Preparation}{37}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Train, Patience, Validation and Test Split}{37}{subsection.3.3.2}%
-\contentsline {subsubsection}{Test set problem}{38}{equation.3.24}%
-\contentsline {section}{\numberline {3.4}Model Selection and Training settings}{39}{section.3.4}%
-\contentsline {subsection}{\numberline {3.4.1}Optimizer}{39}{subsection.3.4.1}%
-\contentsline {subsection}{\numberline {3.4.2}Subgraph Sampling}{40}{subsection.3.4.2}%
-\contentsline {subsection}{\numberline {3.4.3}Early Stopping}{40}{subsection.3.4.3}%
-\contentsline {subsection}{\numberline {3.4.4}Hyperparameters}{40}{subsection.3.4.4}%
-\contentsline {paragraph}{Loss function hyperparameters}{40}{subsection.3.4.4}%
-\contentsline {paragraph}{GAGNN hyperparameters}{41}{subsection.3.4.4}%
-\contentsline {paragraph}{GAT hyperparameters}{41}{subsection.3.4.4}%
-\contentsline {paragraph}{GIN hyperparameters}{41}{subsection.3.4.4}%
-\contentsline {subsubsection}{Loss Function Hyperparameters}{42}{subsection.3.4.4}%
-\contentsline {subsubsection}{Architecture Hyperparameters}{43}{table.caption.20}%
-\contentsline {subsubsection}{Baseline Models Hyperparameters}{44}{table.caption.22}%
-\contentsline {chapter}{\numberline {4}Results}{45}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Hyperparameter Selection Results}{45}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Loss Function Hyperparameters}{45}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Architectural Hyperparameters}{46}{subsection.4.1.2}%
+\contentsline {chapter}{\numberline {2}Background}{11}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Anti Money Laundering theory}{11}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Financial Crime and Money Laundering}{11}{subsection.2.1.1}%
+\contentsline {subsubsection}{The Limitations of the Lonely Scammer}{11}{subsection.2.1.1}%
+\contentsline {subsubsection}{Fraud Rings}{12}{equation.2.1}%
+\contentsline {subsubsection}{Money Laundering patterns}{13}{equation.2.2}%
+\contentsline {subsection}{\numberline {2.1.2}Ethics, Privacy and Regulations}{14}{subsection.2.1.2}%
+\contentsline {subsubsection}{AML Global Regulations}{14}{subsection.2.1.2}%
+\contentsline {subsubsection}{Ethical and practical issues}{15}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Traditional AML methods}{17}{subsection.2.1.3}%
+\contentsline {subsection}{\numberline {2.1.4}The Growing Challenge}{18}{subsection.2.1.4}%
+\contentsline {subsection}{\numberline {2.1.5}Task description}{18}{subsection.2.1.5}%
+\contentsline {section}{\numberline {2.2}Graph Neural Networks for AML}{19}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Graph Neural Networks definition}{20}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Graph Attention Networks}{21}{subsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Graph Isomorphism Networks}{22}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Limitations of Local Message Passing}{23}{subsection.2.2.4}%
+\contentsline {subsubsection}{Weisfeiler-Leman test upperbound}{23}{subsection.2.2.4}%
+\contentsline {subsubsection}{Oversmoothing}{24}{figure.caption.6}%
+\contentsline {subsubsection}{Oversquashing}{25}{figure.caption.6}%
+\contentsline {chapter}{\numberline {3}Methodology}{27}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Group-Aware Graph Neural Networks}{27}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Community-Centric Encoder}{28}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Extended Markov Random Field Layer}{28}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}Node-Level Classification}{29}{subsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.1.4}Group Representation Layer}{30}{subsection.3.1.4}%
+\contentsline {subsection}{\numberline {3.1.5}Group-Level Encoding and Prediction}{30}{subsection.3.1.5}%
+\contentsline {subsection}{\numberline {3.1.6}Multi-Task Loss}{31}{subsection.3.1.6}%
+\contentsline {section}{\numberline {3.2}Dataset description}{31}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Features analysis}{33}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Building the Financial Graph}{38}{subsection.3.2.2}%
+\contentsline {section}{\numberline {3.3}Experimental Settings}{39}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Data Preparation}{39}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Train, Patience, Validation and Test Split}{39}{subsection.3.3.2}%
+\contentsline {subsubsection}{Test set problem}{40}{equation.3.24}%
+\contentsline {section}{\numberline {3.4}Model Selection and Training settings}{41}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Optimizer}{41}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Subgraph Sampling}{42}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Early Stopping}{42}{subsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.4.4}Hyperparameters}{42}{subsection.3.4.4}%
+\contentsline {paragraph}{Loss function hyperparameters}{42}{subsection.3.4.4}%
+\contentsline {paragraph}{GAGNN hyperparameters}{43}{subsection.3.4.4}%
+\contentsline {paragraph}{GAT hyperparameters}{43}{subsection.3.4.4}%
+\contentsline {paragraph}{GIN hyperparameters}{43}{subsection.3.4.4}%
+\contentsline {subsubsection}{Loss Function Hyperparameters}{44}{subsection.3.4.4}%
+\contentsline {subsubsection}{Architecture Hyperparameters}{45}{table.caption.20}%
+\contentsline {subsubsection}{Baseline Models Hyperparameters}{46}{table.caption.22}%
+\contentsline {chapter}{\numberline {4}Results}{47}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Hyperparameter Selection Results}{47}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Loss Function Hyperparameters}{47}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Architectural Hyperparameters}{48}{subsection.4.1.2}%
 \contentsline {section}{\numberline {4.2}Models Results}{49}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Evaluation Metrics}{49}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}General considerations}{50}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Binary Classification task}{52}{subsection.4.2.3}%
-\contentsline {subsection}{\numberline {4.2.4}Multiclass Classification task}{53}{subsection.4.2.4}%
-\contentsline {section}{\numberline {4.3}Limitations}{66}{section.4.3}%
-\contentsline {chapter}{\numberline {5}Conclusions}{67}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Future Directions}{67}{section.5.1}%
+\contentsline {subsection}{\numberline {4.2.1}Evaluation Metrics}{51}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}General considerations}{52}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Binary Classification task}{54}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Multiclass Classification task}{55}{subsection.4.2.4}%
+\contentsline {section}{\numberline {4.3}Limitations}{68}{section.4.3}%
+\contentsline {chapter}{\numberline {5}Conclusions}{69}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Future Directions}{71}{section.5.1}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

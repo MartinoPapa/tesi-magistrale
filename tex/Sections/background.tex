@@ -6,7 +6,7 @@
 \subsection{Financial Crime and Money Laundering}
 \label{moneyLaundering}
 %--------------------------------------------------------------
-Understanding how money laundering works is fundamental to garantee both an effective and explainable detection of suspicious transaction. 
+Understanding how money laundering works is fundamental to guarantee both an effective and explainable detection of suspicious transaction. 
 This section offers a theoretical introduction to money laundering providing a mathematical formulation of the problem together with a summary of common strategies employed by criminals to avoid detection.
 \subsubsection{The Limitations of the Lonely Scammer}
 Individual scammers typically rely on simple and intuitive techniques to introduce illicit funds into the legitimate economy. One of the most prevalent methods is known as ``smurfing''. In simple terms, smurfing involves breaking down a large sum of illicit money into many smaller, inconspicuous chunks to deposit them without raising suspicion. 
@@ -22,7 +22,7 @@ While smurfing is effective for small amounts, its scalability is severely limit
 \subsubsection{Fraud Rings}
 In regard to overcome those issues, criminals have improved their techniques by employing highly sophisticated obfuscation tactics. Instead of acting alone, they form complex ``fraud rings'' to distribute illicit funds across vast networks of temporary accounts. To further break the traceable link between sender and receiver, illicit actors frequently use cyclic transfers and cryptocurrency \textbf{mixers} services that pool together funds from multiple users, mix them, and redistribute them at random intervals and amounts. These advanced tactics create dense, highly camouflaged transaction topologies that easily evade threshold-based rules and simple heuristic detection methods.
 
-To achive their goal they utilize a strategy of transaction layering, often characterized by a topological depth $L$, and network diversification to obscure the money trail \cite{contreras2026strategic, li2025scamsweeper}.
+To achieve their goal they utilize a strategy of transaction layering, often characterized by a topological depth $L$, and network diversification to obscure the money trail \cite{contreras2026strategic, li2025scamsweeper}.
 By spreading the funds through a complex topology, the fraud ring successfully increases its non-detection probability $p_L$, which now depends explicitly on the layering depth $L$. The expected profit of a fraud ring utilizing $L$ layers can be mathematically expressed as:
 \begin{equation}
     E[\pi_L] = p_L x - (1-p_L)T - c(L)
@@ -44,34 +44,34 @@ Which are:
     \item \textit{gather-scatter}, Figure \ref{fig:launderingPatterns} c, is the combination of a fan-in and a fan-out pattern on the same node $v$;
     \item \textit{scatter-gather}, Figure \ref{fig:launderingPatterns} d, also composed by a fan-in and a fan-out pattern but on two different nodes, sharing the same intermediate neighbors;
     \item \textit{simple-cycle}, Figure \ref{fig:launderingPatterns} e, characterized by a sequence of transactions that starts and ends at the same node;
-    \item \textit{random}, Figure \ref{fig:launderingPatterns} f, similar to the cycle but founds do not return to the original account;
-    \item \textit{bipartite}, Figure \ref{fig:launderingPatterns} g, moves founds from a set of original nodes to a set of target nodes, with no transactions between accounts of the same set;
+    \item \textit{random}, Figure \ref{fig:launderingPatterns} f, similar to the cycle but funds do not return to the original account;
+    \item \textit{bipartite}, Figure \ref{fig:launderingPatterns} g, moves funds from a set of original nodes to a set of target nodes, with no transactions between accounts of the same set;
     \item \textit{stack}, Figure \ref{fig:launderingPatterns} h, extends the bipartite pattern by adding a second bipartite layer.
 \end{itemize}
 It's important to mention that in some cases some patterns can be found in both illicit and licit transactions \cite{AMLgentex}. Specifically, \textit{fan-in} and \textit{fan-out} are patterns that are also frequent in legitimate, every-day transactions, such as salary payments or transfers between family members or friends.
-That being said, the detection of such patterns remains a foundamental component of any money laundering detection models, albeit insufficient on its own.
+That being said, the detection of such patterns remains a fundamental component of any money laundering detection models, albeit insufficient on its own.
 Furthermore, a model that correctly classifies those patterns provides a much more interpretable result than one that simply performs a binary classification between licit and illicit transactions. In Section \ref{ethics_privacy_regulations} we will see why explainability is of fundamental importance in the financial field. 
 
 \subsection{Ethics, Privacy and Regulations}
 \label{ethics_privacy_regulations}
 In this section we will begin by introducing a brief overview of the regulations that currently govern the field of AML.
-Subsequently a discussion on the main issues that the use of machine learning models may introduce will be provided, toghether with suggested solutions to address them. A special focus will be reserved to the issues of explainability and privacy.
+Subsequently, a discussion on the main issues that the use of machine learning models may introduce will be provided, together with suggested solutions to address them. A special focus will be reserved to the issues of explainability and privacy.
 To conclude we will consider the use of Synthetic Datasets as a possible solution to these issues, analyzing their limits and advantages in the context of AML.
 \subsubsection{AML Global Regulations}
-Effective money laundering detection requires a combination of domestic laws, regulatory oversight, and international cooperation. Since the end of the 20th century the United States and the Eureopean Union as key jurisdictions, toghether with the FAFT \footnote{The Financial Action Task Force (FATF) is an intergovernmental policymaking body established in 1989 by the G7} as the global leading standard-setter have been developing and elaborate framework for AML \cite{regulations}.
+Effective money laundering detection requires a combination of domestic laws, regulatory oversight, and international cooperation. Since the end of the 20th century the United States and the European Union as key jurisdictions, together with the FAFT \footnote{The Financial Action Task Force (FATF) is an intergovernmental policymaking body established in 1989 by the G7} as the global leading standard-setter have been developing and elaborate framework for AML \cite{regulations}.
 
-In 1989 the G-7 nations enstabished an inter-governmental task force to develop and promote international guidelines in regard to fight money laundering, the FATF. Nowadays FAFT still holds a central role in the AML field. It has issued 40 recomendations for national laws and international cooperation \cite{regulations}.
-These principles have been adopted by over than 200 jurisdictions and they fall into 5 main areas \cite{ruleBased}:
+In 1989 the G-7 nations established an inter-governmental task force to develop and promote international guidelines in regard to fight money laundering, the FATF. Nowadays FAFT still holds a central role in the AML field. It has issued 40 recomendations for national laws and international cooperation \cite{regulations}.
+These principles have been adopted by over 200 jurisdictions and they fall into 5 main areas \cite{ruleBased}:
 \begin{itemize}
     \item Risk Based Approach (RBA): jurisdictions must identify and understand the financial crime risks that they face, allocating the right amount of resources to mitigate them;
     \item Legal Framework: members nations must adopt laws that criminalize money laundering; furthermore authorithies must be given the power to freeze and confiscate funds when needed;
     \item Preventive Measures:
     \begin{itemize}
-        \item Customer Due Diligence (CDD): financial instututions must verify the identity of their customers;
-        \item Ultimate Beneficial Ownership (OBO): company's owners must be verified, this adresses the issue of criminals hiding behind shell instututions;
-        \item Record Keeping: financial instututions must mantain their transactions recrds for at least 5 years and file Suspicious Transactions Reports (STRs) to Financial Intelligence Units (FIUs).
+        \item Customer Due Diligence (CDD): financial institutions must verify the identity of their customers;
+        \item Ultimate Beneficial Ownership (OBO): company's owners must be verified, this addresses the issue of criminals hiding behind shell institutions;
+        \item Record Keeping: financial institutions must maintain their transaction records for at least 5 years and file Suspicious Transactions Reports (STRs) to Financial Intelligence Units (FIUs).
     \end{itemize} 
-    \item Supervision and Transparency: regulators must actively supervise financial instututions; members nations must immediatly enforce UN financial sanctions when required to.
+    \item Supervision and Transparency: regulators must actively supervise financial institutions; member nations must immediately enforce UN financial sanctions when required to.
     \item International cooperation: members must quickly share information and provide mutual legal assistance in international investigations.
 \end{itemize}
 In regard to those guidelines FAFT keeps a \textit{black-list} and a \textit{grey-list} of jurisdictions that are not compliant with its standards \cite{regulations}.
@@ -79,14 +79,14 @@ In regard to those guidelines FAFT keeps a \textit{black-list} and a \textit{gre
 \subsubsection{Ethical and practical issues} \label{patterns}
 When considering real-world datasets, models that detect financial crime are trained on sensitive data that needs to be protected. To avoid the leakage of sensitive information, before feeding the data to machine learning models, it is necessary to apply privacy-preserving techniques. The most common practice is to apply differential privacy, which adds noise to the dataset to protect individual data points. That noise can be quantified using the privacy budget $\epsilon$, which determines the trade-off between privacy and utility. All this comes at the cost of reducing the accuracy of the model.
 
-Another significant issue to consider is explainability. Regulators require banks to explain their decisions, and this requirement extends to the machine learning models they use. Deep Learning models, albeit generally more precise and powerful than traditional machine learning models, are often \textit{black-boxes}, meaning their decision process is very difficoult to understand for a human being.  
+Another significant issue to consider is explainability. Regulators require banks to explain their decisions, and this requirement extends to the machine learning models they use. Deep Learning models, albeit generally more precise and powerful than traditional machine learning models, are often \textit{black-boxes}, meaning their decision process is very difficult to understand for a human being.  
 
 Real datasets are also often limited by the fact that the informations are not shared accross jurisdictions, making it difficult to detect frauds that cross borders.
 
-To tackle all those problematics researchers at IBM developed a simulator for generating realistic financial transactions, called AMLWorld (2023) \cite{AMLWorld}. This simulator solves the privacy problem, simulates multi-jurisdictional transactions and it even tries to takle the explainability issue by providing as lable not only a boolean value for the presence of a fraud, but also the pattern that caracterized it. This wouldn't be possible in real life, but models trained on this synthetic dataset could be able to generalize the detection of patterns even in real world scenarios, highly enhancing interpretability.
+To tackle all those problematics researchers at IBM developed a simulator for generating realistic financial transactions, called AMLWorld (2023) \cite{AMLWorld}. This simulator solves the privacy problem, simulates multi-jurisdictional transactions and it even tries to tackle the explainability issue by providing as label not only a boolean value for the presence of a fraud, but also the pattern that characterized it. This wouldn't be possible in real life, but models trained on this synthetic dataset could be able to generalize the detection of patterns even in real world scenarios, highly enhancing interpretability.
 Figure \ref{fig:amlsim_architecture} provides an overview on how AMLWorld generates realistic financial transactions and patterns of financial crime. 
 
-The possible laundering patterns are the one described in Section \ref{mlpatterns}; the model assumes the existence of 9 different surces of criminal activities: extortion, loan sharking, gambling, prostitution, kidnapping, robbery, embezzlement, drugs, and smuggling. The amount of money and the frequency of these criminal enterprises vary by both activity category and acting entity \cite{AMLWorld}. The funds are then inserted in the financial system alongside the legit ones.
+The possible laundering patterns are the one described in Section \ref{mlpatterns}; the model assumes the existence of 9 different sources of criminal activities: extortion, loan sharking, gambling, prostitution, kidnapping, robbery, embezzlement, drugs, and smuggling. The amount of money and the frequency of these criminal enterprises vary by both activity category and acting entity \cite{AMLWorld}. The funds are then inserted in the financial system alongside the legit ones.
 \begin{figure}
     \centering
     \includegraphics[width=1\textwidth]{IMG/AMLWorld.png}
@@ -119,7 +119,7 @@ Hence, to prevent inadvertently incentivizing sophisticated criminal networks, d
 
 \subsection{Task description}
 \label{task}
-In this dissertation we consider the problem of Edge-Level money laundering detection. This means, considering the Graph $G = (V, E)$ as in Definition \ref{financialGraph}, trying to learn a function \(f\) that, for each transaction $e \in E$, predicts its class. In particular we will consider two different settings. A binary classification where each edge is labeled as fraudulent or lecit and a multi-class classification where, in case of illicit transaction, we also predict the type of pattern, amongst the one described in Section \ref{mlpatterns}, it's involved in.
+In this dissertation we consider the problem of Edge-Level money laundering detection. This means, considering the Graph $G = (V, E)$ as in Definition \ref{financialGraph}, trying to learn a function \(f\) that, for each transaction $e \in E$, predicts its class. In particular we will consider two different settings. A binary classification where each edge is labeled as fraudulent or licit and a multi-class classification where, in case of illicit transaction, we also predict the type of pattern, amongst the one described in Section \ref{mlpatterns}, it's involved in.
 
 Formally we seek a function \(f\) that minimizes the error \(L(f)\) over a distribution \(\mathcal{D}\) of Graphs.
 \begin{equation}

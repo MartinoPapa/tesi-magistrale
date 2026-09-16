@@ -83,7 +83,7 @@ First, for each directed edge $(i,j)$, the layer concatenates the source and des
   p_{\text{trans}}(e_{ij}) = \operatorname{MLP}_{\text{edge}}\!\left([X^{(3)}_i \;\|\; X^{(3)}_j \;\|\; \ell_{ij}]\right)
 \end{equation}
 Then we used this distribution to construct the communities graph.
-Considering an edge \(e_{ij}\), the two accounts \(i\) and \(j\) will be grouped together with a probability equal to their predicted illicit probability $p_{\text{trans}}(e_{ij})$ or, if the edge is in the training set, we will simply use its label to decide whether to group together the two nodes or not. In the case of a multi-class classification task, this Bernoulli probability is computed as $1 - p_{\text{licit}}(e_{ij})$, effectively considering all illicit classes together. The resulting groups are then collapsed into single super-nodes whose feature vector is the mean of its members' original features. Two communities will be connected by an edge if at least one node from one community have an edge with a node in the other community; the edge features will be dropped mantaing only the information about the connectivity.
+Considering an edge \(e_{ij}\), the two accounts \(i\) and \(j\) will be grouped together with a probability equal to their predicted illicit probability $p_{\text{trans}}(e_{ij})$ or, if the edge is in the training set, we will simply use its label to decide whether to group together the two nodes or not. In the case of a multi-class classification task, this Bernoulli probability is computed as $1 - p_{\text{licit}}(e_{ij})$, effectively considering all illicit classes together. The resulting groups are then collapsed into single super-nodes whose feature vector is the mean of its members' original features. Two communities will be connected by an edge if at least one node from one community have an edge with a node in the other community; the edge features will be dropped maintaining only the information about the connectivity.
 
 \begin{equation}
   \hat{x}_g = \frac{1}{|\mathcal{G}_i|} \sum_{v \in \mathcal{G}_i} x_v
@@ -91,7 +91,7 @@ Considering an edge \(e_{ij}\), the two accounts \(i\) and \(j\) will be grouped
 Each group \(\mathcal{G}\) is considered illicit if it contains at least one illicit account, licit otherwise. Formally we define the group label as:
 \begin{equation}
   \hat{y}_\mathcal{G} = \begin{cases}
-    1 & \text{if } \exists V \; \vert  \; V \text{ is ML} \wedge V \in \mathcal{G} \\
+    1 & \text{if } \exists V \; \vert  \; V \text{ is money laundering} \wedge V \in \mathcal{G} \\
     0 & \text{otherwise}
   \end{cases}
 \end{equation}
@@ -144,11 +144,11 @@ Where HI (High) and LO (Low) indicate the frequency of illicit transactions and 
     \label{fig:datasetstats}
 \end{figure}
 
-In this work we will use the HI-Small version. Bigger datasets would of course garantee a better generalization and accuracy but, for hardware and time constraint, it would be impossible to train the models on such graphs. That begin said, we belive that the obtained results are good enough to understand how the models would perform in a real world scenario.
+In this work we will use the HI-Small version. Bigger datasets would of course guarantee a better generalization and accuracy but, for hardware and time constraints, it would be impossible to train the models on such graphs. That being said, we believe that the obtained results are good enough to understand how the models would perform in a real world scenario.
 
 The HI-Small dataset is composed of 3 different files:
 \begin{itemize}
-    \item \texttt{HI-Small\_account.csv}, contains 518,581 accounts toghether with their features:
+    \item \texttt{HI-Small\_account.csv}, contains 518,581 accounts together with their features:
     \begin{itemize}
         \item \textit{Entity ID}: The ID of the account;
         \item \textit{Entity Name}: The name of the account;
@@ -174,8 +174,8 @@ The HI-Small dataset is composed of 3 different files:
         \item \textit{dst}: Destination node identifier;
     \end{itemize}
     Figure \ref{fig:transhead} shows some examples of transaction records.
-    \item \texttt{HI-Small\_Patterns.txt}, lists the edges that are involved in ML activities toghether with the type of pattern they are involved in (multiclass labels).
-    Examples of the 8 differt types of ML patterns in IBM AMLSim are shown in Figure \ref{fig:patternsIBM}.
+    \item \texttt{HI-Small\_Patterns.txt}, lists the edges that are involved in money laundering activities together with the type of pattern they are involved in (multiclass labels).
+    Examples of the 8 different types of money laundering patterns in IBM AMLSim are shown in Figure \ref{fig:patternsIBM}.
 \end{itemize}
 \begin{figure}
     \centering
@@ -205,13 +205,13 @@ Figure \ref{fig:patterns_distr}, provides the distribution of the multiclass lab
     \label{fig:patterns_distr}
 \end{figure}
 
-We now procede by analyzing the edge features. First, we notice that \textit{Amount Received} and \textit{Amount Paid} are almost identical. From Figure \ref{fig:amounttrans} we can see that fraudulent trasnactions have the tendency to be bigger than lecit ones.
+We now proceed by analyzing the edge features. First, we notice that \textit{Amount Received} and \textit{Amount Paid} are almost identical. From Figure \ref{fig:amounttrans} we can see that fraudulent transactions have the tendency to be bigger than licit ones.
 
 Continuing our analysis on edge features, we notice that the most common currency is USD for both fraudulent and licit transactions; most of the currencies have a similar proportion distribution from both fraudulent and licit transactions. From Figure \ref{fig:currencytrans} we can see that there are two exceptions: Shekel, which is more prevalent in licit transactions, and Saudi Riyal, which is significantly more prevalent in fraudulent transactions. It's important to notice that the graph shows the proportion of each currency with respect to the total number of transactions in each class; Since there are way more licit than fraudulent transactions, having similar distributions means that, for every type of currency, licit transactions still represent the vast majority.
 
 Considering now the payment formats, by looking at Figure \ref{fig:paymentformats} we notice that ACH transactions are more frequently used for fraudulent transactions compared to other methods.
 
-The last edge feature is \textit{Timestamp}. Since working with timestamps can be tricky, we decided to extract to categorical features representing the hour of the day and the day of the week (Figures \ref{fig:hourday}). Normally we would have also considered the week of the year and the year itself but, since IBM AMLSim Small only covers the span of a week, it would be irrelevant. That being said, it's important to mention that directly working with timestamps, albeit tricky, could lead to a more precise detection [Chapter \ref{futureDirections}]. 
+The last edge feature is \textit{Timestamp}. Since working with timestamps can be tricky, we decided to extract two categorical features representing the hour of the day and the day of the week (Figures \ref{fig:hourday}). Normally we would have also considered the week of the year and the year itself but, since IBM AMLSim Small only covers the span of a week, it would be irrelevant. That being said, it's important to mention that directly working with timestamps, albeit tricky, could lead to a more precise detection [Chapter \ref{futureDirections}]. 
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{IMG/amount.png}
@@ -237,7 +237,7 @@ The last edge feature is \textit{Timestamp}. Since working with timestamps can b
     \label{fig:hourday}
 \end{figure} 
 
-Finally we take a look at the Node features. The only intresting one is \textit{Bank Name}, Figure \ref{fig:bank} shows the distribution of licit and illicit nodes over the 10 biggest banks.
+Finally we take a look at the Node features. The only interesting one is \textit{Bank Name}, Figure \ref{fig:bank} shows the distribution of licit and illicit nodes over the 10 biggest banks.
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{IMG/banks.png}
@@ -265,11 +265,11 @@ It's important to mention that in case of qualitative edge features or multiclas
 
 \subsection{Data Preparation}\label{dataprep}
 In regard to enhance the performance of the models we perform some preprocessing steps on the dataset.
-First of all, categorical features need to be converted in a numerical format; we opted for One-Hot Encoding, which works particulary well for our architecture since, when we average the features to create the nodes and groups representations, the one-hot vectors translate into proportions of the different categories providing like that meaningfull information. 
+First of all, categorical features need to be converted in a numerical format; we opted for One-Hot Encoding, which works particularly well for our architecture since, when we average the features to create the nodes and groups representations, the one-hot vectors translate into proportions of the different categories providing meaningful information. 
 
 Secondly, we elaborated the timestamp by extrapolating from it the hour of the day, using cyclic encoding, and the day of the week, using a one-hot encoder. The cyclic representation is fundamental to preserve the daily periodicity of transactions.
 
-We then normalized the financial amounts. Since money laundering datasets present a high number of outliers standard normalization techniques often tend to move the value of the legitimate transactions close to zero. For this reason a Robust Scaler was prefered to the standard one. It normalizes features using the median and the interquartile range (IQR), according to the following formula:
+We then normalized the financial amounts. Since money laundering datasets present a high number of outliers standard normalization techniques often tend to move the value of the legitimate transactions close to zero. For this reason a Robust Scaler was preferred to the standard one. It normalizes features using the median and the interquartile range (IQR), according to the following formula:
 \begin{equation}
     x_{\text{scaled}} = \frac{x - Q_2(x)}{Q_3(x) - Q_1(x)}
 \end{equation}
@@ -299,12 +299,12 @@ For the multiclass task, the legitimate class is downsampled to match the total 
 The validations and test sets remain untouched.
 
 \subsubsection{Test set problem}
-By analysing the test set we noticed a flaw in the IBM AMLSim dataset. The amount of ML transactions suddendly increases in the last rows, corresponding to the newer transactions, of the dataset. Because of that we initially ended up with a test set that didn't really represented the real world scenario. The distribution of the ML attemps in the last rows is displayed in Table \ref{tab:distributionlastrow}.
+By analysing the test set we noticed a flaw in the IBM AMLSim dataset. The amount of money laundering transactions suddenly increases in the last rows, corresponding to the newer transactions, of the dataset. Because of that we initially ended up with a test set that didn't really represented the real world scenario. The distribution of the money laundering attemps in the last rows is displayed in Table \ref{tab:distributionlastrow}.
 \begin{table}
 \centering
 \begin{tabular}{l l }
 \hline
-\textbf{Interval} & \textbf{Percentage of ML transactions} \\
+\textbf{Interval} & \textbf{Percentage of money laundering transactions} \\
 \hline
 Last 100,000 rows & 0.9\% \\
 Last 10,000 rows & 6.7\% \\
@@ -312,24 +312,24 @@ Last 5,000 rows & 13.2\% \\
 Last 1,000 rows & 59.0\% \\
 \hline
 \end{tabular}
-\caption{ML transactions distribution in the last rows of the dataset}
+\caption{Money laundering transactions distribution in the last rows of the dataset}
 \label{tab:distributionlastrow}
 \end{table}
 For this reason we decided to get rid of the last 5000 rows by re-defining the test set as:
 \begin{equation}
   \mathcal{D}_\text{test} = \{d \in \mathcal{D} \vert t_3 < t(d) \le t_4 \}
 \end{equation}
-where \(t_4\) is specially chosen to achive the objective. 
+where \(t_4\) is specially chosen to achieve the objective. 
 
 \section{Model Selection and Training settings}
-In this section we describe and explain our choices for the training settings and the modles' hyperparameters. We first discuss the general settings shared amongst all the experiments, then we deep dive into the architectural choices and hyperparameter tuning for each class of models we evaluated. 
+In this section we describe and explain our choices for the training settings and the models' hyperparameters. We first discuss the general settings shared amongst all the experiments, then we deep dive into the architectural choices and hyperparameter tuning for each class of models we evaluated. 
 
 \subsection{Optimizer}
 As suggested by Cheng et al. \cite{mainpaper}, we decided to adopt the Adam optimizer \cite{adam} as the optimization algorithm for all our models. The original implementation suggested a learning rate of \(0.001\) and a batch size of \(128\). 
 With our dataset these settings led to a very unstable convergence, therefore we decided to lower the learning rate to \(\eta = 0.0001\) which, together with gradient clipping at a maximum norm of \(5.0\), ensured smoother and more reliable training dynamics. Furthermore we also changed the batch size to \(256\) to better exploit the GPU usage.
 
 \subsection{Subgraph Sampling}
-Due to the prohibitive dimension of the financial graph, fitting the models directly to the entirety of it is not a feasible option in both terms of memory and tim.
+Due to the prohibitive dimension of the financial graph, fitting the models directly to the entirety of it is not a feasible option in both terms of memory and time.
 
 To address this, we employed a mini-batch subgraph sampling strategy using \texttt{NeighborLoader} from PyTorch Geometric~\cite{pyg}.
 The loader operates by sampling a fixed number of neighbors per hop. This is governed by the \texttt{num\_neighbors} \(=[a,b,c,\dots]\) parameter. Meaning that for each target node in the batch, the loader samples $a$ of its immediate neighbors; for each of those \(a\) sampled neighbors, it further samples $b$ of their neighbors and so on. 
@@ -368,7 +368,7 @@ We begin by listing the hyperparameters that will need to be tuned across all th
   \item \(L\) (\texttt{num\_layers}): Number of message passing layers, determining the multi-hop receptive field of the GNN.
   \item \texttt{gin\_mlp\_hidden}: Dimension of the hidden layers of the \(\operatorname{MLP}\) used inside the GIN UPDATE function (Section~\ref{sec:gin}).
 \end{itemize}
-Due to the very high number of hyperparameters that need to be tuned, we decided to split the model selection process into two distinct phases. The first one concetrates on finding the best values for the parameters involved in the loss function by keeping the architectural hyperparameters fixed to reference values suggested by Cheng et al. \cite{mainpaper}. 
+Due to the very high number of hyperparameters that need to be tuned, we decided to split the model selection process into two distinct phases. The first one concentrates on finding the best values for the parameters involved in the loss function by keeping the architectural hyperparameters fixed to reference values suggested by Cheng et al. \cite{mainpaper}. 
 The second phase instead focuses on tuning the architectural hyperparameters (hidden dimension, number of layers, number of attention heads, etc.) keeping the loss function weights fixed to the values found in the first one.
 
 \subsubsection{Loss Function Hyperparameters}
@@ -376,7 +376,7 @@ The second phase instead focuses on tuning the architectural hyperparameters (hi
 
 In this phase we search for the optimal values of the parameters \(c_1, c_2, c_3\) and \(w\) (used only in the binary task), involved in the loss functions. 
 
-To save computational resources, the grid search for the loss weights is performed exclusively on the GAGNN model with the GAT backbone, assuming that the optimal weights found for GAT apply directly to the GIN backbone as well for their respective tasks. During this phase, all architectural hyperparameters were kept fixed to reference values suggested by Cheng et al. \cite{mainpaper}; when not explictly stated we opted for feasible and reasonable values according to the literature. The fixed architectural hyperparameters are repoted in Table \ref{tab:fixed_arch_hp}.
+To save computational resources, the grid search for the loss weights is performed exclusively on the GAGNN model with the GAT backbone, assuming that the optimal weights found for GAT apply directly to the GIN backbone as well for their respective tasks. During this phase, all architectural hyperparameters were kept fixed to reference values suggested by Cheng et al. \cite{mainpaper}; when not explicitly stated we opted for feasible and reasonable values according to the literature. The fixed architectural hyperparameters are reported in Table \ref{tab:fixed_arch_hp}.
 
 \begin{table}
 \centering
@@ -442,7 +442,7 @@ The second phase consists in finding the optimal values for the architectural hy
 
 We will perform four different model selections, one for each experiment: GAGNN with GAT backbone for the binary task, GAGNN with GIN backbone for the binary task, GAGNN with GAT backbone for the multiclass task and GAGNN with GIN backbone for the multiclass task. Two hyperparameters grid are used, since they are shared between binary and multiclass tasks with the same backbone GNN. As possible values we chose options around those of the reference paper; the hyperparameters grids for GAT and GIN backbones are reported in Table \ref{tab:phase2_gat} and Table \ref{tab:phase2_gin} respectively.
 
-Trying more parameters, expecially for the number of layers, number of heads, \(\beta\) and coefficients of the loss function could lead to much better results. However, due to the limitiations on the computational resources, we had to limit the grid search to a reasonable number of combinations. We will discuss this further in Section \ref{Limitations}.
+Trying more parameters, especially for the number of layers, number of heads, \(\beta\) and coefficients of the loss function could lead to much better results. However, due to the limitations on the computational resources, we had to limit the grid search to a reasonable number of combinations. We will discuss this further in Section \ref{Limitations}.
 
 \begin{table}
 \centering

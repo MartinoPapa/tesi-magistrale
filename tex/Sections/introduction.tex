@@ -2,14 +2,14 @@
 Money laundering is the criminal process of disguising or concealing the origin, identity, and ownership of illegally acquired funds.
 Its detection has become a foundational pillar of modern economic security.
 The rapid digitization of financial services has opened new possibilities for fraudulent activities.
-Undetected ML leads to massive economic losses for individuals and institutions, undermines the public trust in the financial system and frequently serves to finance criminal organizations.
+Undetected money laundering leads to massive economic losses for individuals and institutions, undermines the public trust in the financial system and frequently serves to finance criminal organizations.
 The scale of this phenomenon is staggering: the United Nations Office on Drugs and Crime estimates that between 2\% and 5\% of global GDP is laundered annually, with less than 1\% of these illicit financial flows being successfully detected~\cite{unodc2011estimating,europol2016does}.
 According to the Canadian Anti Fraud Centre, 704 million dollars were lost because of frauds in 2025 only, confirming the raising trend of the previous years \cite{cafc_home}. 
 Consequently, developing robust mechanisms to identify and stop it is critically important to preserving both market integrity and social stability.
 
-The goal of this dissertation is to evaluate the effectiveness of Graph Neural Network (GNN) based models on detecting money laundering patterns. Both precision and explainability will be taken into account and we will propose two different tasks; a binary classification to label transactions as licit or illicit, and a multiclass classification to detect the specific type of laundering strategy employed which, in case of succes, will enhance the explainability of the model. 
+The goal of this dissertation is to evaluate the effectiveness of Graph Neural Network (GNN) based models on detecting money laundering patterns. Both precision and explainability will be taken into account and we will propose two different tasks; a binary classification to label transactions as licit or illicit, and a multiclass classification to detect the specific type of laundering strategy employed which, in case of success, will enhance the explainability of the model. 
 
-In particular we will focus on the Group Aware Graph Neural Network (GAGNN) architecture proposed in \cite{mainpaper}. GAGNN is a GNN-based model that leverages a multi-component loss function to predict if a transaction is licit or illicit. There are a total of 3 losses, a node loss, an edge loss and a group loss. The group one is the novelty of the proposal since it introduces the concept of community by grouping nodes that are suspected to be doing money laundering toghether. More details on the architecture will be provided in Section \ref{sec:gagnn}. 
+In particular we will focus on the Group Aware Graph Neural Network (GAGNN) architecture proposed in \cite{mainpaper}. GAGNN is a GNN-based model that leverages a multi-component loss function to predict if a transaction is licit or illicit. There are a total of 3 losses, a node loss, an edge loss and a group loss. The group one is the novelty of the proposal since it introduces the concept of community by grouping nodes that are suspected to be doing money laundering together. More details on the architecture will be provided in Section \ref{sec:gagnn}. 
 We will investigate the following inquiries;
 \begin{itemize}
     \item whether the GAGNN architecture outperforms other baseline models on the binary task;
